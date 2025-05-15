@@ -1,16 +1,18 @@
 import React from 'react';
+import Hotel1 from '../assets/hotel1.jpg'
+import Hotel2 from '../assets/hotel2.jpg'
 
 const promoData = [
   {
     id: 1,
-    img: 'https://via.placeholder.com/160x100',
+    img: Hotel1,
     label: '30%',
     title: 'HOTEL CORAL YOGYAKARTA',
     labelColor: 'text-red-500',
   },
   {
     id: 2,
-    img: 'https://via.placeholder.com/160x100',
+    img: Hotel2,
     label: 'Rp 350.000',
     title: 'MATARAM SUITES BANDUNG',
     labelColor: 'text-black',
