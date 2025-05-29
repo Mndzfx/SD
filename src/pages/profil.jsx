@@ -1,10 +1,8 @@
 import React from 'react';
 import Navbar from '../components/navbar';
-<<<<<<< HEAD
+
 import Logo from '../assets/logo-new.png'; // Ganti path sesuai lokasi file logo Anda
-=======
-import Logo from '../assets/logo.png'; // Ganti path sesuai lokasi file logo Anda
->>>>>>> be5af4ee2f8a179860a285ff2058e8a1d429738f
+// Ganti path sesuai lokasi file logo Anda
 
 const AccessMemberPage = () => {
   return (

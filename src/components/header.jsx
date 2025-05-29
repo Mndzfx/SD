@@ -3,8 +3,6 @@ import React from "react";
 
 import Logo from '../assets/logo-new.png'
 
-import Logo from '../assets/logo.png'
-
 
 const Header = () => (
   <>

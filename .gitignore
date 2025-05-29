@@ -1,4 +1,4 @@
-# Logs
+# Log files
 logs
 *.log
 npm-debug.log*
@@ -7,10 +7,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependency directories
 node_modules
+
+# Build output
 dist
 dist-ssr
+
+# Local environment files
 *.local
+.env
 
 # Editor directories and files
 .vscode/*
@@ -22,24 +28,18 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-<<<<<<< HEAD
-
-node_modules
-.env
 
 # Hardhat files
 /cache
 /artifacts
 
-# TypeChain files
+# TypeChain generated files
 /typechain
 /typechain-types
 
-# solidity-coverage files
+# Solidity coverage output
 /coverage
 /coverage.json
 
-# Hardhat Ignition default folder for deployments against a local node
+# Hardhat Ignition default deployment folder for chain 31337
 ignition/deployments/chain-31337
-=======
->>>>>>> be5af4ee2f8a179860a285ff2058e8a1d429738f
