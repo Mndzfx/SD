@@ -4,16 +4,12 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
-  useLocation,
 } from 'react-router-dom';
+
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/profil'; 
-<<<<<<< HEAD
 import ProdukDigital from './pages/produkDigital'; 
 import Investasi from './pages/investasi'; 
-=======
->>>>>>> be5af4ee2f8a179860a285ff2058e8a1d429738f
 
 const App = () => {
   return (
@@ -22,11 +18,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
-<<<<<<< HEAD
           <Route path="/produkDigital" element={<ProdukDigital />} />
-          <Route path="/profile" element={<Investasi />} />
-=======
->>>>>>> be5af4ee2f8a179860a285ff2058e8a1d429738f
+          <Route path="/investasi" element={<Investasi />} />
         </Routes>
       </div>
     </Router>
