@@ -22,6 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
 
 node_modules
 .env
@@ -40,3 +41,5 @@ node_modules
 
 # Hardhat Ignition default folder for deployments against a local node
 ignition/deployments/chain-31337
+=======
+>>>>>>> be5af4ee2f8a179860a285ff2058e8a1d429738f

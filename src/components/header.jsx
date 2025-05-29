@@ -1,6 +1,10 @@
 // src/components/HeaderWelcome.jsx
 import React from "react";
+<<<<<<< HEAD
 import Logo from '../assets/logo-new.png'
+=======
+import Logo from '../assets/logo.png'
+>>>>>>> be5af4ee2f8a179860a285ff2058e8a1d429738f
 
 const Header = () => (
   <>

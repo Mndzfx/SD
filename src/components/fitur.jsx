@@ -1,6 +1,9 @@
 // src/components/MenuTripPlanner.jsx
 import React from "react";
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
+=======
+>>>>>>> be5af4ee2f8a179860a285ff2058e8a1d429738f
 import Wisata from '../assets/wisata.png'
 import Kuliner from '../assets/kulineran.png'
 import Tagihan from '../assets/tagih.png'
@@ -73,6 +76,7 @@ const MenuTripPlanner = () => {
         </div>
 
         {/* Produk Digital */}
+<<<<<<< HEAD
         <Link to="/produkDigital">
   <div className="flex flex-col items-center space-y-1 cursor-pointer">
     <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#7B4EFF] to-[#5A2EDB] flex justify-center items-center">
@@ -81,6 +85,14 @@ const MenuTripPlanner = () => {
     <span className="text-xs text-[#1A1A1A] text-center truncate max-w-[4.5rem]">Produk Digital</span>
   </div>
 </Link>
+=======
+        <div className="flex flex-col items-center space-y-1">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#7B4EFF] to-[#5A2EDB] flex justify-center items-center">
+            <img src={ProdukDigital} className="w-7 h-7" />
+          </div>
+          <span className="text-xs text-[#1A1A1A] text-center truncate max-w-[4.5rem]">Produk Digital</span>
+        </div>
+>>>>>>> be5af4ee2f8a179860a285ff2058e8a1d429738f
 
         {/* Event */}
         <div className="flex flex-col items-center space-y-1">
