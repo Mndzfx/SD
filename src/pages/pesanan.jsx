@@ -11,8 +11,8 @@ import {
   Settings,
   Package
 } from 'lucide-react';
-import Navbar from '../components/navbar';
 
+import Navbar from '../components/navbar';
 
 const JelajahinOrders = () => {
   const [activeTab, setActiveTab] = useState('Semua');
@@ -147,7 +147,7 @@ const JelajahinOrders = () => {
   const filteredOrders = filterOrders(activeTab);
 
   return (
-    <div className="max-w-sm mx-auto min-h-screen bg-gray-100 relative overflow-x-hidden">
+    <div className="w-full min-h-screen bg-gray-100 relative overflow-x-hidden">
       <style jsx>{`
         .scrollbar-hide {
           -webkit-overflow-scrolling: touch;
@@ -160,144 +160,144 @@ const JelajahinOrders = () => {
       `}</style>
       
       {/* Blue Header Section */}
-       <div className="bg-gradient-to-br from-blue-500 to-blue-600 pb-10 lg:pb-16 rounded-b-3xl lg:rounded-b-2xl">
-          {/* Header */}
-          <div className="flex items-center p-6 lg:p-8 text-white">
-           
-            <div className="text-xl lg:text-3xl font-semibold flex-1">Pesanan Saya</div>
-            <button className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-white bg-opacity-20 border-none text-white cursor-pointer flex items-center justify-center hover:bg-opacity-30 transition-all">
-              <Zap size={16} className="lg:w-5 lg:h-5" />
-            </button>
-          </div>
+      <div className="bg-gradient-to-br from-blue-500 to-blue-600 pb-10 sm:pb-12 md:pb-14 lg:pb-16 xl:pb-20 rounded-b-3xl">
+        {/* Header */}
+        <div className="flex items-center p-4 sm:p-5 md:p-6 lg:p-8 xl:p-10 text-white">
+          <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold flex-1">Pesanan Saya</div>
+          <button className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-11 lg:h-11 xl:w-12 xl:h-12 rounded-full bg-white bg-opacity-20 border-none text-white cursor-pointer flex items-center justify-center hover:bg-opacity-30 transition-all">
+            <Zap size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7" />
+          </button>
+        </div>
 
-          {/* Tabs */}
-          <div className="px-6 lg:px-8 pb-5">
-            <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex gap-2 lg:gap-4 lg:justify-center" style={{ minWidth: 'max-content' }}>
-                {tabs.map((tab) => (
-                  <button
-                    key={tab.name}
-                    onClick={() => setActiveTab(tab.name)}
-                    className={`relative px-4 py-2.5 lg:px-6 lg:py-3 rounded-full text-sm lg:text-base font-medium cursor-pointer transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
-                      activeTab === tab.name
-                        ? 'bg-white text-blue-500'
-                        : 'bg-white bg-opacity-20 text-white hover:bg-opacity-30'
-                    }`}
-                  >
-                    {tab.name}
-                  
-                  </button>
-                ))}
-              </div>
+        {/* Tabs */}
+        <div className="px-4 sm:px-5 md:px-6 lg:px-8 xl:px-10 pb-5">
+          <div className="overflow-x-auto scrollbar-hide">
+            <div className="flex gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6 lg:justify-center" style={{ minWidth: 'max-content' }}>
+              {tabs.map((tab) => (
+                <button
+                  key={tab.name}
+                  onClick={() => setActiveTab(tab.name)}
+                  className={`relative px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 lg:px-6 lg:py-3.5 xl:px-8 xl:py-4 rounded-full text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium cursor-pointer transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
+                    activeTab === tab.name
+                      ? 'bg-white text-blue-500'
+                      : 'bg-white bg-opacity-20 text-white hover:bg-opacity-30'
+                  }`}
+                >
+                  {tab.name}
+                </button>
+              ))}
             </div>
           </div>
         </div>
+      </div>
 
       {/* Content */}
-      <div className="p-6 bg-gray-100 rounded-t-3xl -mt-6 relative z-10">
+      <div className="p-4 sm:p-5 md:p-6 lg:p-8 xl:p-10 bg-gray-100 rounded-t-3xl -mt-6 relative z-10">
         {/* Summary */}
-        <div className="bg-white rounded-2xl p-5 mb-4 shadow-lg">
-          <div className="flex justify-between mb-2 text-sm">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 mb-4 sm:mb-5 md:mb-6 lg:mb-8 shadow-lg">
+          <div className="flex justify-between mb-2 text-xs sm:text-sm md:text-base lg:text-lg">
             <span className="text-gray-600">Total Pesanan Bulan Ini</span>
-            <span className="text-gray-900">5 pesanan</span>
+            <span className="text-gray-900 font-semibold">5 pesanan</span>
           </div>
-          <div className="flex justify-between mb-2 text-sm">
+          <div className="flex justify-between mb-2 text-xs sm:text-sm md:text-base lg:text-lg">
             <span className="text-gray-600">Total Pengeluaran</span>
-            <span className="text-gray-900">Rp 2.845.000</span>
+            <span className="text-gray-900 font-semibold">Rp 2.845.000</span>
           </div>
-          <div className="flex justify-between text-sm pt-2 border-t border-gray-100 font-semibold">
+          <div className="flex justify-between text-xs sm:text-sm md:text-base lg:text-lg pt-2 border-t border-gray-100 font-semibold">
             <span className="text-gray-600">Poin Terkumpul</span>
             <span className="text-gray-900">1.425 poin</span>
           </div>
         </div>
 
-        {/* Order Cards */}
-        {filteredOrders.map((order) => (
-          <div
-            key={order.id}
-            className="bg-white rounded-2xl mb-4 overflow-hidden shadow-lg hover:transform hover:-translate-y-1 transition-all cursor-pointer"
-          >
-            {/* Order Header */}
-            <div className="px-5 py-4 pb-3 border-b border-gray-100 flex justify-between items-center">
-              <div className="text-sm text-gray-600 font-medium">{order.id}</div>
-              <div className="text-xs text-gray-400">{order.date}</div>
-            </div>
-
-            {/* Order Body */}
-            <div className="p-5">
-              <div className="flex gap-3 mb-3">
-                <div
-                  className="w-15 h-15 rounded-xl flex items-center justify-center text-white flex-shrink-0"
-                  style={{ background: order.gradient }}
-                >
-                  <order.icon size={28} />
-                </div>
-                <div className="flex-1">
-                  <div className="text-base font-semibold text-gray-900 mb-1 leading-tight">
-                    {order.title}
-                  </div>
-                  <div className="text-sm text-gray-600 mb-2">
-                    {order.subtitle}
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="text-base font-bold text-blue-500">
-                      {order.price}
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      {order.quantity}
-                    </div>
-                  </div>
-                </div>
+        {/* Order Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-7 xl:gap-8">
+          {filteredOrders.map((order) => (
+            <div
+              key={order.id}
+              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:transform hover:-translate-y-1 transition-all cursor-pointer"
+            >
+              {/* Order Header */}
+              <div className="px-4 sm:px-5 md:px-6 py-3 sm:py-4 pb-3 border-b border-gray-100 flex justify-between items-center">
+                <div className="text-xs sm:text-sm md:text-base text-gray-600 font-medium">{order.id}</div>
+                <div className="text-xs sm:text-sm text-gray-400">{order.date}</div>
               </div>
-            </div>
 
-            {/* Order Footer */}
-            <div className="px-5 py-3 bg-gray-50 flex justify-between items-center">
-              <div className={`px-3 py-1.5 rounded-2xl text-xs font-semibold ${getStatusClass(order.status)}`}>
-                {order.status}
-              </div>
-              <div className="flex gap-2">
-                {order.actions.map((action) => (
-                  <button
-                    key={action}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAction(action, order.id);
-                    }}
-                    className={`px-4 py-2 rounded-2xl text-xs font-semibold transition-all hover:scale-105 ${
-                      action === 'Batalkan'
-                        ? 'bg-red-500 text-white'
-                        : action === 'E-Voucher' || action === 'Pesan Lagi'
-                        ? 'text-white'
-                        : 'bg-white text-blue-500 border border-blue-500'
-                    }`}
-                    style={
-                      action === 'E-Voucher' || action === 'Pesan Lagi'
-                        ? { background: 'linear-gradient(135deg, #5B7FFF 0%, #4A6EE8 100%)' }
-                        : {}
-                    }
+              {/* Order Body */}
+              <div className="p-4 sm:p-5 md:p-6">
+                <div className="flex gap-3 mb-3">
+                  <div
+                    className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 rounded-xl flex items-center justify-center text-white flex-shrink-0"
+                    style={{ background: order.gradient }}
                   >
-                    {action}
-                  </button>
-                ))}
+                    <order.icon size={24} className="sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-900 mb-1 leading-tight">
+                      {order.title}
+                    </div>
+                    <div className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 mb-2">
+                      {order.subtitle}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-blue-500">
+                        {order.price}
+                      </div>
+                      <div className="text-xs sm:text-sm md:text-base text-gray-600">
+                        {order.quantity}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Order Footer */}
+              <div className="px-4 sm:px-5 md:px-6 py-3 sm:py-4 bg-gray-50 flex justify-between items-center">
+                <div className={`px-3 py-1.5 rounded-2xl text-xs sm:text-sm font-semibold ${getStatusClass(order.status)}`}>
+                  {order.status}
+                </div>
+                <div className="flex gap-2">
+                  {order.actions.map((action) => (
+                    <button
+                      key={action}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAction(action, order.id);
+                      }}
+                      className={`px-3 sm:px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition-all hover:scale-105 ${
+                        action === 'Batalkan'
+                          ? 'bg-red-500 text-white'
+                          : action === 'E-Voucher' || action === 'Pesan Lagi'
+                          ? 'text-white'
+                          : 'bg-white text-blue-500 border border-blue-500'
+                      }`}
+                      style={
+                        action === 'E-Voucher' || action === 'Pesan Lagi'
+                          ? { background: 'linear-gradient(135deg, #5B7FFF 0%, #4A6EE8 100%)' }
+                          : {}
+                      }
+                    >
+                      {action}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
 
         {filteredOrders.length === 0 && (
-          <div className="text-center py-15 text-gray-600">
+          <div className="text-center py-10 sm:py-12 md:py-15 lg:py-20 text-gray-600">
             <div className="flex justify-center mb-4 opacity-50">
-              <Package size={64} />
+              <Package size={48} className="sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24" />
             </div>
-            <div className="text-lg font-semibold mb-2 text-gray-900">
+            <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-2 text-gray-900">
               Tidak ada pesanan
             </div>
-            <div className="text-sm mb-6 leading-relaxed">
+            <div className="text-sm sm:text-base md:text-lg mb-6 leading-relaxed">
               Belum ada pesanan pada kategori ini
             </div>
             <button 
-              className="text-white border-none px-6 py-3 rounded-3xl text-sm font-semibold cursor-pointer"
+              className="text-white border-none px-4 sm:px-5 md:px-6 lg:px-8 py-2.5 sm:py-3 md:py-3.5 lg:py-4 rounded-3xl text-sm sm:text-base md:text-lg font-semibold cursor-pointer"
               style={{ background: 'linear-gradient(135deg, #5B7FFF 0%, #4A6EE8 100%)' }}
             >
               Mulai Jelajah
@@ -306,19 +306,19 @@ const JelajahinOrders = () => {
         )}
 
         {/* Bottom padding for navbar */}
-        <div className="h-20"></div>
+        <div className="h-16 sm:h-18 md:h-20 lg:h-24"></div>
       </div>
 
       {/* Floating Filter Button */}
       <button
         onClick={() => alert('Membuka filter dan pengaturan...')}
-        className="fixed bottom-24 right-6 w-14 h-14 rounded-full border-none text-white cursor-pointer transition-all hover:scale-110 flex items-center justify-center"
+        className="fixed bottom-20 sm:bottom-22 md:bottom-24 lg:bottom-28 right-4 sm:right-5 md:right-6 lg:right-8 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 rounded-full border-none text-white cursor-pointer transition-all hover:scale-110 flex items-center justify-center"
         style={{ 
           background: 'linear-gradient(135deg, #5B7FFF 0%, #4A6EE8 100%)',
           boxShadow: '0 8px 24px rgba(91, 127, 255, 0.4)'
         }}
       >
-        <Settings size={20} />
+        <Settings size={18} className="sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7" />
       </button>
       
       <Navbar />
