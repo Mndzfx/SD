@@ -1,6 +1,6 @@
 // src/components/HeaderWelcome.jsx
 import React from "react";
-
+import { Link } from 'react-router-dom';
 import Logo from '../assets/logo-new.png'
 
 
@@ -8,7 +8,7 @@ const Header = () => (
   <>
     {/* Header */}
     <div className="w-full bg-gradient-to-b from-blue-600 to-blue-400 pt-4 pb-20 px-4 text-center rounded-b-3xl">
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex items-center justify-center gap-3 mt-1">
         <img src={Logo} className="w-12 h-12" alt="Logo" />
         <h1 className="text-white text-2xl font-bold">Jelajahin</h1>
       </div>
@@ -35,9 +35,11 @@ const Header = () => (
             <img src="https://img.icons8.com/ios-filled/24/1E40AF/coins.png" className="w-5 h-5" alt="Coins" />
             <span className="font-semibold text-sm">Koin Anda: 500</span>
           </div>
+          <Link to="/member">
           <button className="bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-xl px-2 py-2 font-semibold text-sm">
             Jadi Member
           </button>
+          </Link>
         </div>
       </div>
     </div>

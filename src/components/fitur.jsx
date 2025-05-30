@@ -17,60 +17,79 @@ const MenuTripPlanner = () => {
       {/* Menu Icons */}
       <div className="grid grid-cols-5 gap-x-4 gap-y-6 px-4 mt-10">
         {/* Wisata */}
+         <Link to="/wisata">
         <div className="flex flex-col items-center space-y-1">
           <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#3A8DFF] to-[#1E5EDB] flex justify-center items-center">
             <img src={Wisata} className="w-7 h-7" />
           </div>
           <span className="text-xs text-[#1A1A1A] text-center">Wisata</span>
         </div>
+        </Link>
 
         {/* Kuliner */}
-        <div className="flex flex-col items-center space-y-1">
+         <Link to="/kuliner">
+           <div className="flex flex-col items-center space-y-1">
           <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#FF7A2A] to-[#FF5A00] flex justify-center items-center">
             <img src={Kuliner} className="w-7 h-7" />
           </div>
           <span className="text-xs font-semibold text-[#1A1A1A] text-center">Kuliner</span>
         </div>
+         </Link>
+      
 
         {/* Tagihan */}
-        <div className="flex flex-col items-center space-y-1">
+         <Link to="/tagihan">
+           <div className="flex flex-col items-center space-y-1">
           <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#3AC1D9] to-[#1E9DB3] flex justify-center items-center">
             <img src={Tagihan} className="w-7 h-7" />
           </div>
           <span className="text-xs text-[#1A1A1A] text-center">Tagihan</span>
         </div>
+         </Link>
+      
 
         {/* Akomodasi */}
-        <div className="flex flex-col items-center space-y-1">
+         <Link to="/akomodasi">
+          <div className="flex flex-col items-center space-y-1">
           <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#7B4EFF] to-[#5A2EDB] flex justify-center items-center">
             <img src={Akomodasi} className="w-7 h-7" />
           </div>
           <span className="text-xs text-[#1A1A1A] text-center">Akomodasi</span>
         </div>
+         </Link>
+       
 
         {/* Transportasi */}
-        <div className="flex flex-col items-center space-y-1">
+         <Link to="/transport">
+           <div className="flex flex-col items-center space-y-1">
           <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#3A8DFF] to-[#1E5EDB] flex justify-center items-center">
             <img src={Transportasi} className="w-7 h-7" />
           </div>
           <span className="text-xs text-[#1A1A1A] text-center truncate max-w-[4.5rem]">Transportasi</span>
         </div>
+         </Link>
+      
 
         {/* Hotel */}
-        <div className="flex flex-col items-center space-y-1">
+         <Link to="/hotel">
+          <div className="flex flex-col items-center space-y-1">
           <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#3A8DFF] to-[#1E5EDB] flex justify-center items-center">
             <img src={Hotel} className="w-7 h-7" />
           </div>
           <span className="text-xs text-[#1A1A1A] text-center truncate max-w-[4.5rem]">Hotel</span>
         </div>
+         </Link>
+       
 
         {/* E-Commerce */}
+        <Link to="/ecommerce">
         <div className="flex flex-col items-center space-y-1">
           <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#3AC1D9] to-[#1E9DB3] flex justify-center items-center">
             <img src={Ecommerce} className="w-7 h-7" />
           </div>
           <span className="text-xs text-[#1A1A1A] text-center truncate max-w-[4.5rem]">E-Commerce</span>
         </div>
+        </Link>
 
         {/* Produk Digital */}
 
@@ -85,12 +104,15 @@ const MenuTripPlanner = () => {
 
 
         {/* Event */}
-        <div className="flex flex-col items-center space-y-1">
+         <Link to="/event">
+          <div className="flex flex-col items-center space-y-1">
           <div className="w-12 h-12 rounded-full bg-gradient-to-b from-[#3A8DFF] to-[#1E5EDB] flex justify-center items-center">
             <img src={Event} className="w-7 h-7" />
           </div>
           <span className="text-xs text-[#1A1A1A] text-center truncate max-w-[4.5rem]">Event</span>
         </div>
+         </Link>
+       
 
         {/* More */}
         <div className="flex flex-col items-center space-y-1">

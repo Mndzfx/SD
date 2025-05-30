@@ -1,473 +1,507 @@
 import React, { useState } from 'react';
-import { Phone, Wifi, Zap, Gamepad2, Tv, CreditCard, ShoppingCart, Car, Droplets, Home, Music, Play, Star, Gift } from 'lucide-react';
+import {
+  Sparkles,
 
-// Mock data untuk produk digital dengan design yang lebih keren
-const digitalProducts = [
-  {
-    category: 'Pulsa & Paket Data',
-    gradient: 'from-red-500 to-pink-500',
-    items: [
-      { 
-        name: 'Telkomsel', 
-        icon: Phone, 
-        gradient: 'from-red-500 to-red-600',
-        description: 'Pulsa & Paket',
 
-      },
-      { 
-        name: 'Indosat', 
-        icon: Phone, 
-        gradient: 'from-yellow-500 to-orange-500',
-        description: 'IM3 & Mentari'
-      },
-      { 
-        name: 'XL Axiata', 
-        icon: Phone, 
-        gradient: 'from-blue-500 to-blue-600',
-        description: 'XL & AXIS'
-      },
-      { 
-        name: 'Tri', 
-        icon: Phone, 
-        gradient: 'from-orange-500 to-red-500',
-        description: '3 (Tri)'
-      },
-      { 
-        name: 'Smartfren', 
-        icon: Wifi, 
-        gradient: 'from-pink-500 to-purple-500',
-        description: 'Unlimited'
-      },
-      { 
-        name: 'By.U', 
-        icon: Phone, 
-        gradient: 'from-purple-500 to-indigo-500',
-        description: 'Digital Only'
-      },
-      { 
-        name: 'Paket Data', 
-        icon: Wifi, 
-        gradient: 'from-green-500 to-teal-500',
-        description: 'All Operator'
-      },
-      { 
-        name: 'Roaming', 
-        icon: Wifi, 
-        gradient: 'from-indigo-500 to-purple-500',
-        description: 'International'
-      }
-    ]
-  },
-  {
-    category: 'Tagihan Bulanan',
-    gradient: 'from-blue-500 to-cyan-500',
-    items: [
-      { 
-        name: 'PLN', 
-        icon: Zap, 
-        gradient: 'from-yellow-500 to-orange-600',
-        description: 'Token Listrik',
-       
-      },
-      { 
-        name: 'PDAM', 
-        icon: Droplets, 
-        gradient: 'from-blue-400 to-cyan-500',
-        description: 'Air Bersih'
-      },
-      { 
-        name: 'IndiHome', 
-        icon: Home, 
-        gradient: 'from-red-500 to-pink-500',
-        description: 'Internet & TV'
-      },
-      { 
-        name: 'MyRepublic', 
-        icon: Wifi, 
-        gradient: 'from-green-500 to-emerald-500',
-        description: 'Fiber Internet'
-      },
-      { 
-        name: 'Biznet', 
-        icon: Wifi, 
-        gradient: 'from-blue-600 to-indigo-600',
-        description: 'Home Internet'
-      },
-      { 
-        name: 'First Media', 
-        icon: Tv, 
-        gradient: 'from-purple-500 to-pink-500',
-        description: 'Cable TV'
-      },
-      { 
-        name: 'MNC Vision', 
-        icon: Tv, 
-        gradient: 'from-orange-500 to-red-500',
-        description: 'Pay TV'
-      },
-      { 
-        name: 'Telkom', 
-        icon: Phone, 
-        gradient: 'from-gray-500 to-gray-600',
-        description: 'Telepon Rumah'
-      }
-    ]
-  },
-  {
-    category: 'Streaming & Hiburan',
-    gradient: 'from-purple-500 to-pink-500',
-    items: [
-      { 
-        name: 'Netflix', 
-        icon: Play, 
-        gradient: 'from-red-600 to-red-700',
-        description: 'Movies & Series',
+ 
+  Paintbrush,
+  LayoutTemplate,
+  LibraryBig,
+  Target,
+  Search, Star, Heart, Filter, ArrowLeft, Users, Clock, Download, Award, TrendingUp, Zap, Calendar, Smartphone, Code, Camera, Music, BookOpen, Palette, Shield, UserCheck, CheckCircle, Play, FileText, Headphones
+} from "lucide-react";
 
-      },
-      { 
-        name: 'Disney+', 
-        icon: Star, 
-        gradient: 'from-blue-600 to-indigo-600',
-        description: 'Family Content'
-      },
-      { 
-        name: 'Spotify', 
-        icon: Music, 
-        gradient: 'from-green-500 to-green-600',
-        description: 'Music Streaming'
-      },
-      { 
-        name: 'YouTube Premium', 
-        icon: Play, 
-        gradient: 'from-red-500 to-pink-500',
-        description: 'Ad-free Videos'
-      },
-      { 
-        name: 'Apple Music', 
-        icon: Music, 
-        gradient: 'from-pink-500 to-rose-500',
-        description: 'Music & Podcasts'
-      },
-      { 
-        name: 'Amazon Prime', 
-        icon: Play, 
-        gradient: 'from-blue-500 to-cyan-500',
-        description: 'Video & Music'
-      },
-      { 
-        name: 'Vidio', 
-        icon: Tv, 
-        gradient: 'from-purple-500 to-indigo-500',
-        description: 'Local Content'
-      },
-      { 
-        name: 'WeTV', 
-        icon: Tv, 
-        gradient: 'from-teal-500 to-cyan-500',
-        description: 'Asian Drama'
-      }
-    ]
-  },
-  {
-    category: 'Voucher Game',
-    gradient: 'from-indigo-500 to-purple-500',
-    items: [
-      { 
-        name: 'Mobile Legends', 
-        icon: Gamepad2, 
-        gradient: 'from-blue-500 to-purple-600',
-        description: 'Diamond ML',
 
-      },
-      { 
-        name: 'Free Fire', 
-        icon: Gamepad2, 
-        gradient: 'from-orange-500 to-red-500',
-        description: 'Diamond FF'
-      },
-      { 
-        name: 'PUBG Mobile', 
-        icon: Gamepad2, 
-        gradient: 'from-yellow-500 to-orange-500',
-        description: 'UC PUBG'
-      },
-      { 
-        name: 'Genshin Impact', 
-        icon: Gamepad2, 
-        gradient: 'from-purple-500 to-pink-500',
-        description: 'Genesis Crystal'
-      },
-      { 
-        name: 'Valorant', 
-        icon: Gamepad2, 
-        gradient: 'from-red-500 to-pink-500',
-        description: 'VP Points'
-      },
-      { 
-        name: 'Steam Wallet', 
-        icon: Gamepad2, 
-        gradient: 'from-gray-700 to-gray-800',
-        description: 'Steam Credit'
-      },
-      { 
-        name: 'Google Play', 
-        icon: Play, 
-        gradient: 'from-green-500 to-teal-500',
-        description: 'Play Store Credit'
-      },
-      { 
-        name: 'Roblox', 
-        icon: Gamepad2, 
-        gradient: 'from-green-400 to-blue-500',
-        description: 'Robux'
-      }
-    ]
-  },
-  {
-    category: 'E-Wallet & Transport',
-    gradient: 'from-green-500 to-teal-500',
-    items: [
-      { 
-        name: 'GoPay', 
-        icon: CreditCard, 
-        gradient: 'from-green-500 to-emerald-600',
-        description: 'Gojek Wallet',
+const DigitalProductsPage = () => {
+  const [activeTab, setActiveTab] = useState('populer');
+  const [favorites, setFavorites] = useState(new Set());
+  const [activeCategory, setActiveCategory] = useState('semua');
 
+  const toggleFavorite = (id) => {
+    const newFavorites = new Set(favorites);
+    if (newFavorites.has(id)) {
+      newFavorites.delete(id);
+    } else {
+      newFavorites.add(id);
+    }
+    setFavorites(newFavorites);
+  };
+
+  const digitalProductsData = {
+    populer: [
+      {
+        id: 1,
+        name: "UI/UX Design System Pro",
+        creator: "DesignStudio Co.",
+        rating: 4.9,
+        reviews: 3241,
+        price: "Rp 299.000",
+        originalPrice: "Rp 499.000",
+        image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=250&fit=crop",
+        category: "Design",
+        type: "Template",
+        downloads: "12.5K",
+        updateDate: "2 hari lalu",
+        isHot: true,
+        isNew: false,
+        license: "Commercial",
+        features: ["100+ Components", "Figma & Sketch", "Documentation", "Lifetime Updates"],
+        discount: 40,
+        badge: "Bestseller"
       },
-      { 
-        name: 'OVO', 
-        icon: CreditCard, 
-        gradient: 'from-purple-500 to-indigo-500',
-        description: 'Digital Wallet'
+      {
+        id: 2,
+        name: "React Native Course Complete",
+        creator: "CodeMaster Academy",
+        rating: 4.8,
+        reviews: 2876,
+        price: "Rp 199.000",
+        originalPrice: "Rp 399.000",
+        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=250&fit=crop",
+        category: "Kursus",
+        type: "Video Course",
+        downloads: "8.2K",
+        duration: "45 jam",
+        isHot: false,
+        isNew: true,
+        license: "Personal",
+        features: ["45 Hours Video", "Source Code", "Certificate", "Live Support"],
+        discount: 50,
+        badge: "Editor's Choice"
       },
-      { 
-        name: 'DANA', 
-        icon: CreditCard, 
-        gradient: 'from-blue-500 to-cyan-500',
-        description: 'Digital Payment'
+      {
+        id: 3,
+        name: "Stock Photography Bundle",
+        creator: "PhotoPro Studio",
+        rating: 4.7,
+        reviews: 1943,
+        price: "Rp 149.000",
+        originalPrice: "Rp 299.000",
+        image: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=400&h=250&fit=crop",
+        category: "Foto",
+        type: "Image Pack",
+        downloads: "15.7K",
+        updateDate: "1 minggu lalu",
+        isHot: true,
+        isNew: false,
+        license: "Commercial",
+        features: ["500+ Photos", "High Resolution", "Multiple Formats", "Commercial Use"],
+        discount: 50,
+        badge: "Premium"
       },
-      { 
-        name: 'ShopeePay', 
-        icon: CreditCard, 
-        gradient: 'from-orange-500 to-red-500',
-        description: 'Shopee Wallet'
+      {
+        id: 4,
+        name: "Mobile App UI Kit",
+        creator: "AppDesign Pro",
+        rating: 4.6,
+        reviews: 2341,
+        price: "Rp 179.000",
+        originalPrice: "Rp 299.000",
+        image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=250&fit=crop",
+        category: "Template",
+        type: "UI Kit",
+        downloads: "9.8K",
+        updateDate: "3 hari lalu",
+        isHot: false,
+        isNew: true,
+        license: "Commercial",
+        features: ["50+ Screens", "iOS & Android", "Sketch & Figma", "Free Updates"],
+        discount: 40,
+        badge: "Trending"
+      }
+    ],
+    terbaru: [
+      {
+        id: 5,
+        name: "AI Prompt Engineering Guide",
+        creator: "TechInnovator",
+        rating: 4.5,
+        reviews: 587,
+        price: "Rp 89.000",
+        originalPrice: "Rp 149.000",
+        image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop",
+        category: "E-book",
+        type: "Digital Book",
+        downloads: "2.1K",
+        updateDate: "Hari ini",
+        isHot: false,
+        isNew: true,
+        license: "Personal",
+        features: ["200+ Pages", "PDF Format", "Bonus Templates", "ChatGPT Tips"],
+        discount: 40,
+        badge: "New Release"
       },
-      { 
-        name: 'LinkAja', 
-        icon: CreditCard, 
-        gradient: 'from-red-500 to-pink-500',
-        description: 'BUMN Wallet'
+      {
+        id: 6,
+        name: "Meditation Music Collection",
+        creator: "ZenSounds",
+        rating: 4.8,
+        reviews: 1234,
+        price: "Rp 79.000",
+        originalPrice: "Rp 129.000",
+        image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=250&fit=crop",
+        category: "Audio",
+        type: "Music Pack",
+        downloads: "5.6K",
+        duration: "12 jam",
+        isHot: false,
+        isNew: true,
+        license: "Personal",
+        features: ["20 Tracks", "High Quality", "Royalty Free", "Meditation Guide"],
+        discount: 39,
+        badge: "Relaxation"
+      }
+    ],
+    terlaris: [
+      {
+        id: 7,
+        name: "WordPress Theme Bundle",
+        creator: "WebMaster Pro",
+        rating: 4.7,
+        reviews: 4532,
+        price: "Rp 249.000",
+        originalPrice: "Rp 499.000",
+        image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf9d?w=400&h=250&fit=crop",
+        category: "Template",
+        type: "Website Theme",
+        downloads: "25.3K",
+        updateDate: "1 minggu lalu",
+        isHot: true,
+        isNew: false,
+        license: "Commercial",
+        features: ["10 Premium Themes", "Responsive Design", "Documentation", "Support"],
+        discount: 50,
+        badge: "Bundle Deal"
       },
-      { 
-        name: 'Grab', 
-        icon: Car, 
-        gradient: 'from-green-600 to-emerald-700',
-        description: 'GrabPay'
-      },
-      { 
-        name: 'E-Toll', 
-        icon: CreditCard, 
-        gradient: 'from-blue-500 to-indigo-500',
-        description: 'Tol Card'
-      },
-      { 
-        name: 'Jakcard', 
-        icon: CreditCard, 
-        gradient: 'from-orange-500 to-amber-500',
-        description: 'TransJakarta'
+      {
+        id: 8,
+        name: "Digital Marketing Masterclass",
+        creator: "MarketingGuru",
+        rating: 4.9,
+        reviews: 6789,
+        price: "Rp 399.000",
+        originalPrice: "Rp 799.000",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop",
+        category: "Kursus",
+        type: "Online Course",
+        downloads: "18.9K",
+        duration: "60 jam",
+        isHot: true,
+        isNew: false,
+        license: "Personal",
+        features: ["60 Hours Content", "Live Sessions", "Certificate", "Community Access"],
+        discount: 50,
+        badge: "Bestseller"
       }
     ]
-  },
-  {
-    category: 'Voucher Belanja',
-    gradient: 'from-orange-500 to-red-500',
-    items: [
-      { 
-        name: 'Shopee', 
-        icon: ShoppingCart, 
-        gradient: 'from-orange-500 to-red-500',
-        description: 'ShopeePay Coins',
-   
-      },
-      { 
-        name: 'Tokopedia', 
-        icon: ShoppingCart, 
-        gradient: 'from-green-500 to-emerald-500',
-        description: 'TopCash'
-      },
-      { 
-        name: 'Bukalapak', 
-        icon: ShoppingCart, 
-        gradient: 'from-red-500 to-pink-500',
-        description: 'BukaDompet'
-      },
-      { 
-        name: 'Lazada', 
-        icon: ShoppingCart, 
-        gradient: 'from-blue-500 to-indigo-500',
-        description: 'LazWallet'
-      },
-      { 
-        name: 'Blibli', 
-        icon: ShoppingCart, 
-        gradient: 'from-blue-400 to-cyan-500',
-        description: 'BlibliPay'
-      },
-      { 
-        name: 'JD.ID', 
-        icon: ShoppingCart, 
-        gradient: 'from-red-600 to-pink-600',
-        description: 'JDPay'
-      },
-      { 
-        name: 'Zalora', 
-        icon: ShoppingCart, 
-        gradient: 'from-pink-500 to-rose-500',
-        description: 'Fashion Voucher'
-      },
-      { 
-        name: 'Indomaret', 
-        icon: Gift, 
-        gradient: 'from-blue-600 to-indigo-600',
-        description: 'Voucher Belanja'
-      }
-    ]
-  }
+  };
+
+  const categories = [
+    { name: "semua", label: "Semua", icon: <Target />, color: "from-blue-400 to-indigo-500" },
+  { name: "template", label: "Template", icon: <LayoutTemplate />, color: "from-purple-400 to-pink-600" },
+  { name: "kursus", label: "Kursus", icon: <LibraryBig />, color: "from-green-400 to-emerald-600" },
+  { name: "foto", label: "Foto", icon: <Camera />, color: "from-orange-400 to-red-500" },
+  { name: "audio", label: "Audio", icon: <Music />, color: "from-cyan-400 to-teal-600" },
+  { name: "e-book", label: "E-book", icon: <BookOpen />, color: "from-yellow-400 to-orange-500" },
+  { name: "design", label: "Design", icon: <Paintbrush />, color: "from-rose-400 to-pink-600" }
 ];
 
-const DigitalProducts = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [activeCategory, setActiveCategory] = useState(0);
 
-  const handleSelect = (product, category) => {
-    setSelectedProduct({ ...product, category });
-    console.log('Selected:', { ...product, category });
+  const getFeatureIcon = (feature) => {
+    if (feature.includes('Video') || feature.includes('Hours')) return <Play className="w-3 h-3" />;
+    if (feature.includes('Code') || feature.includes('Source')) return <Code className="w-3 h-3" />;
+    if (feature.includes('Photo') || feature.includes('Image')) return <Camera className="w-3 h-3" />;
+    if (feature.includes('Certificate')) return <Award className="w-3 h-3" />;
+    if (feature.includes('Support') || feature.includes('Updates')) return <Shield className="w-3 h-3" />;
+    if (feature.includes('Documentation')) return <FileText className="w-3 h-3" />;
+    if (feature.includes('Music') || feature.includes('Audio')) return <Headphones className="w-3 h-3" />;
+    return <CheckCircle className="w-3 h-3" />;
+  };
+
+  const filteredData = activeCategory === 'semua' 
+    ? digitalProductsData[activeTab] 
+    : digitalProductsData[activeTab]?.filter(item => item.category.toLowerCase() === activeCategory);
+
+  const getCategoryIcon = (category) => {
+    const icons = {
+      'Template': <Palette className="w-5 h-5" />,
+      'Kursus': <BookOpen className="w-5 h-5" />,
+      'Foto': <Camera className="w-5 h-5" />,
+      'Audio': <Music className="w-5 h-5" />,
+      'E-book': <FileText className="w-5 h-5" />,
+      'Design': <Palette className="w-5 h-5" />
+    };
+    return icons[category] || <Smartphone className="w-5 h-5" />;
   };
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen pb-8 sm:pb-12 lg:pb-20">
-      <header className="bg-gradient-to-r from-[#1E50D8] to-[#2563EB] text-white text-center py-6 sm:py-8 lg:py-12 px-4 relative overflow-hidden mb-10">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative z-10">
-          <h1 className="font-bold text-2xl sm:text-3xl lg:text-4xl leading-tight mb-2 sm:mb-4 tracking-tight">
-            Produk Digital
-          </h1>
-          <p className="text-sm sm:text-base lg:text-lg mt-2 max-w-xs sm:max-w-md mx-auto leading-relaxed opacity-90">
-            Beli pulsa, bayar tagihan, top up game, dan voucher belanja dengan mudah
-          </p>
-        </div>
-        <div className="absolute -bottom-2 sm:-bottom-4 -right-2 sm:-right-4 w-12 sm:w-16 lg:w-24 h-12 sm:h-16 lg:h-24 bg-white/10 rounded-full"></div>
-        <div className="absolute -top-4 sm:-top-8 -left-4 sm:-left-8 w-16 sm:w-20 lg:w-32 h-16 sm:h-20 lg:h-32 bg-white/5 rounded-full"></div>
-      </header>
-
-      <main className="flex justify-center px-2 sm:px-4 -mt-8 sm:-mt-12 lg:-mt-16 relative z-20">
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 w-full max-w-7xl border border-white/20">
-          
-          {/* Category Navigation */}
-          <div className="flex flex-wrap justify-center gap-1 sm:gap-2 mb-6 sm:mb-8 p-1 sm:p-2 bg-gray-100/50 rounded-lg sm:rounded-xl">
-            {digitalProducts.map((category, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveCategory(index)}
-                className={`px-2 sm:px-3 lg:px-4 py-1.5 sm:py-2 rounded-md sm:rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
-                  activeCategory === index
-                    ? 'bg-white text-blue-600 shadow-md'
-                    : 'text-gray-600 hover:text-blue-600 hover:bg-white/50'
-                }`}
-              >
-                <span className="hidden sm:inline">{category.category}</span>
-                <span className="sm:hidden">{category.category.split(' ')[0]}</span>
-              </button>
-            ))}
+    <div className="min-h-screen bg-gray-50">
+      {/* Header with Logo */}
+      <div className="w-full bg-gradient-to-b from-[#7B4EFF] to-[#5A2EDB] pt-6 pb-20 px-4 text-center rounded-b-3xl">
+        <div className="flex items-center justify-between mb-4">
+          <ArrowLeft className="w-6 h-6 text-white cursor-pointer" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+              <Download className="w-6 h-6 text-purple-600" />
+            </div>
+            <h1 className="text-white text-xl font-bold">DigitalHub Store</h1>
           </div>
+          <div className="w-6 h-6"></div>
+        </div>
+        
+        <p className="text-purple-100 text-sm mb-4">Temukan produk digital terbaik untuk kebutuhan Anda</p>
+      </div>
 
-          {/* Products Grid */}
-          <div className="space-y-8 sm:space-y-10 lg:space-y-12">
-            {digitalProducts.map((category, categoryIndex) => (
-              <div 
-                key={categoryIndex} 
-                className={`transition-all duration-500 ${
-                  activeCategory === categoryIndex ? 'block' : 'hidden'
-                }`}
-              >
-                <div className={`text-center mb-6 sm:mb-8 p-4 sm:p-6 rounded-lg sm:rounded-xl bg-gradient-to-r ${category.gradient} text-white`}>
-                  <h2 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">{category.category}</h2>
-                  <p className="text-sm sm:text-base text-white/80">Pilih produk yang Anda butuhkan</p>
+      {/* Search Card */}
+      <div className="relative z-10 -mt-16 mb-6">
+        <div className="bg-white bg-opacity-95 backdrop-blur-md rounded-3xl p-6 mx-auto w-[90%] max-w-md shadow-xl">
+          <div className="relative mb-4">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Cari template, kursus, foto..."
+              className="w-full bg-gray-50 rounded-2xl py-4 pl-12 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300 focus:bg-white transition-all"
+            />
+            <Filter className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-600 cursor-pointer hover:text-purple-700 transition-colors" />
+          </div>
+          
+          {/* Quick Categories */}
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="bg-gray-50 rounded-xl p-3">
+              <div className="text-xs text-gray-600 mb-1">Populer</div>
+              <div className="text-sm font-bold text-gray-800">UI/UX Design</div>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-3">
+              <div className="text-xs text-gray-600 mb-1">Trending</div>
+              <div className="text-sm font-bold text-gray-800">AI Tools</div>
+            </div>
+          </div>
+          
+          {/* Quick Stats */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="text-center">
+              <div className="text-lg font-bold text-purple-600">5000+</div>
+              <div className="text-xs text-gray-600">Produk</div>
+            </div>
+            <div className="text-center">
+              <div className="text-lg font-bold text-blue-600">4.8★</div>
+              <div className="text-xs text-gray-600">Rating</div>
+            </div>
+            <div className="text-center">
+              <div className="text-lg font-bold text-indigo-600">50K+</div>
+              <div className="text-xs text-gray-600">Download</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Categories */}
+     <div className="px-4 mb-6">
+  <div className="bg-white rounded-3xl p-6 shadow-xl border border-gray-100">
+    <h3 className="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2">
+
+      Kategori Produk
+    </h3>
+    <div className="flex overflow-x-auto space-x-4 pb-2 snap-x snap-mandatory scroll-smooth">
+      {categories.map((category, index) => (
+        <button
+          key={index}
+          onClick={() => setActiveCategory(category.name)}
+          className={`flex-shrink-0 w-40 h-16 rounded-xl flex items-center px-4 transition-all duration-300 snap-start ${
+            activeCategory === category.name
+              ? 'bg-purple-50 ring-2 ring-purple-300 text-purple-600'
+              : 'bg-gray-50 hover:bg-gray-100 text-gray-600'
+          }`}
+        >
+          <div
+            className={`w-10 h-10 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center text-white shadow-md mr-3`}
+          >
+            {category.icon}
+          </div>
+          <span className="text-sm font-medium">{category.label}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
+
+      {/* Enhanced Tabs */}
+      <div className="px-4 mb-6">
+        <div className="flex bg-white rounded-2xl p-2 shadow-lg">
+          {[
+            { key: 'populer', label: 'Populer', icon: TrendingUp },
+            { key: 'terbaru', label: 'Terbaru', icon: Zap },
+            { key: 'terlaris', label: 'Terlaris', icon: Award }
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                activeTab === tab.key
+                  ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg transform scale-105'
+                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+              }`}
+            >
+              <tab.icon className="w-4 h-4" />
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Enhanced Product Cards */}
+      <div className="px-4 space-y-6 pb-20">
+        {filteredData?.map((product, index) => (
+          <div key={product.id} className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="relative">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-56 object-cover"
+              />
+              
+              {/* Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              
+              {/* Badges */}
+              <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                <div className="bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                  {getCategoryIcon(product.category)}
+                  <span className="text-xs font-semibold text-gray-800">{product.category}</span>
                 </div>
-                
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-                  {category.items.map((product, index) => {
-                    const IconComponent = product.icon;
-                    return (
-                      <div key={index} className="group">
-                        <button
-                          type="button"
-                          onClick={() => handleSelect(product, category.category)}
-                          className={`w-full p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden ${
-                            selectedProduct?.name === product.name
-                              ? 'border-blue-500 shadow-xl ring-2 sm:ring-4 ring-blue-200'
-                              : 'border-gray-200 hover:border-blue-300 shadow-lg hover:shadow-xl'
-                          }`}
-                        >
-                          {/* Background Gradient */}
-                          <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
-                          
-                          {/* Popular Badge */}
-                          {product.popular && (
-                            <div className="absolute -top-1 sm:-top-2 -right-1 sm:-right-2 bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs px-1 sm:px-2 py-0.5 sm:py-1 rounded-full font-bold shadow-lg">
-                              <span className="hidden sm:inline">POPULER</span>
-                              <span className="sm:hidden">⭐</span>
-                            </div>
-                          )}
-                          
-                          {/* Icon Container */}
-                          <div className={`w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 mx-auto mb-2 sm:mb-3 lg:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${product.gradient} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow relative overflow-hidden`}>
-                            <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-colors"></div>
-                            <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-white relative z-10" />
-                          </div>
-                          
-                          {/* Content */}
-                          <div className="text-center relative z-10">
-                            <h3 className="font-bold text-gray-900 text-xs sm:text-sm lg:text-base mb-0.5 sm:mb-1 group-hover:text-blue-600 transition-colors">
-                              {product.name}
-                            </h3>
-                            <p className="text-xs sm:text-sm text-gray-500 group-hover:text-gray-600">
-                              {product.description}
-                            </p>
-                          </div>
-                        </button>
-                      </div>
-                    );
-                  })}
+                {product.isHot && (
+                  <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
+                    🔥 HOT
+                  </span>
+                )}
+                {product.isNew && (
+                  <span className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                    ✨ BARU
+                  </span>
+                )}
+                {product.discount && (
+                  <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                    -{product.discount}% OFF
+                  </span>
+                )}
+              </div>
+              
+              <button
+                onClick={() => toggleFavorite(product.id)}
+                className="absolute top-4 right-4 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+              >
+                <Heart
+                  className={`w-5 h-5 transition-colors ${
+                    favorites.has(product.id) ? 'text-red-500 fill-red-500' : 'text-gray-600 hover:text-red-400'
+                  }`}
+                />
+              </button>
+              
+              {/* License Badge */}
+              <div className="absolute bottom-4 left-4">
+                <div className="bg-black/70 backdrop-blur-sm rounded-full px-3 py-1">
+                  <span className="text-xs text-white font-medium">{product.license} License</span>
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Promo Section */}
-          <div className="mt-12 sm:mt-14 lg:mt-16 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 text-white text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-black/10"></div>
-            <div className="relative z-10">
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 sm:mb-4">🎉 Promo Spektakuler!</h3>
-              <p className="text-sm sm:text-lg lg:text-xl mb-4 sm:mb-6 opacity-90">
-                Dapatkan cashback hingga 75% + bonus poin untuk setiap transaksi
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
-                <button className="bg-white text-purple-600 px-4 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-lg text-sm sm:text-base">
-                  Klaim Promo
-                </button>
-                <button className="border-2 border-white text-white px-4 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold hover:bg-white hover:text-purple-600 transition-colors text-sm sm:text-base">
-                  Lihat Syarat
-                </button>
+              
+              <div className="absolute bottom-4 right-4 flex items-center gap-2">
+                <div className="bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
+                  <Download className="w-3 h-3 text-white" />
+                  <span className="text-xs text-white font-medium">{product.downloads}</span>
+                </div>
+                <div className="bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
+                  <CheckCircle className="w-3 h-3 text-green-400" />
+                  <span className="text-xs text-white font-medium">Verified</span>
+                </div>
               </div>
             </div>
-            <div className="absolute -bottom-4 sm:-bottom-8 -right-4 sm:-right-8 w-16 sm:w-24 lg:w-32 h-16 sm:h-24 lg:h-32 bg-white/10 rounded-full"></div>
-            <div className="absolute -top-2 sm:-top-4 -left-2 sm:-left-4 w-10 sm:w-16 lg:w-20 h-10 sm:h-16 lg:h-20 bg-white/5 rounded-full"></div>
+            
+            <div className="p-6">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-2 py-1 rounded-lg text-xs font-bold">
+                      {product.badge}
+                    </span>
+                    <span className="text-xs text-gray-500">{product.type}</span>
+                  </div>
+                  <h3 className="font-bold text-lg text-gray-800 mb-1">{product.name}</h3>
+                  <div className="flex items-center space-x-2 mb-3">
+                    <Users className="w-4 h-4 text-purple-600" />
+                    <span className="text-sm text-gray-600 font-medium">{product.creator}</span>
+                  </div>
+                  
+                  {/* Features */}
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {product.features.slice(0, 3).map((feature, idx) => (
+                      <div key={idx} className="flex items-center bg-gray-100 rounded-lg px-2 py-1">
+                        {getFeatureIcon(feature)}
+                        <span className="text-xs text-gray-600 ml-1">{feature}</span>
+                      </div>
+                    ))}
+                    {product.features.length > 3 && (
+                      <div className="flex items-center bg-purple-100 rounded-lg px-2 py-1">
+                        <span className="text-xs text-purple-600 font-medium">+{product.features.length - 3} fitur</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Additional Info */}
+                  <div className="flex items-center space-x-4 text-xs text-gray-500">
+                    {product.duration && (
+                      <div className="flex items-center space-x-1">
+                        <Clock className="w-3 h-3" />
+                        <span>{product.duration}</span>
+                      </div>
+                    )}
+                    {product.updateDate && (
+                      <div className="flex items-center space-x-1">
+                        <Calendar className="w-3 h-3" />
+                        <span>Update: {product.updateDate}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="text-right">
+                  {product.originalPrice && (
+                    <p className="text-sm text-gray-400 line-through">{product.originalPrice}</p>
+                  )}
+                  <p className="font-bold text-xl text-purple-600">{product.price}</p>
+                  <p className="text-xs text-gray-500">sekali beli</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-1">
+                    <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                    <span className="text-sm font-bold text-gray-800">{product.rating}</span>
+                    <span className="text-sm text-gray-500">({product.reviews} review)</span>
+                  </div>
+                </div>
+                
+                <div className="flex gap-2">
+                  <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-medium hover:bg-gray-200 transition-colors">
+                    Preview
+                  </button>
+                  <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2 rounded-xl text-sm font-bold hover:from-purple-700 hover:to-indigo-700 hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+                    Beli
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </main>
+        ))}
+      </div>
+
+      {/* Enhanced Floating Action Button */}
+      <div className="fixed bottom-6 right-4">
+        <button className="w-16 h-16 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full shadow-2xl flex items-center justify-center hover:shadow-xl transform hover:scale-110 transition-all duration-300">
+          <Download className="w-7 h-7 text-white" />
+        </button>
+      </div>
     </div>
   );
 };
 
-export default DigitalProducts;
+export default DigitalProductsPage;
