@@ -21,6 +21,8 @@ import Member from './pages/member';
 import Promo from './pages/promo'; 
 import Pesanan from './pages/pesanan'; 
 import Favorit from './pages/favorit'; 
+import Fluxo from './pages/fluxo'; 
+import Tes from './pages/tes'; 
 
 const App = () => {
   return (
@@ -42,6 +44,8 @@ const App = () => {
               <Route path="/promo" element={<Promo />} />
               <Route path="/pesanan" element={<Pesanan />} />
               <Route path="/favorit" element={<Favorit />} />
+               <Route path="/fluxo" element={<Fluxo />} />
+               <Route path="/tes" element={<Tes />} />
         </Routes>
       </div>
     </Router>
