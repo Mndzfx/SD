@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const FluxoBrowser = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -12,11 +12,27 @@ const FluxoBrowser = () => {
   const [showSearchOverlay, setShowSearchOverlay] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showMorePopup, setShowMorePopup] = useState(false);
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const [tabs, setTabs] = useState([
     { id: 1, title: 'Halaman Baru', url: '', isActive: true, favicon: 'fas fa-globe' },
   ]);
   const [activeTabId, setActiveTabId] = useState(1);
   const [nextTabId, setNextTabId] = useState(2);
+
+  // Load Google Custom Search script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://cse.google.com/cse.js?cx=e28407b1e91854f6d';
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      // Clean up script when component unmounts
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+    };
+  }, []);
 
   const bookmarks = [
     { title: 'GitHub', url: 'github.com', icon: 'fab fa-github' },
@@ -55,6 +71,37 @@ const FluxoBrowser = () => {
     }
   };
 
+  const performSearch = () => {
+    if (searchQuery.trim()) {
+      setShowSearchOverlay(false);
+      setSearchValue(searchQuery);
+      setShowSearchResults(true);
+      setCurrentPage('search');
+      
+      // Update active tab title
+      setTabs(prev => prev.map(tab => 
+        tab.id === activeTabId 
+          ? { 
+              ...tab, 
+              title: searchQuery.length > 20 ? searchQuery.substring(0, 20) + '...' : searchQuery, 
+              url: `search?q=${encodeURIComponent(searchQuery)}`,
+              favicon: 'fas fa-search'
+            }
+          : tab
+      ));
+
+      // Trigger Google Custom Search
+      setTimeout(() => {
+        if (window.google && window.google.search && window.google.search.cse) {
+          const element = window.google.search.cse.element.getElement('searchbox-001');
+          if (element) {
+            element.execute(searchQuery);
+          }
+        }
+      }, 100);
+    }
+  };
+
   const addNewTab = () => {
     const newTab = {
       id: nextTabId,
@@ -67,11 +114,12 @@ const FluxoBrowser = () => {
     setActiveTabId(nextTabId);
     setNextTabId(prev => prev + 1);
     setCurrentPage('home');
+    setShowSearchResults(false);
   };
 
   const closeTab = (tabId, e) => {
     e.stopPropagation();
-    if (tabs.length === 1) return; // Don't close the last tab
+    if (tabs.length === 1) return;
     
     const newTabs = tabs.filter(tab => tab.id !== tabId);
     setTabs(newTabs);
@@ -79,51 +127,119 @@ const FluxoBrowser = () => {
     if (tabId === activeTabId && newTabs.length > 0) {
       const newActiveTab = newTabs[newTabs.length - 1];
       setActiveTabId(newActiveTab.id);
+      setCurrentPage('home');
+      setShowSearchResults(false);
     }
   };
 
   const switchTab = (tabId) => {
     setTabs(prev => prev.map(tab => ({ ...tab, isActive: tab.id === tabId })));
     setActiveTabId(tabId);
-    setCurrentPage('home');
+    
+    const selectedTab = tabs.find(tab => tab.id === tabId);
+    if (selectedTab && selectedTab.url.startsWith('search?q=')) {
+      setCurrentPage('search');
+      setShowSearchResults(true);
+    } else {
+      setCurrentPage('home');
+      setShowSearchResults(false);
+    }
   };
 
-  const performSearch = (query) => {
-    if (!query.trim()) return;
-    
-    // Check if it's a URL or search query
-    const isUrl = query.includes('.') && !query.includes(' ');
-    const searchUrl = isUrl ? 
-      (query.startsWith('http') ? query : `https://${query}`) : 
-      `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-    
-    // Update active tab
-    setTabs(prev => prev.map(tab => 
-      tab.id === activeTabId 
-        ? { 
-            ...tab, 
-            title: isUrl ? query : `${query.substring(0, 20)}${query.length > 20 ? '...' : ''}`,
-            url: searchUrl,
-            favicon: isUrl ? 'fas fa-globe' : 'fab fa-google'
-          }
-        : tab
-    ));
-    
-    setSearchValue(query);
-    
-    // Automatically redirect to Google search or URL
-    setTimeout(() => {
-      window.open(searchUrl, '_blank');
-      // Reset to home after opening
-      setCurrentPage('home');
-    }, 500);
-    
-    setCurrentPage('search-result');
-  };
+  const renderSearchResults = () => (
+    <div className="flex-grow mx-4 mt-4">
+      <div className="mb-4">
+        <h2 className="text-xl font-bold mb-2" style={{ color: '#59e094' }}>
+          Hasil Pencarian
+        </h2>
+        <div className="text-sm text-gray-400 mb-4">
+          Mencari: "{searchValue}"
+        </div>
+      </div>
+      
+      {/* Google Custom Search Container */}
+      <div className="bg-black bg-opacity-40 backdrop-blur-md rounded-2xl p-4">
+        <div id="google-search-container">
+          <div className="gcse-search" data-enablehistory="true"></div>
+        </div>
+      </div>
+
+      {/* Custom styling for Google Search */}
+      <style >{`
+        :global(.gsc-control-cse) {
+          background-color: transparent !important;
+          border: none !important;
+          padding: 0 !important;
+        }
+        
+        :global(.gsc-search-box) {
+          background-color: rgba(31, 41, 55, 0.8) !important;
+          border: 1px solid rgba(75, 85, 99, 0.5) !important;
+          border-radius: 12px !important;
+          margin-bottom: 20px !important;
+        }
+        
+        :global(.gsc-input) {
+          background-color: transparent !important;
+          color: white !important;
+          border: none !important;
+          padding: 12px !important;
+          font-size: 14px !important;
+        }
+        
+        :global(.gsc-input::placeholder) {
+          color: #9CA3AF !important;
+        }
+        
+        :global(.gsc-search-button) {
+          background-color: #59e094 !important;
+          border: none !important;
+          border-radius: 8px !important;
+          padding: 8px 16px !important;
+          margin: 4px !important;
+        }
+        
+        :global(.gsc-results) {
+          background-color: transparent !important;
+        }
+        
+        :global(.gsc-webResult) {
+          background-color: rgba(31, 41, 55, 0.6) !important;
+          border: 1px solid rgba(75, 85, 99, 0.3) !important;
+          border-radius: 12px !important;
+          margin-bottom: 16px !important;
+          padding: 16px !important;
+        }
+        
+        :global(.gsc-webResult .gs-title) {
+          color: #59e094 !important;
+        }
+        
+        :global(.gsc-webResult .gs-snippet) {
+          color: #D1D5DB !important;
+        }
+        
+        :global(.gsc-webResult .gs-visibleUrl) {
+          color: #9CA3AF !important;
+        }
+        
+        :global(.gsc-cursor-page) {
+          color: #59e094 !important;
+          background-color: rgba(89, 224, 148, 0.1) !important;
+          border: 1px solid #59e094 !important;
+          border-radius: 6px !important;
+        }
+        
+        :global(.gsc-cursor-current-page) {
+          background-color: #59e094 !important;
+          color: #002631 !important;
+        }
+      `}</style>
+    </div>
+  );
 
   const renderHomePage = () => (
     <>
-      {/* Privacy & Data Stats Card */}
       {showStats && (
         <section className="relative mx-4 mt-4 bg-black bg-opacity-40 backdrop-blur-md rounded-2xl p-5 flex justify-between text-xs select-none shadow-lg">
           <div className="flex flex-col items-center space-y-1 w-1/3">
@@ -171,7 +287,6 @@ const FluxoBrowser = () => {
         </section>
       )}
 
-      {/* Main Content Image */}
       <main className="relative flex-grow mx-4 mt-5 rounded-3xl overflow-hidden shadow-lg">
         <img
           src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
@@ -220,51 +335,6 @@ const FluxoBrowser = () => {
     </div>
   );
 
-  // Added missing renderSearchResultPage function
-  const renderSearchResultPage = () => {
-    const currentTab = tabs.find(tab => tab.id === activeTabId);
-    const searchUrl = currentTab?.url || '';
-    
-    return (
-      <div className="flex-grow mx-4 mt-4">
-        <div className="bg-black bg-opacity-40 backdrop-blur-md rounded-2xl p-6 text-center">
-          <div className="mb-4">
-            <i className="fas fa-external-link-alt text-4xl" style={{ color: '#59e094' }}></i>
-          </div>
-          <h2 className="text-xl font-bold mb-2" style={{ color: '#59e094' }}>
-            Membuka Pencarian
-          </h2>
-          <p className="text-gray-300 mb-4">
-            Pencarian: "{searchValue}"
-          </p>
-          <div className="text-sm text-gray-400 mb-4">
-            Klik tombol di bawah untuk membuka hasil pencarian di tab baru
-          </div>
-          <div className="space-y-3">
-            <button
-              onClick={() => {
-                if (searchUrl) {
-                  window.open(searchUrl, '_blank');
-                }
-              }}
-              className="block w-full px-4 py-3 rounded-lg text-white hover:opacity-80 transition-opacity"
-              style={{ backgroundColor: '#59e094', color: '#002631' }}
-            >
-              <i className="fas fa-external-link-alt mr-2"></i>
-              Buka di Tab Baru
-            </button>
-            <button
-              onClick={() => setCurrentPage('home')}
-              className="block w-full px-4 py-2 rounded-lg border border-gray-600 text-gray-300 hover:bg-gray-700 transition-colors"
-            >
-              Kembali ke Beranda
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const renderMorePopup = () => (
     <div 
       className="fixed inset-0 z-40"
@@ -277,14 +347,25 @@ const FluxoBrowser = () => {
           animation: 'slideUpFade 0.2s ease-out'
         }}
       >
-        {/* Options List */}
+        <style >{`
+          @keyframes slideUpFade {
+            from {
+              opacity: 0;
+              transform: translateY(10px) scale(0.95);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+          }
+        `}</style>
+        
         <div className="py-2">
           {moreOptions.map((option, index) => (
             <button
               key={index}
               className="w-full flex items-center space-x-3 px-4 py-3 hover:bg-gray-700 transition-colors text-left"
               onClick={() => {
-                // Handle option click here
                 setShowMorePopup(false);
               }}
             >
@@ -294,10 +375,8 @@ const FluxoBrowser = () => {
           ))}
         </div>
         
-        {/* Separator */}
         <div className="border-t border-gray-700"></div>
         
-        {/* Version Info */}
         <div className="px-4 py-2">
           <div className="text-gray-400 text-xs">
             Fluxo Browser v1.0
@@ -309,7 +388,6 @@ const FluxoBrowser = () => {
 
   const renderSearchOverlay = () => (
     <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex flex-col">
-      {/* Search Header */}
       <div className="p-4 flex items-center space-x-3">
         <button 
           onClick={() => setShowSearchOverlay(false)}
@@ -323,14 +401,8 @@ const FluxoBrowser = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                setShowSearchOverlay(false);
-                performSearch(searchQuery);
-                setSearchQuery('');
-              }
-            }}
-            placeholder="Cari di web..."
+            onKeyPress={(e) => e.key === 'Enter' && performSearch()}
+            placeholder="Cari di Google..."
             className="bg-transparent text-white flex-grow focus:outline-none"
             autoFocus
           />
@@ -345,7 +417,6 @@ const FluxoBrowser = () => {
         </div>
       </div>
 
-      {/* Keyboard */}
       <div className="flex-grow flex items-end">
         <div className="w-full bg-gray-800 p-4 rounded-t-2xl">
           <div className="space-y-2">
@@ -363,7 +434,6 @@ const FluxoBrowser = () => {
               </div>
             ))}
             
-            {/* Bottom row with special keys */}
             <div className="flex justify-center space-x-1 mt-3">
               <button
                 onClick={() => handleKeyPress('space')}
@@ -378,12 +448,7 @@ const FluxoBrowser = () => {
                 <i className="fas fa-backspace"></i>
               </button>
               <button
-                onClick={() => {
-                  // Handle search
-                  setShowSearchOverlay(false);
-                  performSearch(searchQuery);
-                  setSearchQuery('');
-                }}
+                onClick={performSearch}
                 className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
               >
                 Cari
@@ -404,32 +469,15 @@ const FluxoBrowser = () => {
            overflowY: 'scroll',
          }}>
 
-      {/* Custom Styles */}
-      <style>{`
+      <style >{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         
         ::-webkit-scrollbar {
           width: 0px;
           background: transparent;
         }
-
-        @keyframes slideUpFade {
-          from {
-            opacity: 0;
-            transform: translateY(10px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        .tab-container::-webkit-scrollbar {
-          display: none;
-        }
       `}</style>
 
-      {/* Top Header with Logo and Brand */}
       <header className="pt-4 px-4 pb-2 flex items-center justify-between" style={{ backgroundColor: '#002631' }}>
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: '#59e094' }}>
@@ -440,15 +488,19 @@ const FluxoBrowser = () => {
           </div>
         </div>
         
-        {/* Tab Counter */}
         <div className="text-xs text-gray-400">
           {tabs.length} tab{tabs.length > 1 ? 's' : ''}
         </div>
       </header>
 
-      {/* Tab Bar */}
       <div className="px-4 pb-2" style={{ backgroundColor: '#002631' }}>
         <div className="flex items-center space-x-2 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <style >{`
+            .tab-container::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
+          
           <div className="flex space-x-2 tab-container">
             {tabs.map((tab) => (
               <div
@@ -479,7 +531,6 @@ const FluxoBrowser = () => {
             ))}
           </div>
           
-          {/* Add New Tab Button */}
           <button
             onClick={addNewTab}
             className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-700 transition-colors"
@@ -491,7 +542,6 @@ const FluxoBrowser = () => {
         </div>
       </div>
 
-      {/* URL/Search Bar */}
       <div className="flex items-center bg-gray-800 rounded-2xl px-4 py-2 mx-4 mt-2 space-x-3 shadow-lg">
         <button
           aria-label="Tor Network Status"
@@ -503,7 +553,7 @@ const FluxoBrowser = () => {
         </button>
         <input
           type="text"
-          placeholder="Telusuri atau ketik URL"
+          placeholder="Telusuri dengan Google atau ketik URL"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           onClick={() => setShowSearchOverlay(true)}
@@ -516,6 +566,7 @@ const FluxoBrowser = () => {
           style={{ color: '#59e094' }}
           onClick={() => {
             setSearchValue('');
+            setShowSearchResults(false);
             setCurrentPage('home');
           }}
         >
@@ -523,23 +574,23 @@ const FluxoBrowser = () => {
         </button>
       </div>
 
-      {/* Page Content */}
       {currentPage === 'home' && renderHomePage()}
       {currentPage === 'bookmarks' && renderBookmarksPage()}
       {currentPage === 'messages' && renderMessagesPage()}
-      {currentPage === 'search-result' && renderSearchResultPage()}
+      {currentPage === 'search' && showSearchResults && renderSearchResults()}
 
-      {/* Spacer to push navbar down */}
       <div style={{ height: '60px' }}></div>
 
-      {/* Bottom Navigation Bar - Smaller without text */}
       <nav className="fixed bottom-0 left-0 right-0 px-8 py-3 flex justify-between items-center text-white select-none rounded-t-2xl shadow-2xl border-t z-10"
            style={{ backgroundColor: '#002631', borderTopColor: '#1a4a54', height: '50px' }}>
         <button 
           aria-label="Home" 
           className="flex items-center justify-center focus:outline-none hover:opacity-80 transition-all transform hover:scale-110" 
           style={{ color: currentPage === 'home' ? '#59e094' : '#9CA3AF' }}
-          onClick={() => setCurrentPage('home')}
+          onClick={() => {
+            setCurrentPage('home');
+            setShowSearchResults(false);
+          }}
         >
           <i className="fas fa-home text-xl"></i>
         </button>
@@ -547,14 +598,17 @@ const FluxoBrowser = () => {
           aria-label="Bookmarks" 
           className="flex items-center justify-center focus:outline-none hover:opacity-80 transition-all transform hover:scale-110"
           style={{ color: currentPage === 'bookmarks' ? '#59e094' : '#9CA3AF' }}
-          onClick={() => setCurrentPage('bookmarks')}
+          onClick={() => {
+            setCurrentPage('bookmarks');
+            setShowSearchResults(false);
+          }}
         >
           <i className="fas fa-bookmark text-xl"></i>
         </button>
         <button 
           aria-label="Search" 
           className="flex items-center justify-center focus:outline-none hover:opacity-80 transition-all transform hover:scale-110"
-          style={{ color: showSearchOverlay ? '#59e094' : '#9CA3AF' }}
+          style={{ color: showSearchOverlay || currentPage === 'search' ? '#59e094' : '#9CA3AF' }}
           onClick={() => setShowSearchOverlay(true)}
         >
           <i className="fas fa-search text-xl"></i>
@@ -563,7 +617,10 @@ const FluxoBrowser = () => {
           aria-label="Notifications" 
           className="relative flex items-center justify-center focus:outline-none hover:opacity-80 transition-all transform hover:scale-110"
           style={{ color: currentPage === 'messages' ? '#59e094' : '#9CA3AF' }}
-          onClick={() => setCurrentPage('messages')}
+          onClick={() => {
+            setCurrentPage('messages');
+            setShowSearchResults(false);
+          }}
         >
           <div className="relative">
             <i className="fas fa-comment-alt text-xl"></i>
@@ -582,13 +639,9 @@ const FluxoBrowser = () => {
         </button>
       </nav>
 
-      {/* Search Overlay */}
       {showSearchOverlay && renderSearchOverlay()}
-
-      {/* More Options Popup */}
       {showMorePopup && renderMorePopup()}
 
-      {/* Font Awesome */}
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
