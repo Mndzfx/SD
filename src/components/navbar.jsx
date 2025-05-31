@@ -7,6 +7,8 @@ const navItems = [
   { to: '/pesanan', icon: 'fa-box', label: 'Pesanan' },
   { to: '/favorit', icon: 'fa-heart', label: 'Favorit' },
   { to: '/profile', icon: 'fa-user', label: 'Akun' },
+   { to: '/tes', icon: 'fa-user', label: 'tes' },
+    { to: '/fluxo', icon: 'fa-user', label: 'fluxo' },
 ];
 
 const BottomNavigation = () => {
