@@ -50,12 +50,11 @@ const HomeContent = ({ showStats, privacyStats, setShowStats }) => {
         </section>
       )}
 
-      <main className="relative flex-grow mx-4 mt-5 rounded-3xl overflow-hidden shadow-lg">
+      <main className="relative flex-grow mx-4 mt-5 rounded-3xl overflow-hidden shadow-lg" style={{ height: '450px' }}>
         <img
           src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
           alt="Beautiful mountain landscape"
-          className="w-full object-cover rounded-3xl"
-          style={{ height: '450px' }}
+          className="w-full h-full object-cover rounded-3xl"
         />
         <div className="absolute bottom-4 left-4 text-xs text-white font-semibold select-none bg-black bg-opacity-40 rounded-md px-2 py-1">
           Pemandangan Alam <span className="font-bold">Pegunungan Alpen</span>
