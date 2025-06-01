@@ -11,7 +11,7 @@ import Web3Page from './components/Web3Page';
 // Import halaman-halaman baru
 import SettingsPage from './components/SettingsPage';
 import HistoryPage from './components/HistoryPage';
-import FluxoLogo from './assets/logo2.png';
+import FluxoLogo from './assets/logo2.png'; // Pastikan ini path yang benar ke logo Anda
 import DownloadsPage from './components/DownloadsPage';
 
 const FluxoBrowser = () => {
@@ -19,12 +19,12 @@ const FluxoBrowser = () => {
     searchValue, setSearchValue,
     privacyStats,
     showStats, setShowStats,
-    currentPage, setCurrentPage,
+    currentPage, setCurrentPage, // <-- Pastikan ini ada dari useBrowserState
     showSearchOverlay, setShowSearchOverlay,
     searchQuery, setSearchQuery,
     showMorePopup, setShowMorePopup,
-    showSearchResults, setShowSearchResults,
-    searchResults,
+    showSearchResults, setShowSearchResults, // <-- Pastikan ini ada dari useBrowserState
+    searchResults, setSearchResults, // <-- Pastikan setSearchResults ini ada dari useBrowserState
     isLoading,
     tabs, setTabs,
     activeTabId, setActiveTabId,
@@ -35,14 +35,14 @@ const FluxoBrowser = () => {
     addNewTab,
     closeTab,
     switchTab,
-    currentSearchType, setCurrentSearchType,
+    currentSearchType, setCurrentSearchType, // <-- Pastikan ini ada dari useBrowserState
     cryptoWallet, connectWallet, disconnectWallet, simulateSendTransaction,
     isIncognitoMode,
     isAntiPhishingActive, setIsAntiPhishingActive,
     isAdBlockerActive, setIsAdBlockerActive,
     isNetworkOptimized, setIsNetworkOptimized,
     performanceStats
-  } = useBrowserState();
+  } = useBrowserState(); // Destrukturisasi semua yang dibutuhkan dari hook
 
   return (
     <div className="min-h-screen flex flex-col text-white"
@@ -74,8 +74,9 @@ const FluxoBrowser = () => {
 
       <header className="pt-4 px-4 pb-2 flex items-center justify-between" style={{ backgroundColor: '#002631' }}>
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: '#59e094' }}>
-             <img src={FluxoLogo} alt="Fluxo Icon" className="w-full h-full object-contain w-6 h-6" />
+          <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden" style={{ backgroundColor: '#59e094' }}>
+            {/* Perbaiki kelas untuk logo di header */}
+            <img src={FluxoLogo} alt="Fluxo Icon" className="w-6 h-6 object-contain" />
           </div>
           <div className="font-bold text-lg tracking-wide" style={{ color: '#59e094' }}>
             Fluxo
@@ -118,11 +119,12 @@ const FluxoBrowser = () => {
           className="text-lg focus:outline-none"
           style={{ color: '#59e094' }}
           onClick={() => {
+            // Pastikan semua setter ini berasal dari destructuring useBrowserState()
             setSearchValue('');
             setShowSearchResults(false);
-            setSearchResults([]);
-            setCurrentPage('home'); // Pastikan kembali ke home
-            setCurrentSearchType('all');
+            setSearchResults([]); // <-- Ini yang menyebabkan error, sekarang sudah didefinisikan
+            setCurrentPage('home'); // <-- Ini juga
+            setCurrentSearchType('all'); // <-- Dan ini
           }}
         >
           <i className="fas fa-sync-alt"></i>
@@ -257,12 +259,18 @@ const FluxoBrowser = () => {
           setSearchQuery={setSearchQuery}
           performSearch={performSearch}
           setShowSearchOverlay={setShowSearchOverlay}
+          currentSearchType={currentSearchType} // Pastikan ini juga dilewatkan
+          setCurrentSearchType={setCurrentSearchType} // Dan ini
         />
       )}
       {showMorePopup && (
         <MoreOptionsPopup
           moreOptions={moreOptions}
           setShowMorePopup={setShowMorePopup}
+          setCurrentPage={setCurrentPage} // Jika pop-up ini bisa mengubah halaman
+          setShowSearchResults={setShowSearchResults} // Jika pop-up ini bisa memengaruhi hasil pencarian
+          setSearchResults={setSearchResults} // Jika pop-up ini bisa mereset hasil pencarian
+          setCurrentSearchType={setCurrentSearchType} // Jika pop-up ini bisa mereset tipe pencarian
         />
       )}
 
