@@ -1,5 +1,5 @@
 import React from 'react';
-import useBrowserState from './hooks/useBrowserState';
+import useBrowserState from './hooks/useBrowserState.jsx';
 import HomeContent from './components/HomeContent';
 import SearchResults from './components/SearchResults';
 import BookmarksPage from './components/BookmarksPage';
