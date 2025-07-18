@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import FluxoBrowser from './FluxoBrowser';
-import SplashScreen from './components/SplashScreen'; // Pastikan path ini benar
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-const App = () => {
-  const [showSplashScreen, setShowSplashScreen] = useState(true);
+// Core App Components
+import Home from './pages/home';
 
-  const handleSplashFinish = () => {
-    setShowSplashScreen(false);
-  };
-
-  return (
-    <React.StrictMode>
-      {showSplashScreen ? (
-        <SplashScreen onFinishLoading={handleSplashFinish} />
-      ) : (
-        <FluxoBrowser />
-      )}
-    </React.StrictMode>
-  );
-};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      {/* Routes component wraps all your Route components */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+       
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
+);
