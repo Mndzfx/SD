@@ -61,7 +61,7 @@ function Dashboard() {
             backgroundRepeat: 'no-repeat',
             position: 'relative',
             marginTop: '60px',
-            padding: '20px 0', // DISINI PERUBAHAN: Mengurangi padding atas dan bawah dari 40px menjadi 20px
+            padding: '20px 0',
             borderRadius: '0',
             color: 'white',
             boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
@@ -100,8 +100,7 @@ function Dashboard() {
             minWidth: '300px',
             background: 'white',
             borderRadius: '12px',
-            // --- KUNCI: Pengurangan padding di dalam card agar lebih pendek ---
-            padding: '10px 20px', // Mengurangi padding atas/bawah dari 15px menjadi 10px
+            padding: '10px 20px',
             color: '#333',
             boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
             transition: 'transform 0.3s ease, box-shadow 0.3s ease',
@@ -118,8 +117,7 @@ function Dashboard() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
-            // --- Mengurangi margin-bottom pada header card ---
-            marginBottom: '5px', // Dari 10px menjadi 5px
+            marginBottom: '5px',
             gap: '10px',
         },
         prestasiBadge: {
@@ -138,30 +136,27 @@ function Dashboard() {
         prestasiName: {
             fontSize: '20px',
             fontWeight: 'bold',
-            // --- Mengurangi margin-bottom pada nama prestasi ---
-            marginBottom: '3px', // Dari 5px menjadi 3px
+            marginBottom: '3px',
             color: '#2c3e50',
             lineHeight: '1.2',
         },
         prestasiDetails: {
             fontSize: '14px',
             color: '#7f8c8d',
-            // --- Mengurangi margin-bottom pada detail agar lebih rapat lagi ---
-            marginBottom: '5px', // Dari 8px menjadi 5px
+            marginBottom: '5px',
         },
         prestasiInfoGrid: {
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
             gap: '8px',
-            // --- Mengurangi marginTop dan paddingTop pada grid info secara lebih signifikan ---
-            marginTop: '5px', // Dari 8px menjadi 5px
-            paddingTop: '5px', // Dari 8px menjadi 5px
+            marginTop: '5px',
+            paddingTop: '5px',
             borderTop: '1px solid #f0f0f0',
         },
         prestasiInfoItem: {
             display: 'flex',
             flexDirection: 'column',
-            gap: '0px', // Mengurangi gap antar label dan value dari 2px menjadi 0px
+            gap: '0px',
         },
         prestasiInfoLabel: {
             fontSize: '11px',
@@ -224,122 +219,144 @@ function Dashboard() {
     const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false);
 
     return (
+        // Outermost container with black background
         <div style={{
-            fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-            backgroundColor: '#ffffff',
-            color: '#333',
-            lineHeight: '1.6',
-            margin: 0,
-            padding: 0,
+            backgroundColor: '#000000', // Latar belakang hitam
+            width: '100%', // Pastikan memenuhi lebar
             boxSizing: 'border-box',
-            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center', // Pusatkan konten secara horizontal
+            justifyContent: 'flex-start', // Mulai dari atas
+            padding: '20px 0', // Padding atas/bawah untuk memberikan sedikit ruang
+            // Kunci: Tidak ada 'minHeight: 100vh' di sini.
+            // Tingginya akan sepenuhnya ditentukan oleh konten anak-anaknya.
         }}>
             <div style={{
-                ...getStyle('prestasiSection'),
+                fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                backgroundColor: '#ffffff', // Latar belakang putih untuk "kartu" utama
+                color: '#333',
+                lineHeight: '1.6',
+                margin: '0',
+                boxSizing: 'border-box',
+                width: '100%',
+                maxWidth: '1200px',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
             }}>
-                <div style={getStyle('container')}>
-                    <div style={{
-                        ...getStyle('sectionHeader'),
-                        paddingTop: '0',
-                    }}>
-                        <div>
-                            <h1 style={{ ...getStyle('sectionTitle') }}>Ragam Prestasi Siswa</h1>
-                            <p style={{ ...getStyle('sectionSubtitle') }}>Merayakan keberhasilan siswa-siswi SD Muhammadiyah Plus Kota Probolinggo dalam berbagai bidang.</p>
+                {/* Bagian Prestasi Siswa dengan background1.png */}
+                <div style={{
+                    ...getStyle('prestasiSection'),
+                    // Ini adalah div yang memiliki background1.png.
+                    // Tingginya akan ditentukan oleh konten di dalamnya.
+                }}>
+                    <div style={getStyle('container')}>
+                        <div style={{
+                            ...getStyle('sectionHeader'),
+                            paddingTop: '0',
+                        }}>
+                            <div>
+                                <h1 style={{ ...getStyle('sectionTitle') }}>Ragam Prestasi Siswa</h1>
+                                <p style={{ ...getStyle('sectionSubtitle') }}>Merayakan keberhasilan siswa-siswi SD Muhammadiyah Plus Kota Probolinggo dalam berbagai bidang.</p>
+                            </div>
+                            <button
+                                style={{
+                                    ...getStyle('sectionButton'),
+                                    backgroundColor: 'white',
+                                    color: '#3498db',
+                                    border: '1px solid white',
+                                    ...(isSectionButtonHovered ? { backgroundColor: '#e8f4fd', color: '#3498db', transform: 'translateY(-2px)', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' } : {})
+                                }}
+                                onMouseEnter={() => setIsSectionButtonHovered(true)}
+                                onMouseLeave={() => setIsSectionButtonHovered(false)}
+                            >
+                                Lihat Semua Prestasi
+                            </button>
                         </div>
-                        <button
-                            style={{
-                                ...getStyle('sectionButton'),
-                                backgroundColor: 'white',
-                                color: '#3498db',
-                                border: '1px solid white',
-                                ...(isSectionButtonHovered ? { backgroundColor: '#e8f4fd', color: '#3498db', transform: 'translateY(-2px)', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' } : {})
-                            }}
-                            onMouseEnter={() => setIsSectionButtonHovered(true)}
-                            onMouseLeave={() => setIsSectionButtonHovered(false)}
-                        >
-                            Lihat Semua Prestasi
-                        </button>
-                    </div>
 
-                    <div style={{
-                        ...getStyle('prestasiScrollContainer'),
-                        paddingLeft: getStyle('container').padding,
-                        paddingRight: getStyle('container').padding,
-                    }}>
-                        <PrestasiCard
-                            type="Non Akademik"
-                            name="Aulia Rahma Putri"
-                            details="Juara 3 Tahfidz Qur'an Festival Anak Sholeh Muhammadiyah Kota Probolinggo."
-                            rank="Juara 3"
-                            field="Tahfidz Qur'an"
-                            year="2024"
-                            icon="🥉"
-                        />
-                        <PrestasiCard
-                            type="Non Akademik"
-                            name="Siti Nurhaliza Maulani"
-                            details="Juara Harapan 3 Renang Gaya Bebas Kejuaraan Renang Pelajar Aquatik Challenge."
-                            rank="Harapan 3"
-                            field="Renang"
-                            year="2024"
-                            icon="🏅"
-                        />
-                        <PrestasiCard
-                            type="Non Akademik"
-                            name="Muhammad Rizki Pratama"
-                            details="Medali Perak Lompat Jauh Kejuaraan Atletik Pelajar Kota Probolinggo."
-                            rank="Medali Perak"
-                            field="Atletik"
-                            year="2024"
-                            icon="🥈"
-                        />
-                        <PrestasiCard
-                            type="Akademik"
-                            name="Ahmad Faizal Rahman"
-                            details="Juara 1 Bidang Matematika Olimpiade Sains Nasional Tingkat Kota Probolinggo."
-                            rank="Juara 1"
-                            field="Matematika"
-                            year="2024"
-                            icon="🥇"
-                        />
-                        <PrestasiCard
-                            type="Non Akademik"
-                            name="Zahra Amelia Putri"
-                            details="Juara 2 Tari Tradisional Festival Seni dan Budaya Pelajar Jawa Timur."
-                            rank="Juara 2"
-                            field="Seni Tari"
-                            year="2023"
-                            icon="🥈"
-                        />
-                        <PrestasiCard
-                            type="Akademik"
-                            name="Bima Sakti Putra"
-                            details="Juara 2 Lomba Mengarang Tingkat Kota Probolinggo."
-                            rank="Juara 2"
-                            field="Menulis"
-                            year="2024"
-                            icon="🥈"
-                        />
-                        <PrestasiCard
-                            type="Non Akademik"
-                            name="Dewi Lestari"
-                            details="Juara 1 Lomba Pidato Bahasa Inggris Tingkat SD Se-Jawa Timur."
-                            rank="Juara 1"
-                            field="Bahasa Inggris"
-                            year="2024"
-                            icon="🥇"
-                        />
-                        <PrestasiCard
-                            type="Akademik"
-                            name="Fitriani Indah"
-                            details="Juara 3 Olimpiade IPS Tingkat Provinsi Jawa Timur."
-                            rank="Juara 3"
-                            field="Ilmu Pengetahuan Sosial"
-                            year="2023"
-                            icon="🥉"
-                        />
+                        <div style={{
+                            ...getStyle('prestasiScrollContainer'),
+                            paddingLeft: getStyle('container').padding,
+                            paddingRight: getStyle('container').padding,
+                        }}>
+                            <PrestasiCard
+                                type="Non Akademik"
+                                name="Aulia Rahma Putri"
+                                details="Juara 3 Tahfidz Qur'an Festival Anak Sholeh Muhammadiyah Kota Probolinggo."
+                                rank="Juara 3"
+                                field="Tahfidz Qur'an"
+                                year="2024"
+                                icon="🥉"
+                            />
+                            <PrestasiCard
+                                type="Non Akademik"
+                                name="Siti Nurhaliza Maulani"
+                                details="Juara Harapan 3 Renang Gaya Bebas Kejuaraan Renang Pelajar Aquatik Challenge."
+                                rank="Harapan 3"
+                                field="Renang"
+                                year="2024"
+                                icon="🏅"
+                            />
+                            <PrestasiCard
+                                type="Non Akademik"
+                                name="Muhammad Rizki Pratama"
+                                details="Medali Perak Lompat Jauh Kejuaraan Atletik Pelajar Kota Probolinggo."
+                                rank="Medali Perak"
+                                field="Atletik"
+                                year="2024"
+                                icon="🥈"
+                            />
+                            <PrestasiCard
+                                type="Akademik"
+                                name="Ahmad Faizal Rahman"
+                                details="Juara 1 Bidang Matematika Olimpiade Sains Nasional Tingkat Kota Probolinggo."
+                                rank="Juara 1"
+                                field="Matematika"
+                                year="2024"
+                                icon="🥇"
+                            />
+                            <PrestasiCard
+                                type="Non Akademik"
+                                name="Zahra Amelia Putri"
+                                details="Juara 2 Tari Tradisional Festival Seni dan Budaya Pelajar Jawa Timur."
+                                rank="Juara 2"
+                                field="Seni Tari"
+                                year="2023"
+                                icon="🥈"
+                            />
+                            <PrestasiCard
+                                type="Akademik"
+                                name="Bima Sakti Putra"
+                                details="Juara 2 Lomba Mengarang Tingkat Kota Probolinggo."
+                                rank="Juara 2"
+                                field="Menulis"
+                                year="2024"
+                                icon="🥈"
+                            />
+                            <PrestasiCard
+                                type="Non Akademik"
+                                name="Dewi Lestari"
+                                details="Juara 1 Lomba Pidato Bahasa Inggris Tingkat SD Se-Jawa Timur."
+                                rank="Juara 1"
+                                field="Bahasa Inggris"
+                                year="2024"
+                                icon="🥇"
+                            />
+                            <PrestasiCard
+                                type="Akademik"
+                                name="Fitriani Indah"
+                                details="Juara 3 Olimpiade IPS Tingkat Provinsi Jawa Timur."
+                                rank="Juara 3"
+                                field="Ilmu Pengetahuan Sosial"
+                                year="2023"
+                                icon="🥉"
+                            />
+                        </div>
                     </div>
                 </div>
+                {/* Anda bisa menambahkan bagian lain dari dashboard Anda di sini */}
             </div>
         </div>
     );

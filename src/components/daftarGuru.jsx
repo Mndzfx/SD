@@ -58,7 +58,7 @@ function DaftarGuru() {
         container: {
             maxWidth: '1200px',
             margin: '0 auto', // Menggunakan '0 auto' agar selalu di tengah
-            marginTop: isMobile ? '-150px' : '-220px', // Margin atas disesuaikan untuk mobile
+            marginTop: isMobile ? '-10px' : '-20px', // Margin atas disesuaikan untuk mobile
             padding: isMobile ? '0 15px' : '0 20px', // Padding samping disesuaikan untuk mobile
             boxSizing: 'border-box',
         },
