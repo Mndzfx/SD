@@ -1,202 +1,210 @@
 // src/components/Pengumuman.jsx
 import React, { useState } from 'react';
+// Import icons if you decide to use them later:
+// import { FaCalendarAlt, FaFileDownload, FaExternalLinkAlt } from 'react-icons/fa';
 
 const Pengumuman = () => {
-    // --- Common Styles (Disalin dari komponen lain untuk konsistensi) ---
-    const commonStyles = {
+    // --- Global & New Design Styles ---
+    const componentStyles = {
         container: {
             maxWidth: '1200px',
-            margin: '0 auto', // Mengatur margin otomatis untuk centering
-            padding: '0 20px', // Memberikan padding samping untuk konten
+            margin: '0 auto',
+            padding: '0 25px',
             boxSizing: 'border-box',
-            fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+            fontFamily: '"Poppins", sans-serif',
+        },
+        sectionWrapper: {
+            padding: '80px 0',
+            backgroundColor: '#ffffff',
+            borderTop: '1px solid #f0f0f0',
         },
         sectionHeader: {
-            display: 'flex',
-            // PERUBAHAN: Set flexDirection to 'column' and alignItems to 'center'
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: '15px', // Adjusted to 15px (was 10px, originally more)
-            flexWrap: 'wrap',
-            gap: '10px',
-            paddingTop: '30px', // Reduced from 60px
+            textAlign: 'center',
+            marginBottom: '60px',
+            position: 'relative',
         },
         sectionTitle: {
-            fontSize: '32px',
-            fontWeight: 'bold',
+            fontSize: '3.5rem',
+            fontWeight: 700,
             color: '#2c3e50',
-            marginBottom: '2px',
-            marginTop: '0',
-            textAlign: 'center',
-            width: '100%',
+            marginBottom: '15px',
+            lineHeight: '1.2',
+            letterSpacing: '-0.04em',
         },
         sectionSubtitle: {
-            fontSize: '15px',
+            fontSize: '1.2rem',
             color: '#7f8c8d',
-            marginTop: '0',
-            marginBottom: '8px',
-            textAlign: 'center',
-            width: '100%',
+            maxWidth: '750px',
+            margin: '0 auto 30px auto',
+            lineHeight: '1.7',
         },
         sectionButton: {
-            backgroundColor: '#e8f4fd',
-            color: '#3498db',
-            border: '1px solid #3498db',
-            padding: '10px 20px',
-            borderRadius: '25px',
-            fontSize: '15px',
+            backgroundColor: '#007bff',
+            color: 'white',
+            border: 'none',
+            padding: '16px 35px',
+            borderRadius: '8px',
+            fontSize: '1.1rem',
+            fontWeight: 600,
             cursor: 'pointer',
-            transition: 'all 0.3s ease',
+            transition: 'all 0.3s ease-in-out',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
             textDecoration: 'none',
-            display: 'inline-block',
-            whiteSpace: 'nowrap',
+            boxShadow: '0 8px 20px rgba(0, 123, 255, 0.25)',
         },
         sectionButtonHover: {
-            backgroundColor: '#3498db',
+            backgroundColor: '#0056b3',
+            transform: 'translateY(-5px)',
+            boxShadow: '0 12px 28px rgba(0, 123, 255, 0.35)',
+        },
+
+        // Pengumuman Cards Specific Styles (Optimized for Horizontal Scroll with Fixed Width)
+        pengumumanScrollContainer: {
+            display: 'flex',
+            overflowX: 'auto', // Enable horizontal scrollbar
+            gap: '25px', // Slightly reduced gap for a more compact look
+            paddingBottom: '20px', // Space for scrollbar
+            scrollSnapType: 'x mandatory', // Smooth snapping effect
+            WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
+
+            // Scrollbar styling (for customization if desired, otherwise browser default will apply)
+            '&::-webkit-scrollbar': {
+                height: '8px',
+                backgroundColor: '#f1f1f1',
+            },
+            '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#ccc',
+                borderRadius: '10px',
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+                backgroundColor: '#a0a0a0',
+            },
+            msOverflowStyle: 'none', // Hide scrollbar for IE/Edge
+            scrollbarWidth: 'none', // Hide scrollbar for Firefox (can't fully hide, but makes it minimal)
+        },
+        pengumumanCard: {
+            flex: '0 0 auto', // Crucial: Prevents shrinking/growing, maintains width
+            width: '300px', // Explicitly set a fixed width for the card
+            backgroundColor: '#ffffff',
+            borderRadius: '16px',
+            // --- SHADOW BARU SESUAI PERMINTAAN ---
+            boxShadow: '0 4px 18px rgba(0,0,0,0.08)',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Durasi transisi disesuaikan
+            // ------------------------------------
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            border: '1px solid #e8e8e8',
+            position: 'relative',
+            scrollSnapAlign: 'start',
+        },
+        pengumumanCardHover: {
+            // --- SHADOW BARU SAAT HOVER SESUAI PERMINTAAN ---
+            transform: 'translateY(-7px)', // Efek lift disesuaikan
+            boxShadow: '0 10px 30px rgba(0,0,0,0.12)', // Shadow saat hover disesuaikan
+            // ---------------------------------------------
+        },
+        cardDateBadge: {
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            backgroundColor: '#e6f0ff',
+            color: '#007bff',
+            padding: '8px 15px',
+            borderRadius: '25px',
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '7px',
+            boxShadow: '0 2px 8px rgba(0, 123, 255, 0.1)',
+        },
+        cardContent: {
+            padding: '30px',
+            flexGrow: '1',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            paddingTop: '80px',
+        },
+        cardTitle: {
+            fontSize: '1.4rem',
+            fontWeight: 700,
+            marginBottom: '15px',
+            color: '#2c3e50',
+            lineHeight: '1.3',
+        },
+        cardDescription: {
+            fontSize: '0.95rem',
+            color: '#7f8c8d',
+            marginBottom: '30px',
+            lineHeight: '1.6',
+        },
+        cardActions: {
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            marginTop: 'auto',
+            paddingTop: '20px',
+            borderTop: '1px solid #f0f0f0',
+        },
+        btnPrimary: {
+            backgroundColor: '#007bff',
             color: 'white',
+            border: 'none',
+            padding: '12px 20px',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '0.95rem',
+            fontWeight: 600,
+            transition: 'background-color 0.3s ease, transform 0.2s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            textDecoration: 'none',
+            boxShadow: '0 4px 10px rgba(0, 123, 255, 0.15)',
+        },
+        btnPrimaryHover: {
+            backgroundColor: '#0056b3',
+            transform: 'translateY(-2px)',
+            boxShadow: '0 6px 15px rgba(0, 123, 255, 0.25)',
+        },
+        btnSecondary: {
+            backgroundColor: 'white',
+            border: '1px solid #ced4da',
+            color: '#6c757d',
+            padding: '12px 20px',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '0.95rem',
+            fontWeight: 600,
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            textDecoration: 'none',
+            boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+        },
+        btnSecondaryHover: {
+            backgroundColor: '#e9ecef',
+            borderColor: '#adb5bd',
+            color: '#495057',
             transform: 'translateY(-2px)',
             boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
         },
     };
 
-    // --- Pengumuman Section Styles ---
-    const pengumumanStyles = {
-        pengumumanSection: {
-            // Updated padding for the entire section
-            padding: '20px 0 30px 0', // Reduced bottom from 60px to 30px, added 20px top padding
-        },
-        pengumumanScrollContainer: {
-            display: 'flex',
-            overflowX: 'auto',
-            gap: '25px',
-            paddingBottom: '15px',
-            scrollSnapType: 'x mandatory',
-            WebkitOverflowScrolling: 'touch',
-            '&::-webkit-scrollbar': { display: 'none' },
-            msOverflowStyle: 'none',
-            scrollbarWidth: 'none',
-            marginTop: '20px', // Add top margin to separate from the header
-        },
-        pengumumanCard: {
-            flex: '0 0 auto',
-            minWidth: '320px',
-            background: 'white',
-            borderRadius: '12px',
-            boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-            display: 'flex',
-            flexDirection: 'column',
-            scrollSnapAlign: 'start',
-            overflow: 'hidden',
-        },
-        pengumumanCardHover: {
-            transform: 'translateY(-8px)',
-            boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
-        },
-        cardHeader: {
-            backgroundColor: '#e8f4fd',
-            padding: '15px 25px',
-            borderBottom: '1px solid #d0e7fb',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: '10px',
-        },
-        cardLabel: {
-            fontSize: '12px',
-            color: '#3498db',
-            fontWeight: 'bold',
-            backgroundColor: '#c4e0f9',
-            padding: '5px 10px',
-            borderRadius: '5px',
-        },
-        cardDate: {
-            fontSize: '14px',
-            color: '#555',
-            fontWeight: '600',
-        },
-        cardContent: {
-            padding: '25px',
-            flexGrow: '1',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-        },
-        cardTitle: {
-            fontSize: '20px',
-            fontWeight: 'bold',
-            marginBottom: '10px',
-            color: '#2c3e50',
-            lineHeight: '1.4',
-        },
-        cardDescription: {
-            fontSize: '15px',
-            color: '#7f8c8d',
-            marginBottom: '20px',
-        },
-        cardButtons: {
-            display: 'flex',
-            gap: '12px',
-            marginTop: 'auto',
-        },
-        btnLihat: {
-            backgroundColor: 'transparent',
-            border: '1px solid #95a5a6',
-            color: '#7f8c8d',
-            padding: '10px 18px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '15px',
-            transition: 'all 0.3s ease',
-            whiteSpace: 'nowrap',
-            flexGrow: 1,
-            textAlign: 'center',
-        },
-        btnLihatHover: {
-            backgroundColor: '#dfe4ea',
-            color: '#2c3e50',
-            borderColor: '#2c3e50',
-        },
-        btnUnduh: {
-            backgroundColor: '#3498db',
-            border: '1px solid #3498db',
-            color: 'white',
-            padding: '10px 18px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '15px',
-            transition: 'all 0.3s ease',
-            whiteSpace: 'nowrap',
-            flexGrow: 1,
-            textAlign: 'center',
-        },
-        btnUnduhHover: {
-            backgroundColor: '#2980b9',
-            borderColor: '#2980b9',
-            transform: 'scale(1.02)',
-        },
-    };
-
     // Helper function to get styles
     const getStyle = (elementName, isHovered = false) => {
-        const allStyles = { ...commonStyles, ...pengumumanStyles };
-        const baseStyle = allStyles[`${elementName}`] || {};
-        const hoverStyle = isHovered && allStyles[`${elementName}Hover`] ? allStyles[`${elementName}Hover`] : (
-            isHovered && baseStyle['&:hover'] ? baseStyle['&:hover'] : {}
-        );
+        const baseStyle = componentStyles[`${elementName}`] || {};
+        const hoverStyle = isHovered && componentStyles[`${elementName}Hover`] ? componentStyles[`${elementName}Hover`] : {};
 
-        let combinedStyle = { ...baseStyle };
-
-        // Apply media queries if they exist in the baseStyle (not strictly needed here but good for consistency)
-        if (baseStyle['@media']) {
-            for (const query in baseStyle['@media']) {
-                if (window.matchMedia(query).matches) {
-                    Object.assign(combinedStyle, baseStyle['@media'][query]);
-                }
-            }
-        }
-        return { ...combinedStyle, ...hoverStyle };
+        return { ...baseStyle, ...hoverStyle };
     };
 
     // --- Pengumuman Card Component (Nested for direct access to getStyle) ---
@@ -214,33 +222,34 @@ const Pengumuman = () => {
                 onMouseEnter={() => setIsCardHovered(true)}
                 onMouseLeave={() => setIsCardHovered(false)}
             >
-                <div style={getStyle('cardHeader')}>
-                    <div style={getStyle('cardLabel')}>PENGUMUMAN</div>
-                    <div style={getStyle('cardDate')}>{date}</div>
+                <div style={getStyle('cardDateBadge')}>
+                    {/* You can uncomment and use the icon if you reinstall react-icons */}
+                    {/* <FaCalendarAlt size={14} /> */}
+                    <span>{date}</span>
                 </div>
                 <div style={getStyle('cardContent')}>
                     <h3 style={getStyle('cardTitle')}>{title}</h3>
                     <p style={getStyle('cardDescription')}>{description}</p>
-                    <div style={getStyle('cardButtons')}>
+                    <div style={getStyle('cardActions')}>
                         <button
                             style={{
-                                ...getStyle('btnLihat'),
-                                ...(isLihatHovered ? getStyle('btnLihatHover') : {})
+                                ...getStyle('btnPrimary'),
+                                ...(isLihatHovered ? getStyle('btnPrimaryHover') : {})
                             }}
                             onMouseEnter={() => setIsLihatHovered(true)}
                             onMouseLeave={() => setIsLihatHovered(false)}
                         >
-                            Baca Selengkapnya
+                            {/* <FaExternalLinkAlt size={14} /> */} Baca Selengkapnya
                         </button>
                         <button
                             style={{
-                                ...getStyle('btnUnduh'),
-                                ...(isUnduhHovered ? getStyle('btnUnduhHover') : {})
+                                ...getStyle('btnSecondary'),
+                                ...(isUnduhHovered ? getStyle('btnSecondaryHover') : {})
                             }}
                             onMouseEnter={() => setIsUnduhHovered(true)}
                             onMouseLeave={() => setIsUnduhHovered(false)}
                         >
-                            Unduh
+                            {/* <FaFileDownload size={14} /> */} Unduh
                         </button>
                     </div>
                 </div>
@@ -252,50 +261,62 @@ const Pengumuman = () => {
     const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false);
 
     return (
-        <section style={{ ...getStyle('pengumumanSection'), ...getStyle('container') }}>
-            <div style={getStyle('sectionHeader')}>
-                <h2 style={getStyle('sectionTitle')}>Pengumuman Terbaru</h2>
-                <p style={getStyle('sectionSubtitle')}>
-                    Informasi penting dan kegiatan terbaru dari SD Muhammadiyah Plus Kota Probolinggo.
-                </p>
-                <button
-                    style={{
-                        ...getStyle('sectionButton'),
-                        ...(isSectionButtonHovered ? getStyle('sectionButtonHover') : {})
-                    }}
-                    onMouseEnter={() => setIsSectionButtonHovered(true)}
-                    onMouseLeave={() => setIsSectionButtonHovered(false)}
-                >
-                    Lihat Semua Pengumuman
-                </button>
-            </div>
+        <section style={getStyle('sectionWrapper')}>
+            <div style={getStyle('container')}>
+                <div style={getStyle('sectionHeader')}>
+                    <h2 style={getStyle('sectionTitle')}>Pengumuman & Berita Sekolah</h2>
+                    <p style={getStyle('sectionSubtitle')}>
+                        Temukan informasi terbaru, pengumuman penting, dan kegiatan sekolah kami di sini.
+                    </p>
+                    <button
+                        style={{
+                            ...getStyle('sectionButton'),
+                            ...(isSectionButtonHovered ? getStyle('sectionButtonHover') : {})
+                        }}
+                        onMouseEnter={() => setIsSectionButtonHovered(true)}
+                        onMouseLeave={() => setIsSectionButtonHovered(false)}
+                    >
+                        Lihat Semua Pengumuman
+                    </button>
+                </div>
 
-            <div style={getStyle('pengumumanScrollContainer')}>
-                <PengumumanCard
-                    title="Liburan Semester Genap"
-                    description="Surat pemberitahuan resmi mengenai jadwal liburan semester genap tahun ajaran 2024/2025."
-                    date="17 Juli 2025"
-                />
-                <PengumumanCard
-                    title="Jadwal Asesmen Akhir Semester"
-                    description="Informasi lengkap jadwal pelaksanaan Asesmen Akhir Semester (AAS) untuk semua kelas."
-                    date="15 Juli 2025"
-                />
-                <PengumumanCard
-                    title="Milad SD Muhammadiyah Plus ke-20"
-                    description="Rangkaian acara peringatan Milad SD Muhammadiyah Plus ke-20. Mari meriahkan!"
-                    date="10 Juli 2025"
-                />
-                <PengumumanCard
-                    title="Kegiatan Hari Kemerdekaan"
-                    description="Detail kegiatan dan lomba dalam rangka memperingati Hari Kemerdekaan Republik Indonesia."
-                    date="05 Juli 2025"
-                />
-                <PengumumanCard
-                    title="Pendaftaran Siswa Baru 2025/2026"
-                    description="Informasi lengkap persyaratan dan prosedur pendaftaran siswa baru tahun ajaran 2025/2026."
-                    date="01 Juli 2025"
-                />
+                <div style={getStyle('pengumumanScrollContainer')}>
+                    <PengumumanCard
+                        title="Liburan Semester Genap"
+                        description="Surat pemberitahuan resmi mengenai jadwal liburan semester genap tahun ajaran 2024/2025 telah diterbitkan."
+                        date="17 Juli 2025"
+                    />
+                    <PengumumanCard
+                        title="Jadwal Asesmen Akhir Semester"
+                        description="Informasi lengkap dan detail jadwal pelaksanaan Asesmen Akhir Semester (AAS) untuk semua kelas."
+                        date="15 Juli 2025"
+                    />
+                    <PengumumanCard
+                        title="Milad SD Muhammadiyah Plus ke-20"
+                        description="Rangkaian acara spesial peringatan Milad SD Muhammadiyah Plus ke-20 tahun. Mari meriahkan!"
+                        date="10 Juli 2025"
+                    />
+                    <PengumumanCard
+                        title="Kegiatan Hari Kemerdekaan RI"
+                        description="Detail kegiatan dan berbagai lomba seru dalam rangka memperingati Hari Kemerdekaan Republik Indonesia."
+                        date="05 Juli 2025"
+                    />
+                    <PengumumanCard
+                        title="Pendaftaran Siswa Baru 2025/2026"
+                        description="Informasi lengkap persyaratan dan prosedur pendaftaran siswa baru tahun ajaran 2025/2026 telah dibuka."
+                        date="01 Juli 2025"
+                    />
+                     <PengumumanCard
+                        title="Rapat Wali Murid Kelas 4"
+                        description="Undangan resmi rapat wali murid kelas 4 untuk pembahasan program semester dan persiapan ujian."
+                        date="28 Juni 2025"
+                    />
+                     <PengumumanCard
+                        title="Lomba Kreativitas Siswa"
+                        description="Pengumuman hasil lomba kreativitas siswa tingkat sekolah dasar. Selamat kepada para pemenang!"
+                        date="25 Juni 2025"
+                    />
+                </div>
             </div>
         </section>
     );

@@ -1,235 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 function Fasilitas() {
-    const commonStyles = {
-        container: {
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '0 20px',
-            boxSizing: 'border-box',
-            fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-        },
-        sectionHeader: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingTop: '30px',
-            marginBottom: '20px',
-            flexWrap: 'wrap',
-            gap: '10px',
-            textAlign: 'center',
-        },
-        sectionTitle: {
-            fontSize: '32px',
-            fontWeight: 'bold',
-            color: '#2c3e50',
-            marginBottom: '2px',
-            marginTop: 0,
-            width: '100%',
-        },
-        sectionSubtitle: {
-            fontSize: '15px',
-            color: '#7f8c8d',
-            marginTop: 0,
-            marginBottom: '8px',
-            maxWidth: '750px',
-            lineHeight: '1.6',
-            width: '100%',
-        },
-        sectionButton: {
-            backgroundColor: '#e8f4fd',
-            color: '#3498db',
-            border: '1px solid #3498db',
-            padding: '10px 20px',
-            borderRadius: '25px',
-            fontSize: '15px',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            textDecoration: 'none',
-            display: 'inline-block',
-            whiteSpace: 'nowrap',
-        },
-        sectionButtonHover: {
-            backgroundColor: '#3498db',
-            color: 'white',
-            transform: 'translateY(-2px)',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-        },
-    };
-
-    const styles = {
-        fasilitasSection: {
-            padding: '20px 0 30px 0',
-            fontFamily: "'Inter', sans-serif",
-            color: '#333',
-            backgroundColor: '#FFFFFF',
-            width: '100%',
-            boxSizing: 'border-box',
-        },
-        contentWrapper: {
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '0 20px',
-        },
-        fasilitasGridContainer: {
-            overflowX: 'auto',
-            overflowY: 'hidden',
-            whiteSpace: 'nowrap',
-            paddingBottom: '20px',
-            scrollBehavior: 'smooth',
-            WebkitOverflowScrolling: 'touch',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            '&::-webkit-scrollbar': {
-                display: 'none',
-            },
-            marginTop: '20px',
-        },
-        fasilitasGrid: {
-            display: 'inline-flex',
-            gap: '15px',
-            paddingRight: '20px',
-            justifyContent: 'flex-start',
-        },
-        fasilitasCard: {
-            flexShrink: 0,
-            background: '#ffffff',
-            borderRadius: '15px',
-            overflow: 'hidden',
-            boxShadow: '0 4px 18px rgba(0,0,0,0.08)',
-            transition: 'transform 0.4s ease, box-shadow 0.4s ease',
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'relative',
-            cursor: 'pointer',
-            border: 'none',
-            height: '280px',
-        },
-        fasilitasCardHover: {
-            transform: 'translateY(-12px) scale(1.02)',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
-        },
-        fasilitasImageWrapper: {
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            overflow: 'hidden',
-            borderRadius: '15px',
-        },
-        fasilitasImage: {
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transition: 'transform 0.5s ease-out, filter 0.5s ease-out',
-            filter: 'brightness(0.7) grayscale(0.1)',
-        },
-        fasilitasImageHover: {
-            transform: 'scale(1.1)',
-            filter: 'brightness(1) grayscale(0)',
-        },
-        fasilitasContent: {
-            position: 'absolute',
-            bottom: '0',
-            left: '0',
-            width: '100%',
-            padding: '20px 25px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            background: 'linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0))',
-            color: 'white',
-            minHeight: '100px',
-            zIndex: 1,
-        },
-        fasilitasName: {
-            fontSize: '24px',
-            fontWeight: '800',
-            color: 'white',
-            marginBottom: '10px',
-            lineHeight: 1.2,
-            textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-        },
-        lihatDetailBtn: {
-            background: '#FED219',
-            color: 'black',
-            padding: '10px 22px',
-            border: 'none',
-            borderRadius: '25px',
-            fontSize: '15px',
-            fontWeight: '600',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease', // Transisi untuk opasitas dan transform
-            boxShadow: 'none',
-            marginTop: 'auto',
-            alignSelf: 'flex-start',
-            opacity: 0, // Awalnya tidak terlihat
-            transform: 'translateY(10px)', // Awalnya sedikit ke bawah
-            pointerEvents: 'none', // Mencegah interaksi saat tidak terlihat
-            zIndex: 2,
-        },
-        // --- Ini adalah gaya untuk tombol saat kartu di-hover ---
-        fasilitasCardHoverButton: {
-            opacity: 1, // Jadi terlihat
-            transform: 'translateY(0)', // Kembali ke posisi semula
-            pointerEvents: 'auto', // Memungkinkan interaksi
-        },
-        // Media query untuk menyesuaikan ukuran kartu di mobile
-        '@media (max-width: 767px)': {
-            fasilitasCard: {
-                width: 'calc(50vw - 30px)',
-                height: 'calc((50vw - 30px) * 280 / 300)',
-            },
-            fasilitasName: {
-                fontSize: '18px',
-            },
-            lihatDetailBtn: {
-                padding: '8px 16px',
-                fontSize: '14px',
-            },
-        },
-        '@media (max-width: 480px)': {
-            fasilitasCard: {
-                width: 'calc(50vw - 25px)',
-                height: 'calc((50vw - 25px) * 280 / 300)',
-            },
-            fasilitasName: {
-                fontSize: '16px',
-            },
-            lihatDetailBtn: {
-                padding: '7px 14px',
-                fontSize: '13px',
-            },
-        }
-    };
-
-    const getStyle = (elementName, isHovered = false) => {
-        const allStyles = { ...commonStyles, ...styles };
-        let baseStyle = allStyles[elementName] || {};
-        const hoverStyle = isHovered && allStyles[`${elementName}Hover`] ? allStyles[`${elementName}Hover`] : {};
-
-        // Apply responsive styles for mobile first
-        if (windowWidth < 768 && allStyles['@media (max-width: 767px)'] && allStyles['@media (max-width: 767px)'][elementName]) {
-            baseStyle = { ...baseStyle, ...allStyles['@media (max-width: 767px)'][elementName] };
-        }
-        if (windowWidth < 481 && allStyles['@media (max-width: 480px)'] && allStyles['@media (max-width: 480px)'][elementName]) {
-            baseStyle = { ...baseStyle, ...allStyles['@media (max-width: 480px)'][elementName] };
-        }
-
-        // Default desktop styles (if not overridden by mobile)
-        if (elementName === 'fasilitasCard' && windowWidth >= 768) {
-            baseStyle = { ...baseStyle, width: '300px', height: '280px' };
-        }
-
-        return { ...baseStyle, ...hoverStyle };
-    };
-
-    const [hoveredCard, setHoveredCard] = useState({});
-    const [isJelajahiBtnHovered, setIsJelajahiBtnHovered] = useState(false);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const scrollContainerRef = useRef(null);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -237,81 +10,345 @@ function Fasilitas() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const handleLihatDetailClick = (fasilitasName) => {
-        console.log(`Tombol 'Lihat Detail' diklik untuk fasilitas: ${fasilitasName}`);
-        // Logika detail di sini (misal: navigasi, buka modal, dll.)
+    // Scroll handlers for the arrows
+    const scrollLeft = () => {
+        if (scrollContainerRef.current) {
+            // Scroll by one card width + gap (280px + 20px = 300px)
+            scrollContainerRef.current.scrollBy({
+                left: -300,
+                behavior: 'smooth'
+            });
+        }
     };
 
+    const scrollRight = () => {
+        if (scrollContainerRef.current) {
+            // Scroll by one card width + gap (280px + 20px = 300px)
+            scrollContainerRef.current.scrollBy({
+                left: 300,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    const handleDetailClick = (categoryName) => { // Mengganti nama fungsi dari handleShopClick
+        console.log(`Tombol 'Detail' diklik untuk kategori: ${categoryName}`);
+        // Add your navigation logic or other actions here
+    };
+
+    // Data fasilitas/kategori dengan gambar placeholder yang lebih andal
     const fasilitasData = [
-        { id: 1, imgSrc: "https://images.unsplash.com/photo-1532631627993-801264c1f964?q=80", name: "Ruang Kelas Modern" },
-        { id: 2, imgSrc: "https://images.unsplash.com/photo-1596495578065-6f9175249f3e?q=80", name: "Perpustakaan Lengkap" },
-        { id: 3, imgSrc: "https://images.unsplash.com/photo-1588196749597-9ff0b68d6ce7?q=80", name: "Laboratorium Komputer" },
-        { id: 4, imgSrc: "https://images.unsplash.com/photo-1576442654378-01e4a35cf525?q=80", name: "Lapangan Olahraga Luas" },
-        { id: 5, imgSrc: "https://images.unsplash.com/photo-1627883907409-f8d9519c50c0?q=80", name: "Ruang Kesenian & Musik" },
-        { id: 6, imgSrc: "https://images.unsplash.com/photo-1579707129532-c65191c94d1f?q=80", name: "Kantin Sehat & Bersih" },
-        { id: 7, imgSrc: "https://images.unsplash.com/photo-1542478951-b8474246830d?q=80", name: "Area Rekreasi" },
-        { id: 8, imgSrc: "https://images.unsplash.com/photo-1549880153-ddc41ff77fdd?q=80", name: "Klinik Kesehatan" },
-        { id: 9, imgSrc: "https://images.unsplash.com/photo-1533035336040-349ce6b9c9dc?q=80", name: "Studio Tari" },
-        { id: 10, imgSrc: "https://images.unsplash.com/photo-1517840901100-8179e982acb7?q=80", name: "Asrama Nyaman" },
-        { id: 11, imgSrc: "https://images.unsplash.com/photo-1542831371-d68a9c72f10b?q=80", name: "Auditorium Besar" },
+        // Menggunakan picsum.photos untuk gambar acak
+        { id: 1, imgSrc: "https://picsum.photos/id/1015/280/280", name: "Men's" }, // Gambar pemandangan gunung
+        { id: 2, imgSrc: "https://picsum.photos/id/1025/280/280", name: "Women's" }, // Gambar anjing
+        { id: 3, imgSrc: "https://picsum.photos/id/1062/280/280", name: "Kids' & Baby" }, // Gambar balon udara
+        { id: 4, imgSrc: "https://picsum.photos/id/1070/280/280", name: "Packs & Gear" }, // Gambar gurun
+        { id: 5, imgSrc: "https://picsum.photos/id/1080/280/280", name: "Equipment" }, // Gambar pohon
+        { id: 6, imgSrc: "https://picsum.photos/id/1084/280/280", name: "Accessories" }, // Gambar hutan pinus
+        { id: 7, imgSrc: "https://picsum.photos/id/1057/280/280", name: "Camping Gear" }, // Gambar api unggun
+        { id: 8, imgSrc: "https://picsum.photos/id/1043/280/280", name: "Water Sports" }, // Gambar perahu
     ];
 
-    return (
-        <section style={{ ...getStyle('fasilitasSection'), ...getStyle('container') }}>
-            <div style={getStyle('sectionHeader')}>
-                <h2 style={getStyle('sectionTitle')}>Fasilitas Unggulan</h2>
-                <p style={getStyle('sectionSubtitle')}>
-                    Menyediakan Sarana dan Prasarana Terbaik untuk Mendukung Proses Belajar Mengajar
-                </p>
-                <button
-                    style={{
-                        ...getStyle('sectionButton'),
-                        ...(isJelajahiBtnHovered ? getStyle('sectionButtonHover') : {}),
-                    }}
-                    onMouseEnter={() => setIsJelajahiBtnHovered(true)}
-                    onMouseLeave={() => setIsJelajahiBtnHovered(false)}
-                >
-                    Lihat Semua Fasilitas
-                </button>
-            </div>
+    // Inline styles (cleaned up and adjusted for the new layout)
+    const styles = {
+        fasilitasSection: {
+            padding: '40px 0', // Increased padding to match the image spacing
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', // Closest to the image's font
+            color: '#1a1a1a', // Darker text color
+            backgroundColor: '#f7f7f7', // Light gray background to match the image
+            width: '100%',
+            boxSizing: 'border-box',
+            position: 'relative', // Needed for scroll buttons
+        },
+        contentWrapper: {
+            maxWidth: '1200px', // Example max width, adjust as needed
+            margin: '0 auto',
+            padding: '0 20px', // Add horizontal padding
+            boxSizing: 'border-box',
+            position: 'relative', // Needed for scroll buttons within this wrapper
+        },
+        fasilitasGridContainer: {
+            overflowX: 'scroll', // Use scroll to enable native scroll but we'll hide the bar
+            overflowY: 'hidden',
+            whiteSpace: 'nowrap',
+            paddingBottom: '20px', // Space for potential scrollbar (even if hidden)
+            scrollBehavior: 'smooth',
+            WebkitOverflowScrolling: 'touch', // For smoother scrolling on iOS
+            scrollbarWidth: 'none', // For Firefox
+            msOverflowStyle: 'none', // For IE and Edge
+            marginTop: '20px', // Added some top margin for spacing
+            position: 'relative',
+        },
+        // Hide scrollbar for Webkit browsers (Chrome, Safari)
+        // Note: Direct pseudo-element styling like ::-webkit-scrollbar is tricky with inline styles.
+        // It's best handled in a CSS file or with CSS-in-JS libraries.
+        // For demonstration, we keep it in mind, but it won't directly work as an inline style property.
+        // If you move to a .css file, you'd add:
+        // .fasilitasGridContainer::-webkit-scrollbar { display: none; }
+        fasilitasGrid: {
+            display: 'flex', // Changed to flex for better control of items
+            gap: '20px', // Increased gap between cards
+            paddingRight: '20px', // Ensure space for last item to fully scroll into view
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start', // Align items to the top
+            width: 'fit-content', // Allow content to dictate width for horizontal scroll
+            paddingLeft: '0px', // No padding on the left of the grid itself, padding comes from contentWrapper
+        },
+        fasilitasCard: {
+            flexShrink: 0, // Prevent cards from shrinking
+            background: '#ffffff',
+            borderRadius: '8px', // Slightly less rounded corners
+            overflow: 'hidden',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)', // Subtle shadow
+            transition: 'transform 0.2s ease',
+            display: 'flex',
+            flexDirection: 'column',
+            cursor: 'pointer',
+            border: 'none',
+            width: '280px', // Fixed width for desktop, adjust based on image analysis
+            height: 'auto', // Auto height to accommodate text below
+        },
+        fasilitasCardHover: {
+            // No explicit hover transform for the card itself, as per image
+        },
+        fasilitasCardImageWrapper: {
+            width: '100%',
+            height: '280px', // Fixed height for the image area to match card width
+            overflow: 'hidden',
+            borderRadius: '8px 8px 0 0', // Top corners rounded
+        },
+        fasilitasImage: {
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            transition: 'transform 0.3s ease',
+        },
+        fasilitasImageHover: {
+            transform: 'scale(1.05)', // Image scales on card hover
+        },
+        fasilitasCardContent: {
+            padding: '15px', // Padding around the text and button
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start', // Align text and button to the left
+        },
+        fasilitasName: {
+            fontSize: '18px', // Smaller font size
+            fontWeight: '600', // Semi-bold
+            color: '#1a1a1a',
+            marginBottom: '15px', // Spacing below name
+            marginTop: '0',
+            whiteSpace: 'normal', // Allow text to wrap if needed
+        },
+        shopBtn: { // Mengganti nama style dari shopBtn menjadi detailBtn jika mau lebih deskriptif
+            backgroundColor: '#FED219', // Ganti warna latar belakang tombol
+            color: 'black', // Ganti warna teks agar terlihat kontras
+            padding: '8px 18px', // Slightly smaller padding
+            border: 'none',
+            borderRadius: '9999px', // Fully rounded "pill" button
+            fontSize: '14px', // Smaller font
+            fontWeight: '600',
+            cursor: 'pointer',
+            transition: 'background-color 0.2s ease, transform 0.2s ease',
+            textDecoration: 'none',
+            display: 'inline-block',
+        },
+        shopBtnHover: { // Tetap gunakan shopBtnHover untuk transisi hover
+            backgroundColor: '#FDD94A', // Sedikit lebih terang atau gelap untuk efek hover
+            transform: 'scale(1.02)',
+        },
+        scrollButton: {
+            position: 'absolute',
+            top: 'calc(20px + 140px)', // Roughly center vertical position
+            transform: 'translateY(-50%)', // Ensure perfect vertical centering
+            backgroundColor: 'white',
+            border: '1px solid #ddd',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+            zIndex: 10,
+            transition: 'background-color 0.2s ease, border-color 0.2s ease',
+            fontSize: '20px', // Ukuran ikon panah (jika menggunakan ikon font)
+            fontWeight: 'bold',
+            color: '#555', // Warna ikon panah
+        },
+        scrollButtonHover: {
+            backgroundColor: '#f0f0f0',
+            borderColor: '#bbb',
+        },
+        scrollButtonLeft: {
+            left: '0px', // Position relative to contentWrapper's padding
+            transform: 'translateX(-50%) translateY(-50%)', // Pull half of button outside padding + vertical center
+        },
+        scrollButtonRight: {
+            right: '0px', // Position relative to contentWrapper's padding
+            transform: 'translateX(50%) translateY(-50%)', // Push half of button outside padding + vertical center
+        },
+        // Responsive adjustments
+        '@media (max-width: 768px)': {
+            fasilitasCard: {
+                width: 'calc(50vw - 30px)', // Two cards per row with gap (20px gap, 20px * 2 for contentWrapper padding)
+            },
+            fasilitasCardImageWrapper: {
+                height: 'calc(50vw - 30px)', // Make image height proportional to width
+            },
+            fasilitasName: {
+                fontSize: '16px',
+                marginBottom: '10px',
+            },
+            shopBtn: {
+                padding: '6px 14px',
+                fontSize: '13px',
+            },
+            scrollButton: {
+                display: 'none', // Hide scroll buttons on smaller screens
+            },
+            contentWrapper: {
+                padding: '0 15px', // Slightly less padding on smaller screens
+            }
+        },
+        '@media (max-width: 480px)': {
+            fasilitasCard: {
+                width: 'calc(100vw - 40px)', // One card per row on very small screens (20px * 2 for contentWrapper padding)
+            },
+            fasilitasCardImageWrapper: {
+                height: 'calc(100vw - 40px)',
+            },
+            contentWrapper: {
+                padding: '0 10px', // Even less padding on very small screens
+            }
+        }
+    };
 
-            <div style={styles.fasilitasGridContainer} ref={scrollContainerRef}>
-                <div style={styles.fasilitasGrid}>
-                    {fasilitasData.map(fasilitas => (
-                        <div
-                            key={fasilitas.id}
-                            style={{
-                                ...getStyle('fasilitasCard', hoveredCard[fasilitas.id]),
-                            }}
-                            onMouseEnter={() => setHoveredCard(prev => ({ ...prev, [fasilitas.id]: true }))}
-                            onMouseLeave={() => setHoveredCard(prev => ({ ...prev, [fasilitas.id]: false }))}
-                        >
-                            <div style={styles.fasilitasImageWrapper}>
-                                <img
-                                    src={fasilitas.imgSrc}
-                                    alt={fasilitas.name}
-                                    style={{
-                                        ...styles.fasilitasImage,
-                                        ...(hoveredCard[fasilitas.id] ? styles.fasilitasImageHover : {}),
-                                    }}
-                                />
-                            </div>
-                            <div style={styles.fasilitasContent}>
-                                <h3 style={getStyle('fasilitasName')}>{fasilitas.name}</h3>
-                                <button
-                                    style={{
-                                        ...styles.lihatDetailBtn, // Gaya dasar tombol "Lihat Detail"
-                                        // Terapkan gaya hover hanya jika kartu sedang di-hover
-                                        ...(hoveredCard[fasilitas.id] ? styles.fasilitasCardHoverButton : {}),
-                                    }}
-                                    onClick={() => handleLihatDetailClick(fasilitas.name)}
+    // Helper to apply responsive styles and hover styles
+    const getCombinedStyle = (baseStyle, isHovered, hoverStyle, mobileStyle = null, superMobileStyle = null) => {
+        let combined = { ...baseStyle };
+
+        if (windowWidth <= 480 && superMobileStyle) {
+            combined = { ...combined, ...superMobileStyle };
+        } else if (windowWidth <= 768 && mobileStyle) {
+            combined = { ...combined, ...mobileStyle };
+        }
+
+        if (isHovered && hoverStyle) {
+            combined = { ...combined, ...hoverStyle };
+        }
+        return combined;
+    };
+
+    // For the scroll buttons, we need separate hover states
+    const [isLeftBtnHovered, setIsLeftBtnHovered] = useState(false);
+    const [isRightBtnHovered, setIsRightBtnHovered] = useState(false);
+
+
+    return (
+        <section style={styles.fasilitasSection}>
+            <div style={getCombinedStyle(
+                styles.contentWrapper, false, null,
+                styles['@media (max-width: 768px)'].contentWrapper,
+                styles['@media (max-width: 480px)'].contentWrapper
+            )}>
+                <div style={styles.fasilitasGridContainer} ref={scrollContainerRef}>
+                    <div style={styles.fasilitasGrid}>
+                        {fasilitasData.map(fasilitas => {
+                            const [isCardHovered, setIsCardHovered] = useState(false);
+                            const [isBtnHovered, setIsBtnHovered] = useState(false);
+
+                            return (
+                                <div
+                                    key={fasilitas.id}
+                                    style={getCombinedStyle(
+                                        styles.fasilitasCard,
+                                        isCardHovered, // pass card hover state
+                                        styles.fasilitasCardHover,
+                                        styles['@media (max-width: 768px)'].fasilitasCard,
+                                        styles['@media (max-width: 480px)'].fasilitasCard
+                                    )}
+                                    onMouseEnter={() => setIsCardHovered(true)}
+                                    onMouseLeave={() => setIsCardHovered(false)}
                                 >
-                                    Lihat Detail
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                                    <div
+                                        style={getCombinedStyle(
+                                            styles.fasilitasCardImageWrapper,
+                                            false, null, // Image wrapper itself doesn't have hover state
+                                            styles['@media (max-width: 768px)'].fasilitasCardImageWrapper,
+                                            styles['@media (max-width: 480px)'].fasilitasCardImageWrapper
+                                        )}
+                                    >
+                                        <img
+                                            src={fasilitas.imgSrc}
+                                            alt={fasilitas.name}
+                                            style={getCombinedStyle(
+                                                styles.fasilitasImage,
+                                                isCardHovered, // Image hover depends on card hover
+                                                styles.fasilitasImageHover
+                                            )}
+                                        />
+                                    </div>
+                                    <div style={styles.fasilitasCardContent}>
+                                        <h3
+                                            style={getCombinedStyle(
+                                                styles.fasilitasName, false, null,
+                                                styles['@media (max-width: 768px)'].fasilitasName,
+                                                styles['@media (max-width: 480px)'].fasilitasName
+                                            )}
+                                        >
+                                            {fasilitas.name}
+                                        </h3>
+                                        <button
+                                            style={getCombinedStyle(
+                                                styles.shopBtn, // Menggunakan shopBtn karena namanya tidak diganti di sini
+                                                isBtnHovered,
+                                                styles.shopBtnHover,
+                                                styles['@media (max-width: 768px)'].shopBtn,
+                                                styles['@media (max-width: 480px)'].shopBtn
+                                            )}
+                                            onMouseEnter={() => setIsBtnHovered(true)}
+                                            onMouseLeave={() => setIsBtnHovered(false)}
+                                            onClick={() => handleDetailClick(fasilitas.name)} // Menggunakan handleDetailClick
+                                        >
+                                            Detail {/* Mengganti teks tombol */}
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
+
+                {/* Scroll buttons placed within contentWrapper for correct positioning */}
+                <button
+                    style={getCombinedStyle(
+                        { ...styles.scrollButton, ...styles.scrollButtonLeft },
+                        isLeftBtnHovered,
+                        styles.scrollButtonHover,
+                        styles['@media (max-width: 768px)'].scrollButton // Hide on mobile
+                    )}
+                    onMouseEnter={() => setIsLeftBtnHovered(true)}
+                    onMouseLeave={() => setIsLeftBtnHovered(false)}
+                    onClick={scrollLeft}
+                >
+                    {/* Teks panah dihapus di sini */}
+                </button>
+
+                <button
+                    style={getCombinedStyle(
+                        { ...styles.scrollButton, ...styles.scrollButtonRight },
+                        isRightBtnHovered,
+                        styles.scrollButtonHover,
+                        styles['@media (max-width: 768px)'].scrollButton // Hide on mobile
+                    )}
+                    onMouseEnter={() => setIsRightBtnHovered(true)}
+                    onMouseLeave={() => setIsRightBtnHovered(false)}
+                    onClick={scrollRight}
+                >
+                    {/* Teks panah dihapus di sini */}
+                </button>
             </div>
         </section>
     );

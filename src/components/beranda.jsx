@@ -76,7 +76,8 @@ function App() {
     const styles = {
         appContainer: {
             fontFamily: "'Poppins', sans-serif",
-            margin: 0,
+         
+           marginTop: '-21px',
             padding: '0 0 50px 0',
             backgroundColor: colors.white,
             color: colors.darkGray,

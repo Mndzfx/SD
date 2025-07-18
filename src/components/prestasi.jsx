@@ -5,8 +5,8 @@ function Dashboard() {
     // --- Styles untuk common elements ---
     const commonStyles = {
         container: {
-            maxWidth: '1200px',
-            margin: '0 auto', // Tetapkan ke auto untuk pemusatan
+            maxWidth: '100%', // Changed to 100% for full width
+            margin: '0', // Removed auto margin for full width
             padding: '0 20px', // Memberikan padding samping untuk konten
             boxSizing: 'border-box',
         },
@@ -239,8 +239,7 @@ function Dashboard() {
                 lineHeight: '1.6',
                 margin: '0',
                 boxSizing: 'border-box',
-                width: '100%',
-                maxWidth: '1200px',
+                width: '100%', // Changed from maxWidth to width for full width
                 borderRadius: '12px',
                 overflow: 'hidden',
                 display: 'flex',
@@ -252,7 +251,8 @@ function Dashboard() {
                     // Ini adalah div yang memiliki background1.png.
                     // Tingginya akan ditentukan oleh konten di dalamnya.
                 }}>
-                    <div style={getStyle('container')}>
+                    {/* The container here will now take 100% width, but its internal padding will keep content from the very edges */}
+                    <div style={commonStyles.container}>
                         <div style={{
                             ...getStyle('sectionHeader'),
                             paddingTop: '0',
@@ -278,8 +278,9 @@ function Dashboard() {
 
                         <div style={{
                             ...getStyle('prestasiScrollContainer'),
-                            paddingLeft: getStyle('container').padding,
-                            paddingRight: getStyle('container').padding,
+                            // Ensure the padding inside the scroll container matches the common container's horizontal padding
+                            paddingLeft: commonStyles.container.padding,
+                            paddingRight: commonStyles.container.padding,
                         }}>
                             <PrestasiCard
                                 type="Non Akademik"

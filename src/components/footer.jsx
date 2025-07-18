@@ -10,6 +10,7 @@ const FooterContainer = styled.footer`
     color: #fff; /* --white */
     padding: 40px 0 25px;
     margin-top: 40px;
+    margin-bottom: -100px;
     border-radius: 15px;
     box-shadow: 0 -6px 15px rgba(0,0,0,0.15);
     font-family: 'Arial', sans-serif;
@@ -42,16 +43,16 @@ const FooterColumn = styled.div`
     }
 
     @media (max-width: 768px) {
-        flex: 1 1 45%; /* On smaller screens, allow two columns per row, or shrink more if needed */
-        min-width: 120px; /* Even smaller minimum width for tighter packing */
+        flex: 1 1 90%; /* On smaller screens, make columns take up almost full width, stacking them */
+        min-width: unset; /* Remove min-width to allow maximum shrinking */
         margin-bottom: 20px; /* Add some space between rows if items wrap */
         padding: 0 8px;
         text-align: center; /* Center text within columns on mobile */
     }
 
     @media (max-width: 480px) {
-        flex: 1 1 90%; /* On very small screens, allow items to take up almost full width, but still flow horizontally */
-        min-width: unset; /* Remove min-width to allow maximum shrinking */
+        flex: 1 1 90%; /* Ensure it's still stacking on very small screens */
+        min-width: unset;
         margin-bottom: 15px;
     }
 `;
