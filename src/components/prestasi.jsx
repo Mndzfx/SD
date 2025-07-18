@@ -5,8 +5,8 @@ function Dashboard() {
     // --- Styles untuk common elements ---
     const commonStyles = {
         container: {
-            maxWidth: '100%', // Changed to 100% for full width
-            margin: '0', // Removed auto margin for full width
+            maxWidth: '1200px', // Set a max-width for content alignment
+            margin: '0 auto', // Center the content
             padding: '0 20px', // Memberikan padding samping untuk konten
             boxSizing: 'border-box',
         },
@@ -61,36 +61,40 @@ function Dashboard() {
             backgroundRepeat: 'no-repeat',
             position: 'relative',
             marginTop: '60px',
-            padding: '20px 0',
+            paddingTop: '20px', // Adjust padding for consistent spacing
+            paddingBottom: '20px', // Adjust padding for consistent spacing
             borderRadius: '0',
             color: 'white',
             boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
             boxSizing: 'border-box',
             overflow: 'hidden',
-            '&::before': {
-                content: '""',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'rgba(33, 150, 243, 0.7)',
-                zIndex: 0,
-            },
-            '> *': {
-                position: 'relative',
-                zIndex: 1,
-            },
+        },
+        // Overlay handled by a separate div in JSX for inline styles
+        prestasiSectionOverlay: {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(33, 150, 243, 0.7)',
+            zIndex: 0,
+        },
+        prestasiContentWrapper: { // New style for wrapping content within the section
+            position: 'relative',
+            zIndex: 1,
+            ...commonStyles.container, // Apply common container styles for max-width and margin
         },
         prestasiScrollContainer: {
             display: 'flex',
             overflowX: 'auto',
             gap: '25px',
             marginTop: '20px',
-            paddingBottom: '0px',
+            paddingBottom: '15px', // Add padding for scrollbar
             scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',
             alignItems: 'flex-start',
+            // Hide scrollbar
             '&::-webkit-scrollbar': { display: 'none' },
             msOverflowStyle: 'none',
             scrollbarWidth: 'none',
@@ -108,6 +112,7 @@ function Dashboard() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start',
+            cursor: 'pointer', // Added cursor for better UX
         },
         prestasiCardHover: {
             transform: 'translateY(-8px)',
@@ -174,9 +179,7 @@ function Dashboard() {
     const getStyle = (elementName, isHovered = false) => {
         const allStyles = { ...commonStyles, ...prestasiStyles };
         const baseStyle = allStyles[elementName] || {};
-        const hoverStyle = isHovered && allStyles[`${elementName}Hover`] ? allStyles[`${elementName}Hover`] : (
-            isHovered && baseStyle['&:hover'] ? baseStyle['&:hover'] : {}
-        );
+        const hoverStyle = isHovered && allStyles[`${elementName}Hover`] ? allStyles[`${elementName}Hover`] : {};
         return { ...baseStyle, ...hoverStyle };
     };
 
@@ -218,48 +221,56 @@ function Dashboard() {
 
     const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false);
 
+    const prestasiData = [
+        { id: 1, type: "Non Akademik", name: "Aulia Rahma Putri", details: "Juara 3 Tahfidz Qur'an Festival Anak Sholeh Muhammadiyah Kota Probolinggo.", rank: "Juara 3", field: "Tahfidz Qur'an", year: "2024", icon: "🥉" },
+        { id: 2, type: "Non Akademik", name: "Siti Nurhaliza Maulani", details: "Juara Harapan 3 Renang Gaya Bebas Kejuaraan Renang Pelajar Aquatik Challenge.", rank: "Harapan 3", field: "Renang", year: "2024", icon: "🏅" },
+        { id: 3, type: "Non Akademik", name: "Muhammad Rizki Pratama", details: "Medali Perak Lompat Jauh Kejuaraan Atletik Pelajar Kota Probolinggo.", rank: "Medali Perak", field: "Atletik", year: "2024", icon: "🥈" },
+        { id: 4, type: "Akademik", name: "Ahmad Faizal Rahman", details: "Juara 1 Bidang Matematika Olimpiade Sains Nasional Tingkat Kota Probolinggo.", rank: "Juara 1", field: "Matematika", year: "2024", icon: "🥇" },
+        { id: 5, type: "Non Akademik", name: "Zahra Amelia Putri", details: "Juara 2 Tari Tradisional Festival Seni dan Budaya Pelajar Jawa Timur.", rank: "Juara 2", field: "Seni Tari", year: "2023", icon: "🥈" },
+        { id: 6, type: "Akademik", name: "Bima Sakti Putra", details: "Juara 2 Lomba Mengarang Tingkat Kota Probolinggo.", rank: "Juara 2", field: "Menulis", year: "2024", icon: "🥈" },
+        { id: 7, type: "Non Akademik", name: "Dewi Lestari", details: "Juara 1 Lomba Pidato Bahasa Inggris Tingkat SD Se-Jawa Timur.", rank: "Juara 1", field: "Bahasa Inggris", year: "2024", icon: "🥇" },
+        { id: 8, type: "Akademik", name: "Fitriani Indah", details: "Juara 3 Olimpiade IPS Tingkat Provinsi Jawa Timur.", rank: "Juara 3", field: "Ilmu Pengetahuan Sosial", year: "2023", icon: "🥉" },
+    ];
+
+
     return (
-        // Outermost container with black background
         <div style={{
-            backgroundColor: '#fff', // Latar belakang hitam
-            width: '100%', // Pastikan memenuhi lebar
+            backgroundColor: '#fff',
+            width: '100%',
             boxSizing: 'border-box',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center', // Pusatkan konten secara horizontal
-            justifyContent: 'flex-start', // Mulai dari atas
-            padding: '0px 0', // Padding atas/bawah untuk memberikan sedikit ruang
-            // Kunci: Tidak ada 'minHeight: 100vh' di sini.
-            // Tingginya akan sepenuhnya ditentukan oleh konten anak-anaknya.
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            padding: '0px 0',
         }}>
             <div style={{
                 fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-                backgroundColor: '#ffffff', // Latar belakang putih untuk "kartu" utama
+                backgroundColor: '#ffffff',
                 color: '#333',
                 lineHeight: '1.6',
                 margin: '0',
                 boxSizing: 'border-box',
-                width: '100%', // Changed from maxWidth to width for full width
+                width: '100%',
                 borderRadius: '12px',
                 overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
             }}>
                 {/* Bagian Prestasi Siswa dengan background1.png */}
-                <div style={{
-                    ...getStyle('prestasiSection'),
-                    // Ini adalah div yang memiliki background1.png.
-                    // Tingginya akan ditentukan oleh konten di dalamnya.
-                }}>
-                    {/* The container here will now take 100% width, but its internal padding will keep content from the very edges */}
-                    <div style={commonStyles.container}>
+                <div style={getStyle('prestasiSection')}>
+                    {/* The overlay div for background effect */}
+                    <div style={getStyle('prestasiSectionOverlay')}></div>
+
+                    {/* Content wrapper to apply common container styles (max-width, margin, padding) */}
+                    <div style={getStyle('prestasiContentWrapper')}>
                         <div style={{
                             ...getStyle('sectionHeader'),
-                            paddingTop: '0',
+                            paddingTop: '0', // Keep this if you want no extra top padding inside sectionHeader
                         }}>
                             <div>
-                                <h1 style={{ ...getStyle('sectionTitle') }}>Ragam Prestasi Siswa</h1>
-                                <p style={{ ...getStyle('sectionSubtitle') }}>Merayakan keberhasilan siswa-siswi SD Muhammadiyah Plus Kota Probolinggo dalam berbagai bidang.</p>
+                                <h1 style={getStyle('sectionTitle')}>Ragam Prestasi Siswa</h1>
+                                <p style={getStyle('sectionSubtitle')}>Merayakan keberhasilan siswa-siswi SD Muhammadiyah Plus Kota Probolinggo dalam berbagai bidang.</p>
                             </div>
                             <button
                                 style={{
@@ -276,84 +287,20 @@ function Dashboard() {
                             </button>
                         </div>
 
-                        <div style={{
-                            ...getStyle('prestasiScrollContainer'),
-                            // Ensure the padding inside the scroll container matches the common container's horizontal padding
-                            paddingLeft: commonStyles.container.padding,
-                            paddingRight: commonStyles.container.padding,
-                        }}>
-                            <PrestasiCard
-                                type="Non Akademik"
-                                name="Aulia Rahma Putri"
-                                details="Juara 3 Tahfidz Qur'an Festival Anak Sholeh Muhammadiyah Kota Probolinggo."
-                                rank="Juara 3"
-                                field="Tahfidz Qur'an"
-                                year="2024"
-                                icon="🥉"
-                            />
-                            <PrestasiCard
-                                type="Non Akademik"
-                                name="Siti Nurhaliza Maulani"
-                                details="Juara Harapan 3 Renang Gaya Bebas Kejuaraan Renang Pelajar Aquatik Challenge."
-                                rank="Harapan 3"
-                                field="Renang"
-                                year="2024"
-                                icon="🏅"
-                            />
-                            <PrestasiCard
-                                type="Non Akademik"
-                                name="Muhammad Rizki Pratama"
-                                details="Medali Perak Lompat Jauh Kejuaraan Atletik Pelajar Kota Probolinggo."
-                                rank="Medali Perak"
-                                field="Atletik"
-                                year="2024"
-                                icon="🥈"
-                            />
-                            <PrestasiCard
-                                type="Akademik"
-                                name="Ahmad Faizal Rahman"
-                                details="Juara 1 Bidang Matematika Olimpiade Sains Nasional Tingkat Kota Probolinggo."
-                                rank="Juara 1"
-                                field="Matematika"
-                                year="2024"
-                                icon="🥇"
-                            />
-                            <PrestasiCard
-                                type="Non Akademik"
-                                name="Zahra Amelia Putri"
-                                details="Juara 2 Tari Tradisional Festival Seni dan Budaya Pelajar Jawa Timur."
-                                rank="Juara 2"
-                                field="Seni Tari"
-                                year="2023"
-                                icon="🥈"
-                            />
-                            <PrestasiCard
-                                type="Akademik"
-                                name="Bima Sakti Putra"
-                                details="Juara 2 Lomba Mengarang Tingkat Kota Probolinggo."
-                                rank="Juara 2"
-                                field="Menulis"
-                                year="2024"
-                                icon="🥈"
-                            />
-                            <PrestasiCard
-                                type="Non Akademik"
-                                name="Dewi Lestari"
-                                details="Juara 1 Lomba Pidato Bahasa Inggris Tingkat SD Se-Jawa Timur."
-                                rank="Juara 1"
-                                field="Bahasa Inggris"
-                                year="2024"
-                                icon="🥇"
-                            />
-                            <PrestasiCard
-                                type="Akademik"
-                                name="Fitriani Indah"
-                                details="Juara 3 Olimpiade IPS Tingkat Provinsi Jawa Timur."
-                                rank="Juara 3"
-                                field="Ilmu Pengetahuan Sosial"
-                                year="2023"
-                                icon="🥉"
-                            />
+                        {/* Scroll container for prestasi cards */}
+                        <div style={getStyle('prestasiScrollContainer')}>
+                            {prestasiData.map((prestasi) => (
+                                <PrestasiCard
+                                    key={prestasi.id}
+                                    type={prestasi.type}
+                                    name={prestasi.name}
+                                    details={prestasi.details}
+                                    rank={prestasi.rank}
+                                    field={prestasi.field}
+                                    year={prestasi.year}
+                                    icon={prestasi.icon}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>

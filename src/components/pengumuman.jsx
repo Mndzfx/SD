@@ -4,73 +4,95 @@ import React, { useState } from 'react';
 // import { FaCalendarAlt, FaFileDownload, FaExternalLinkAlt } from 'react-icons/fa';
 
 const Pengumuman = () => {
-    // --- Global & New Design Styles ---
-    const componentStyles = {
+    // --- Common Styles (Copied from TestimonialSection for consistency) ---
+    const commonStyles = {
         container: {
             maxWidth: '1200px',
             margin: '0 auto',
-            padding: '0 25px',
+            padding: '0 20px', // Memberikan padding samping untuk konten
             boxSizing: 'border-box',
-            fontFamily: '"Poppins", sans-serif',
-        },
-        sectionWrapper: {
-            padding: '80px 0',
-            backgroundColor: '#ffffff',
-            borderTop: '1px solid #f0f0f0',
         },
         sectionHeader: {
-            textAlign: 'center',
-            marginBottom: '60px',
-            position: 'relative',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0px', // FURTHER REDUCED: Remove bottom margin to let elements dictate spacing
+            flexWrap: 'wrap',
+            gap: '8px', // FURTHER REDUCED: Smaller gap between stacked elements
+            paddingTop: '40px', // REDUCED from 60px: Less top padding for the section header
         },
         sectionTitle: {
-            fontSize: '3.5rem',
-            fontWeight: 700,
+            fontSize: '32px',
+            fontWeight: 'bold',
             color: '#2c3e50',
-            marginBottom: '15px',
-            lineHeight: '1.2',
-            letterSpacing: '-0.04em',
+            marginBottom: '0px', // FURTHER REDUCED to 0px
+            marginTop: '0',
+            textAlign: 'center',
+            width: '100%',
         },
         sectionSubtitle: {
-            fontSize: '1.2rem',
+            fontSize: '15px',
             color: '#7f8c8d',
-            maxWidth: '750px',
-            margin: '0 auto 30px auto',
-            lineHeight: '1.7',
+            marginTop: '0',
+            textAlign: 'center',
+            width: '100%',
+            marginBottom: '10px', // SLIGHTLY INCREASED to give a bit more space before the button
         },
         sectionButton: {
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            padding: '16px 35px',
-            borderRadius: '8px',
-            fontSize: '1.1rem',
-            fontWeight: 600,
+            backgroundColor: '#e8f4fd',
+            color: '#3498db',
+            border: '1px solid #3498db',
+            padding: '10px 20px',
+            borderRadius: '25px',
+            fontSize: '15px',
             cursor: 'pointer',
-            transition: 'all 0.3s ease-in-out',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '10px',
+            transition: 'all 0.3s ease',
             textDecoration: 'none',
-            boxShadow: '0 8px 20px rgba(0, 123, 255, 0.25)',
+            display: 'inline-block',
+            whiteSpace: 'nowrap',
         },
         sectionButtonHover: {
-            backgroundColor: '#0056b3',
-            transform: 'translateY(-5px)',
-            boxShadow: '0 12px 28px rgba(0, 123, 255, 0.35)',
+            backgroundColor: '#3498db',
+            color: 'white',
+            transform: 'translateY(-2px)',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
         },
+    };
 
-        // Pengumuman Cards Specific Styles (Optimized for Horizontal Scroll with Fixed Width)
+    // --- Pengumuman Specific Styles ---
+    const pengumumanStyles = {
+        sectionWrapper: {
+            padding: '50px 0 80px 0',
+            backgroundColor: '#ffffff',
+            borderTop: 'none',
+            border: 'none',
+            outline: 'none',
+            boxShadow: 'none',
+            fontFamily: '"Poppins", sans-serif', // Keep Poppins for this section
+        },
+        // Re-aligning sectionHeader to match the common style that has it as 'flex'
+        // and its children (title, subtitle, button) are centered due to `width: '100%', textAlign: 'center'`
+        // If you want them stacked and centered *within* the header, keep flexDirection: 'column'
+        // For consistency with TestimonialSection, I'll align it similarly.
+        sectionHeader: {
+            display: 'flex',
+            flexDirection: 'column', // Force column layout for title, subtitle, button
+            alignItems: 'center', // Center items horizontally when in column
+            marginBottom: '60px', // Keep original margin for more space before cards
+            position: 'relative',
+            border: 'none',
+            outline: 'none',
+            boxShadow: 'none',
+            paddingTop: '40px', // Apply padding top as per common
+        },
+        // The individual card styles
         pengumumanScrollContainer: {
             display: 'flex',
-            overflowX: 'auto', // Enable horizontal scrollbar
-            gap: '25px', // Slightly reduced gap for a more compact look
-            paddingBottom: '20px', // Space for scrollbar
-            scrollSnapType: 'x mandatory', // Smooth snapping effect
-            WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
-
-            // Scrollbar styling (for customization if desired, otherwise browser default will apply)
+            overflowX: 'auto',
+            gap: '25px',
+            paddingBottom: '20px',
+            scrollSnapType: 'x mandatory',
+            WebkitOverflowScrolling: 'touch',
             '&::-webkit-scrollbar': {
                 height: '8px',
                 backgroundColor: '#f1f1f1',
@@ -82,30 +104,30 @@ const Pengumuman = () => {
             '&::-webkit-scrollbar-thumb:hover': {
                 backgroundColor: '#a0a0a0',
             },
-            msOverflowStyle: 'none', // Hide scrollbar for IE/Edge
-            scrollbarWidth: 'none', // Hide scrollbar for Firefox (can't fully hide, but makes it minimal)
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none',
+            border: 'none',
+            outline: 'none',
+            boxShadow: 'none',
         },
         pengumumanCard: {
-            flex: '0 0 auto', // Crucial: Prevents shrinking/growing, maintains width
-            width: '300px', // Explicitly set a fixed width for the card
+            flex: '0 0 auto',
+            width: '300px',
             backgroundColor: '#ffffff',
             borderRadius: '16px',
-            // --- SHADOW BARU SESUAI PERMINTAAN ---
             boxShadow: '0 4px 18px rgba(0,0,0,0.08)',
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Durasi transisi disesuaikan
-            // ------------------------------------
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
-            border: '1px solid #e8e8e8',
+            border: 'none',
+            outline: 'none',
             position: 'relative',
             scrollSnapAlign: 'start',
         },
         pengumumanCardHover: {
-            // --- SHADOW BARU SAAT HOVER SESUAI PERMINTAAN ---
-            transform: 'translateY(-7px)', // Efek lift disesuaikan
-            boxShadow: '0 10px 30px rgba(0,0,0,0.12)', // Shadow saat hover disesuaikan
-            // ---------------------------------------------
+            transform: 'translateY(-7px)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.12)',
         },
         cardDateBadge: {
             position: 'absolute',
@@ -121,6 +143,8 @@ const Pengumuman = () => {
             alignItems: 'center',
             gap: '7px',
             boxShadow: '0 2px 8px rgba(0, 123, 255, 0.1)',
+            border: 'none',
+            outline: 'none',
         },
         cardContent: {
             padding: '30px',
@@ -167,6 +191,7 @@ const Pengumuman = () => {
             gap: '8px',
             textDecoration: 'none',
             boxShadow: '0 4px 10px rgba(0, 123, 255, 0.15)',
+            outline: 'none',
         },
         btnPrimaryHover: {
             backgroundColor: '#0056b3',
@@ -189,6 +214,7 @@ const Pengumuman = () => {
             gap: '8px',
             textDecoration: 'none',
             boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+            outline: 'none',
         },
         btnSecondaryHover: {
             backgroundColor: '#e9ecef',
@@ -201,8 +227,14 @@ const Pengumuman = () => {
 
     // Helper function to get styles
     const getStyle = (elementName, isHovered = false) => {
-        const baseStyle = componentStyles[`${elementName}`] || {};
-        const hoverStyle = isHovered && componentStyles[`${elementName}Hover`] ? componentStyles[`${elementName}Hover`] : {};
+        const allStyles = { ...commonStyles, ...pengumumanStyles }; // Merge common and pengumuman specific styles
+        const baseStyle = allStyles[elementName] || {};
+        const hoverStyle = isHovered && allStyles[`${elementName}Hover`] ? allStyles[`${elementName}Hover`] : {};
+
+        // Special handling for Webkit scrollbar pseudo-element styles as they can't be directly merged
+        if (elementName === 'pengumumanScrollContainer' && (baseStyle['&::-webkit-scrollbar'] || baseStyle['&::-webkit-scrollbar-thumb'])) {
+            return { ...baseStyle, ...hoverStyle };
+        }
 
         return { ...baseStyle, ...hoverStyle };
     };
@@ -263,7 +295,11 @@ const Pengumuman = () => {
     return (
         <section style={getStyle('sectionWrapper')}>
             <div style={getStyle('container')}>
-                <div style={getStyle('sectionHeader')}>
+                <div style={{
+                    ...getStyle('sectionHeader'),
+                    flexDirection: 'column', // Ensure vertical stacking
+                    alignItems: 'center', // Center content horizontally
+                }}>
                     <h2 style={getStyle('sectionTitle')}>Pengumuman & Berita Sekolah</h2>
                     <p style={getStyle('sectionSubtitle')}>
                         Temukan informasi terbaru, pengumuman penting, dan kegiatan sekolah kami di sini.
@@ -306,12 +342,12 @@ const Pengumuman = () => {
                         description="Informasi lengkap persyaratan dan prosedur pendaftaran siswa baru tahun ajaran 2025/2026 telah dibuka."
                         date="01 Juli 2025"
                     />
-                     <PengumumanCard
+                    <PengumumanCard
                         title="Rapat Wali Murid Kelas 4"
                         description="Undangan resmi rapat wali murid kelas 4 untuk pembahasan program semester dan persiapan ujian."
                         date="28 Juni 2025"
                     />
-                     <PengumumanCard
+                    <PengumumanCard
                         title="Lomba Kreativitas Siswa"
                         description="Pengumuman hasil lomba kreativitas siswa tingkat sekolah dasar. Selamat kepada para pemenang!"
                         date="25 Juni 2025"

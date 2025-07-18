@@ -7,18 +7,18 @@ const Ekstrakurikuler = () => {
         container: {
             maxWidth: '1200px',
             margin: '0 auto',
-            padding: '0 20px', // Memberikan padding samping untuk konten
+            padding: '0 20px',
             boxSizing: 'border-box',
         },
         sectionHeader: {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '15px', // Adjusted for slightly more breathing room than 10px, but still compact
+            marginBottom: '15px',
             flexWrap: 'wrap',
             gap: '10px',
-            paddingTop: '30px', // Reduced from 60px to decrease top spacing
-            flexDirection: 'column', // Ensure vertical stacking for centering
+            paddingTop: '30px',
+            flexDirection: 'column',
         },
         sectionTitle: {
             fontSize: '32px',
@@ -61,8 +61,7 @@ const Ekstrakurikuler = () => {
     // --- Ekstrakurikuler Section Styles ---
     const ekstrakurikulerStyles = {
         ekstrakurikuler: {
-            // Updated padding for the entire section
-            padding: '20px 0 30px 0', // Reduced bottom padding from 60px to 30px, added 20px top padding
+            padding: '20px 0 30px 0',
             fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
         },
         ekstrakurikulerScrollContainer: {
@@ -75,20 +74,22 @@ const Ekstrakurikuler = () => {
             '&::-webkit-scrollbar': { display: 'none' },
             msOverflowStyle: 'none',
             scrollbarWidth: 'none',
-            marginTop: '20px', // Maintain separation from the header
+            marginTop: '20px',
         },
         ekstrakurikulerCard: {
             flex: '0 0 auto',
-            minWidth: '240px',
-            maxWidth: '280px',
+            width: '240px',
+            height: '300px',
             background: 'white',
             borderRadius: '12px',
             overflow: 'hidden',
             boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
             transition: 'transform 0.3s ease, box-shadow 0.3s ease',
             scrollSnapAlign: 'start',
+            position: 'relative',
             display: 'flex',
             flexDirection: 'column',
+            cursor: 'pointer',
         },
         ekstrakurikulerCardHover: {
             transform: 'translateY(-8px)',
@@ -96,18 +97,16 @@ const Ekstrakurikuler = () => {
         },
         ekstrakurikulerImageContainer: {
             width: '100%',
-            height: '140px',
+            height: '100%',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             position: 'relative',
             display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-            color: 'white',
-            fontSize: '22px',
-            fontWeight: 'bold',
+            flexDirection: 'column',
+            justifyContent: 'flex-end', // Push content to the bottom
             padding: '15px',
             boxSizing: 'border-box',
+            borderRadius: '12px',
         },
         ekstrakurikulerImageOverlay: {
             position: 'absolute',
@@ -115,58 +114,88 @@ const Ekstrakurikuler = () => {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            borderRadius: '12px 12px 0 0',
+            backgroundColor: 'rgba(0,0,0,0.4)', // Base overlay for text visibility
+            borderRadius: '12px',
+            transition: 'background-color 0.3s ease', // Smooth transition for darkening
         },
-        ekstrakurikulerTitleOverlay: {
-            zIndex: 1,
-            textAlign: 'center',
-            lineHeight: '1.3',
+        ekstrakurikulerImageOverlayHover: {
+            backgroundColor: 'rgba(0,0,0,0.7)', // Darker on hover
         },
-        ekstrakurikulerContent: {
-            padding: '15px 20px 20px',
-            flexGrow: 1,
+        ekstrakurikulerTitleWrapper: { // NEW: Wrapper for title and schedule when not hovered
+            zIndex: 2,
+            width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            paddingBottom: '15px', // Space from bottom of card
         },
-        ekstrakurikulerInfoRow: {
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '10px',
-            flexWrap: 'wrap',
-            gap: '8px',
+        ekstrakurikulerTitleOverlay: {
+            color: 'white',
+            fontSize: '18px',
+            fontWeight: '600',
+            textAlign: 'left',
+            lineHeight: '1.2',
+            textShadow: '0 1px 3px rgba(0,0,0,0.5)',
+            marginBottom: '10px', // <--- ADJUSTED: Increased margin-bottom here
         },
-        ekstrakurikulerBadge: {
-            backgroundColor: '#e0e0e0',
-            color: '#555',
-            padding: '5px 10px',
+        ekstrakurikulerScheduleBadge: {
+            backgroundColor: 'rgba(0,0,0,0.6)', // Semi-transparent dark background
+            color: 'white',
+            padding: '4px 8px',
             borderRadius: '5px',
             fontSize: '12px',
-            fontWeight: '600',
+            fontWeight: 'bold',
+            textShadow: '0 1px 2px rgba(0,0,0,0.5)',
         },
-        ekstrakurikulerDescription: {
+
+        ekstrakurikulerDescriptionContainer: {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            background: 'linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0))',
+            color: 'white',
+            padding: '15px',
+            paddingTop: '30px',
+            boxSizing: 'border-box',
+            transform: 'translateY(100%)', // Start hidden below
+            transition: 'transform 0.4s ease-out, opacity 0.4s ease-out', // Animation for slide and fade
+            opacity: 0, // Start invisible
+            zIndex: 3, // Above other overlays
+            borderRadius: '0 0 12px 12px', // Rounded bottom corners
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-start',
+        },
+        ekstrakurikulerDescriptionContainerHover: {
+            transform: 'translateY(0%)', // Slide up to visible position
+            opacity: 1, // Become fully visible
+        },
+        ekstrakurikulerDescriptionText: {
             fontSize: '14px',
-            color: '#7f8c8d',
-            marginBottom: '15px',
-            flexGrow: 1,
+            lineHeight: '1.5',
+            marginBottom: '10px',
+            textShadow: '0 1px 2px rgba(0,0,0,0.5)',
         },
-        ekstrakurikulerDetailButton: {
+        ekstrakurikulerRegisterButton: {
             backgroundColor: '#3498db',
             color: 'white',
             border: 'none',
-            padding: '10px 15px',
-            borderRadius: '8px',
-            cursor: 'pointer',
+            padding: '8px 15px',
+            borderRadius: '20px',
             fontSize: '14px',
             fontWeight: 'bold',
-            transition: 'background-color 0.3s ease',
-            textAlign: 'center',
-            width: '100%',
+            cursor: 'pointer',
+            transition: 'background-color 0.3s ease, transform 0.2s ease',
+            textDecoration: 'none',
+            display: 'inline-block',
+            marginTop: '10px',
+            alignSelf: 'flex-start',
         },
-        ekstrakurikulerDetailButtonHover: {
+        ekstrakurikulerRegisterButtonHover: {
             backgroundColor: '#2980b9',
+            transform: 'translateY(-2px)',
         }
     };
 
@@ -174,27 +203,14 @@ const Ekstrakurikuler = () => {
     const getStyle = (elementName, isHovered = false) => {
         const allStyles = { ...commonStyles, ...ekstrakurikulerStyles };
         const baseStyle = allStyles[`${elementName}`] || {};
-        const hoverStyle = isHovered && allStyles[`${elementName}Hover`] ? allStyles[`${elementName}Hover`] : (
-            isHovered && baseStyle['&:hover'] ? baseStyle['&:hover'] : {}
-        );
-
-        let combinedStyle = { ...baseStyle };
-
-        // Apply media queries if they exist in the baseStyle (for consistency, though not strictly needed here)
-        if (baseStyle['@media']) {
-            for (const query in baseStyle['@media']) {
-                if (window.matchMedia(query).matches) {
-                    Object.assign(combinedStyle, baseStyle['@media'][query]);
-                }
-            }
-        }
-        return { ...combinedStyle, ...hoverStyle };
+        const hoverStyle = isHovered && allStyles[`${elementName}Hover`] ? allStyles[`${elementName}Hover`] : {};
+        return { ...baseStyle, ...hoverStyle };
     };
 
     // --- Ekstrakurikuler Card Component (Nested for direct access to getStyle) ---
-    const EkstrakurikulerCard = ({ imageUrl, title, description, location, time }) => {
+    const EkstrakurikulerCard = ({ imageUrl, title, description, schedule }) => {
         const [isCardHovered, setIsCardHovered] = useState(false);
-        const [isButtonHovered, setIsButtonHovered] = useState(false);
+        const [isRegisterButtonHovered, setIsRegisterButtonHovered] = useState(false);
 
         return (
             <div
@@ -206,25 +222,55 @@ const Ekstrakurikuler = () => {
                 onMouseLeave={() => setIsCardHovered(false)}
             >
                 <div style={{ ...getStyle('ekstrakurikulerImageContainer'), backgroundImage: `url(${imageUrl})` }}>
-                    <div style={getStyle('ekstrakurikulerImageOverlay')}></div>
-                    <span style={getStyle('ekstrakurikulerTitleOverlay')}>{title}</span>
-                </div>
-                <div style={getStyle('ekstrakurikulerContent')}>
-                    <div style={getStyle('ekstrakurikulerInfoRow')}>
-                        <span style={getStyle('ekstrakurikulerBadge')}>{location}</span>
-                        <span style={getStyle('ekstrakurikulerBadge')}>{time}</span>
-                    </div>
-                    <p style={getStyle('ekstrakurikulerDescription')}>{description}</p>
-                    <button
+                    <div
                         style={{
-                            ...getStyle('ekstrakurikulerDetailButton'),
-                            ...(isButtonHovered ? getStyle('ekstrakurikulerDetailButtonHover') : {})
+                            ...getStyle('ekstrakurikulerImageOverlay'),
+                            ...(isCardHovered ? getStyle('ekstrakurikulerImageOverlayHover') : {})
                         }}
-                        onMouseEnter={() => setIsButtonHovered(true)}
-                        onMouseLeave={() => setIsButtonHovered(false)}
+                    ></div>
+
+                    {/* Content visible when NOT hovered (Title and Schedule) */}
+                    {!isCardHovered && (
+                        <div style={getStyle('ekstrakurikulerTitleWrapper')}>
+                            <span style={getStyle('ekstrakurikulerTitleOverlay')}>{title}</span>
+                            {schedule && (
+                                <span style={getStyle('ekstrakurikulerScheduleBadge')}>{schedule}</span>
+                            )}
+                        </div>
+                    )}
+
+
+                    {/* Description and Register Button that appear on hover */}
+                    <div
+                        style={{
+                            ...getStyle('ekstrakurikulerDescriptionContainer'),
+                            ...(isCardHovered ? getStyle('ekstrakurikulerDescriptionContainerHover') : {})
+                        }}
                     >
-                        Lihat Detail
-                    </button>
+                        {isCardHovered && (
+                            <>
+                                <h3 style={{
+                                    color: 'white',
+                                    fontSize: '20px',
+                                    fontWeight: 'bold',
+                                    marginBottom: '5px',
+                                    textShadow: '0 1px 3px rgba(0,0,0,0.5)',
+                                    alignSelf: 'flex-start'
+                                }}>{title}</h3>
+                                <p style={getStyle('ekstrakurikulerDescriptionText')}>{description}</p>
+                                <button
+                                    style={{
+                                        ...getStyle('ekstrakurikulerRegisterButton'),
+                                        ...(isRegisterButtonHovered ? getStyle('ekstrakurikulerRegisterButtonHover') : {})
+                                    }}
+                                    onMouseEnter={() => setIsRegisterButtonHovered(true)}
+                                    onMouseLeave={() => setIsRegisterButtonHovered(false)}
+                                >
+                                    Daftar Sekarang
+                                </button>
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
         );
@@ -237,8 +283,8 @@ const Ekstrakurikuler = () => {
         <section style={{ ...getStyle('ekstrakurikuler'), ...getStyle('container') }}>
             <div style={{
                 ...getStyle('sectionHeader'),
-                flexDirection: 'column', // Stack title, subtitle, and button
-                alignItems: 'center',    // Center align them
+                flexDirection: 'column',
+                alignItems: 'center',
             }}>
                 <h2 style={getStyle('sectionTitle')}>Program Ekstrakurikuler</h2>
                 <p style={getStyle('sectionSubtitle')}>
@@ -258,60 +304,52 @@ const Ekstrakurikuler = () => {
 
             <div style={getStyle('ekstrakurikulerScrollContainer')}>
                 <EkstrakurikulerCard
-                    imageUrl="https://via.placeholder.com/250x140/ff6b6b/ffffff?text=Seni+Tari"
-                    title="Seni Tari"
-                    description="Menjelajahi keindahan gerak tari tradisional dan modern."
-                    location="Studio Seni"
-                    time="Selasa, 14.00"
+                    imageUrl="https://via.placeholder.com/240x300/607d8b/ffffff?text=PRAMUKA"
+                    title="Pramuka"
+                    schedule="Setiap Jumat"
+                    description="Kegiatan kepramukaan melatih kemandirian, kepemimpinan, dan kecintaan pada alam. Belajar sandi, tali-temali, dan survival dasar."
                 />
                 <EkstrakurikulerCard
-                    imageUrl="https://via.placeholder.com/250x140/4ecdc4/ffffff?text=Futsal"
+                    imageUrl="https://via.placeholder.com/240x300/4CAF50/ffffff?text=QIROATI"
+                    title="Qiroati"
+                    schedule="Senin & Rabu"
+                    description="Membimbing siswa dalam membaca Al-Qur'an dengan tajwid yang benar dan suara yang indah."
+                />
+                <EkstrakurikulerCard
+                    imageUrl="https://via.placeholder.com/240x300/FF9800/ffffff?text=TAPAKSUCI"
+                    title="Tapak Suci"
+                    schedule="Selasa & Kamis"
+                    description="Seni bela diri Tapak Suci untuk membentuk karakter disiplin, keberanian, dan ketangguhan fisik serta mental."
+                />
+                <EkstrakurikulerCard
+                    imageUrl="https://via.placeholder.com/240x300/9C27B0/ffffff?text=FUTSAL"
                     title="Futsal"
-                    description="Mengembangkan keterampilan sepak bola dan sportivitas."
-                    location="Lapangan Indoor"
-                    time="Rabu, 15.00"
+                    schedule="Setiap Sabtu"
+                    description="Mengembangkan bakat dan keterampilan dalam olahraga futsal, melatih kerjasama tim dan strategi permainan."
                 />
                 <EkstrakurikulerCard
-                    imageUrl="https://via.placeholder.com/250x140/667eea/ffffff?text=Catur"
-                    title="Catur"
-                    description="Melatih strategi dan kemampuan berpikir logis."
-                    location="Ruang Kelas C"
-                    time="Jumat, 13.00"
+                    imageUrl="https://via.placeholder.com/240x300/03A9F4/ffffff?text=ANGKLUNG"
+                    title="Angklung"
+                    schedule="Setiap Kamis"
+                    description="Mengenalkan seni musik tradisional angklung, melatih kekompakan dan harmoni dalam bermusik."
                 />
                 <EkstrakurikulerCard
-                    imageUrl="https://via.placeholder.com/250x140/f093fb/ffffff?text=Art+%26+Craft"
-                    title="Art and Craft"
-                    description="Mengekspresikan kreativitas melalui seni rupa dan kerajinan."
-                    location="Lab. Kreativitas"
-                    time="Kamis, 14.30"
+                    imageUrl="https://via.placeholder.com/240x300/E91E63/ffffff?text=ROBOTIK"
+                    title="Robotik"
+                    schedule="Setiap Rabu"
+                    description="Belajar dasar-dasar robotika, pemrograman, dan desain, merangsang kreativitas dalam teknologi."
                 />
                 <EkstrakurikulerCard
-                    imageUrl="https://via.placeholder.com/250x140/a18cd1/ffffff?text=Paduan+Suara"
-                    title="Paduan Suara"
-                    description="Mengembangkan bakat vokal dan harmoni."
-                    location="Aula Sekolah"
-                    time="Senin, 15.00"
+                    imageUrl="https://via.placeholder.com/240x300/795548/ffffff?text=SENITARI"
+                    title="Seni Tari"
+                    schedule="Setiap Selasa"
+                    description="Menjelajahi berbagai jenis tari, baik tradisional maupun modern, untuk mengembangkan ekspresi dan kelenturan tubuh."
                 />
                 <EkstrakurikulerCard
-                    imageUrl="https://via.placeholder.com/250x140/f5d020/ffffff?text=Taekwondo"
-                    title="Taekwondo"
-                    description="Membentuk fisik dan mental melalui seni bela diri."
-                    location="Gedung Olahraga"
-                    time="Selasa, 16.00"
-                />
-                <EkstrakurikulerCard
-                    imageUrl="https://via.placeholder.com/250x140/56ab2f/ffffff?text=Sains+Cilik"
-                    title="Sains Cilik"
-                    description="Eksplorasi dunia sains dengan eksperimen seru."
-                    location="Lab. Sains"
-                    time="Rabu, 13.30"
-                />
-                <EkstrakurikulerCard
-                    imageUrl="https://via.placeholder.com/250x140/fdc830/ffffff?text=Literasi"
-                    title="Literasi & Dongeng"
-                    description="Meningkatkan minat baca dan bercerita."
-                    location="Perpustakaan"
-                    time="Jumat, 14.00"
+                    imageUrl="https://via.placeholder.com/240x300/607D8B/ffffff?text=PANAHAN"
+                    title="Panahan"
+                    schedule="Setiap Minggu"
+                    description="Melatih fokus, konsentrasi, dan ketepatan melalui olahraga panahan, membentuk mental yang tenang."
                 />
             </div>
         </section>

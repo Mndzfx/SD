@@ -1,8 +1,7 @@
-// Agenda.js
 import React, { useEffect, useState } from 'react';
 
 function Agenda() {
-    // --- Common Styles (Disalin dari DaftarGuru.js untuk konsistensi) ---
+    // --- Common Styles (REVERTED TO ORIGINAL FOR HEADER ELEMENTS) ---
     const commonStyles = {
         container: {
             maxWidth: '1200px',
@@ -10,7 +9,7 @@ function Agenda() {
             padding: '0 20px',
             boxSizing: 'border-box',
         },
-        // --- sectionHeader untuk Desktop (default) ---
+        // --- sectionHeader untuk Desktop (default from original) ---
         sectionHeader: {
             display: 'flex',
             justifyContent: 'space-between', // Default: sejajar kiri-kanan
@@ -33,7 +32,6 @@ function Agenda() {
             marginTop: 0,
             maxWidth: '750px',
             lineHeight: '1.6',
-            // margin: '0 auto' dan textAlign: 'center' akan diterapkan kondisional untuk mobile
         },
         sectionButton: {
             backgroundColor: '#e8f4fd',
@@ -56,79 +54,114 @@ function Agenda() {
         },
     };
 
-    // Definisi gaya khusus untuk komponen Agenda ini
+    // --- Specific styles for the Agenda component and card internals (KEPT NEW DESIGN) ---
     const styles = {
         agendaSection: {
-            backgroundImage: `url('/img/background1.png')`, // Pastikan path gambar ini benar
+            // Reverted background to original image with overlay, but kept other properties
+            backgroundImage: `url('/img/background1.png')`, // Original image background
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             position: 'relative',
-            marginTop: '50px',
+            marginTop: '50px', // Original margin
             maxWidth: '100%',
             overflow: 'hidden',
             color: 'white',
-            boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
-            padding: '0 0 30px 0',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.1)', // Original shadow
+            padding: '0 0 30px 0', // Original padding
         },
         agendaGridContainer: {
-            display: 'flex', // Use flexbox for horizontal layout
+            display: 'flex',
             overflowX: 'scroll', // Enable horizontal scrolling
-            scrollSnapType: 'x mandatory', // Optional: for smoother snapping to cards
-            paddingBottom: '15px', // Add some padding for the scrollbar area
-            msOverflowStyle: 'none', // Hide scrollbar for IE/Edge
-            scrollbarWidth: 'none', // Hide scrollbar for Firefox
-            WebkitOverflowScrolling: 'touch', // Enable smooth scrolling on iOS
-            gap: '25px', // Jarak antar kartu
+            scrollSnapType: 'x mandatory',
+            paddingBottom: '15px',
+            gap: '30px', // Gap between cards (kept new value)
+            padding: '0 20px', // Padding for the container itself (kept new value)
 
-            // Hide scrollbar for Chrome, Safari, Opera
+            // --- HIDE SCROLLBAR (Kept) ---
+            MsOverflowStyle: 'none',
+            scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
             '&::-webkit-scrollbar': {
                 display: 'none',
             },
-            flexShrink: 0, // Prevent container from shrinking
         },
         agendaCard: {
-            flex: '0 0 auto', // Prevent cards from growing or shrinking, keep their auto width
-            width: '300px', // Fixed width for each card (adjust as needed)
-            background: '#ffffff',
-            borderRadius: '12px',
-            padding: '25px',
-            backdropFilter: 'none',
-            border: '1px solid #ddd',
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            flex: '0 0 auto',
+            width: '320px', // Fixed width for each card (kept new value)
+            background: '#ffffff', // Clean white background (kept new value)
+            borderRadius: '16px', // More rounded corners (kept new value)
+            padding: '25px', // Increased padding inside card (kept new value)
+            border: 'none', // No border (kept new value)
+            transition: 'all 0.4s ease', // Slower transition (kept new value)
             color: '#333',
             cursor: 'pointer',
-            scrollSnapAlign: 'start', // Optional: for smoother snapping to cards
-
+            boxShadow: '0 6px 20px rgba(0,0,0,0.08)', // Lighter, modern shadow (kept new value)
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            minHeight: '220px', // Adjusted minimum height (kept new value)
+            position: 'relative',
+            overflow: 'hidden',
+            scrollSnapAlign: 'start',
             '&:hover': {
-                transform: 'translateY(-5px)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                transform: 'translateY(-10px) scale(1.03)', // More prominent lift and slight scale (kept new value)
+                boxShadow: '0 15px 35px rgba(0,0,0,0.15)', // Stronger hover shadow (kept new value)
             },
+        },
+        // --- CARD INTERNAL STYLES (KEPT NEW DESIGN) ---
+        cardHeader: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            marginBottom: '15px',
         },
         agendaDateSmall: {
             fontSize: '13px',
-            opacity: 0.8,
-            marginBottom: '8px',
+            fontWeight: '600',
             color: '#777',
+            opacity: 0.9,
+            letterSpacing: '0.5px',
+            textTransform: 'uppercase',
         },
         agendaTime: {
-            fontSize: '15px',
-            fontWeight: 'bold',
-            marginBottom: '10px',
-            color: '#e67e22',
+            fontSize: '20px',
+            fontWeight: '700',
+            color: '#1E90FF', // Dodger Blue for time
+            flexShrink: 0,
+            marginLeft: '15px',
         },
         agendaEventTitle: {
-            fontSize: '19px',
-            fontWeight: 'bold',
-            marginBottom: '12px',
+            fontSize: '22px',
+            fontWeight: '800',
+            color: '#2c3e50', // Darker blue-grey for title
             lineHeight: 1.3,
-            color: '#222',
+            marginBottom: '15px',
         },
         agendaLocation: {
             fontSize: '14px',
-            opacity: 0.85,
-            color: '#555',
+            color: '#666',
+            opacity: 0.8,
+            marginTop: 'auto',
+            paddingTop: '15px',
+            borderTop: '1px dashed #eee', // Dashed line for a softer separator
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
         },
+        locationIcon: {
+            fontSize: '16px',
+            color: '#3498db',
+        },
+        cardCornerAccent: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '40px',
+            height: '40px',
+            backgroundColor: '#FFD700', // Gold accent
+            borderBottomLeftRadius: '16px',
+        }
     };
 
     const getStyle = (elementName, isHovered = false) => {
@@ -138,24 +171,14 @@ function Agenda() {
             isHovered && baseStyle['&:hover'] ? baseStyle['&:hover'] : {}
         );
 
-        let combinedStyle = { ...baseStyle };
-
-        // Handle pseudo-elements for agendaSection overlay (as inline styles don't support `&::before`)
-        // This will be handled by a separate div in JSX for inline styles.
-        if (elementName === 'agendaSection' && combinedStyle['&::before']) {
-             // This part will not directly apply in React inline styles.
-             // It's meant for CSS-in-JS libraries or external CSS.
-             // We'll add a separate div in JSX for the overlay.
-        }
-
-        return { ...combinedStyle, ...hoverStyle };
+        return { ...baseStyle, ...hoverStyle };
     };
 
     const [hoveredJelajahiAgendaBtn, setHoveredJelajahiAgendaBtn] = useState(false);
     const [hoveredAgendaCard, setHoveredAgendaCard] = useState({});
 
     // --- State dan useEffect untuk Deteksi Ukuran Layar ---
-    const MOBILE_BREAKPOINT = 768; // Sesuaikan breakpoint sesuai kebutuhan (misal: 768px untuk tablet/mobile)
+    const MOBILE_BREAKPOINT = 768;
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -164,7 +187,7 @@ function Agenda() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const isMobileView = windowWidth < MOBILE_BREAKPOINT;
+    const isMobileView = windowWidth < MOBILE_BREAKPOINT; // Kept for sectionHeader responsiveness
 
     const agendaData = [
         { id: 1, date: "18 November 2024", time: "Start 07:00 WIB", title: "Upacara Milad Muhammadiyah", location: "Lapangan SD Muhammadiyah Plus" },
@@ -179,7 +202,7 @@ function Agenda() {
         <div
             style={getStyle('agendaSection')}
         >
-            {/* The overlay div for background effect (needed for inline styles) */}
+            {/* The overlay div for background effect (needed for inline styles with background image) */}
             <div style={{
                 position: 'absolute',
                 top: 0,
@@ -194,7 +217,7 @@ function Agenda() {
                 <div
                     style={{
                         ...getStyle('sectionHeader'),
-                        // --- Kondisi Gaya untuk Mobile View ---
+                        // --- Kondisi Gaya untuk Mobile View (Reverted to original) ---
                         ...(isMobileView ? {
                             flexDirection: 'column', // Tumpuk vertikal
                             alignItems: 'center',    // Pusatkan secara horizontal
@@ -205,13 +228,16 @@ function Agenda() {
                     {/* Div yang membungkus Judul dan Subjudul */}
                     <div
                         style={{
-                            // Untuk subjudul, pastikan margin auto juga hanya aktif di mobile
+                            // Untuk subjudul, pastikan margin auto juga hanya aktif di mobile (Reverted to original)
                             ...(isMobileView ? { margin: '0 auto' } : {}),
                         }}
                     >
+                        {/* REVERTED: Original Title */}
                         <h1 style={getStyle('sectionTitle')}>Agenda</h1>
+                        {/* REVERTED: Original Subtitle */}
                         <p style={getStyle('sectionSubtitle')}>Menyajikan Publikasi Artikel Berita dan Informasi dari SD Muhammadiyah Plus Kota Probolinggo</p>
                     </div>
+                    {/* REVERTED: Original Button */}
                     <button
                         style={{
                             ...getStyle('sectionButton'),
@@ -224,21 +250,24 @@ function Agenda() {
                     </button>
                 </div>
 
-                <div style={{ ...getStyle('agendaGridContainer'), ...commonStyles.container, padding: commonStyles.container.padding }}>
+                {/* Agenda Cards Container (Horizontal Scroll with hidden scrollbar and new card design) */}
+                <div style={getStyle('agendaGridContainer')}>
                     {agendaData.map((agenda) => (
                         <div
                             key={agenda.id}
-                            style={{
-                                ...getStyle('agendaCard'),
-                                ...(hoveredAgendaCard[`${agenda.id}`] ? getStyle('agendaCard', true) : {}),
-                            }}
+                            style={getStyle('agendaCard', hoveredAgendaCard[`${agenda.id}`])}
                             onMouseEnter={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: true }))}
                             onMouseLeave={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: false }))}
                         >
-                            <div style={getStyle('agendaDateSmall')}>{agenda.date}</div>
-                            <div style={getStyle('agendaTime')}>{agenda.time}</div>
+                            <div style={getStyle('cardCornerAccent')}></div> {/* New accent element */}
+                            <div style={getStyle('cardHeader')}>
+                                <div style={getStyle('agendaDateSmall')}>{agenda.date}</div>
+                                <div style={getStyle('agendaTime')}>{agenda.time}</div>
+                            </div>
                             <h3 style={getStyle('agendaEventTitle')}>{agenda.title}</h3>
-                            <div style={getStyle('agendaLocation')}>{agenda.location}</div>
+                            <div style={getStyle('agendaLocation')}>
+                                <span style={getStyle('locationIcon')}>📍</span> {agenda.location}
+                            </div>
                         </div>
                     ))}
                 </div>
