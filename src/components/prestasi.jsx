@@ -221,14 +221,14 @@ function Dashboard() {
     return (
         // Outermost container with black background
         <div style={{
-            backgroundColor: '#000000', // Latar belakang hitam
+            backgroundColor: '#fff', // Latar belakang hitam
             width: '100%', // Pastikan memenuhi lebar
             boxSizing: 'border-box',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center', // Pusatkan konten secara horizontal
             justifyContent: 'flex-start', // Mulai dari atas
-            padding: '20px 0', // Padding atas/bawah untuk memberikan sedikit ruang
+            padding: '0px 0', // Padding atas/bawah untuk memberikan sedikit ruang
             // Kunci: Tidak ada 'minHeight: 100vh' di sini.
             // Tingginya akan sepenuhnya ditentukan oleh konten anak-anaknya.
         }}>
