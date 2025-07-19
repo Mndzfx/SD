@@ -258,7 +258,7 @@ a {
     color: var(--color-white);
     max-width: 46.875rem;
     margin: 0 auto 0.8125rem auto;
-    line-height: 1.5; /* Adjusted for better readability */
+    line-height: 1.5;
 }
 
 .hero-buttons {
@@ -367,7 +367,9 @@ a {
     align-items: flex-start;
     position: relative;
     z-index: 1;
-    margin-top: -5rem; /* DIKEMBALIKAN KE NILAI ASLI ANDA UNTUK DESKTOP */
+    margin-top: -5rem;
+    /* Menyesuaikan padding untuk mengurangi tinggi card secara keseluruhan */
+    padding: 1.5rem 2rem; /* Sedikit mengurangi padding atas/bawah dan samping */
 }
 
 .update-section-h2 {
@@ -421,55 +423,55 @@ a {
     width: 100%;
 }
 
-/* --- Visi dan Misi Section Styles (Enhanced) --- */
+/* --- Visi dan Misi Section Styles (Enhanced FOR DESKTOP) --- */
 .help-section-h3 {
-    font-size: 2.2rem; /* Larger, more impactful title */
+    font-size: 1.8rem; /* Dikecilkan dari 2.2rem */
     color: var(--color-dark-gray);
-    margin-bottom: 1.5rem; /* More space below the main title */
-    font-weight: 800; /* Extra bold for prominence */
+    margin-bottom: 0.8rem; /* Dikecilkan dari 1.5rem */
+    font-weight: 800;
     line-height: 1.2;
-    text-align: center; /* Center align for strong presence */
+    text-align: center;
     width: 100%;
 }
 
 .help-content-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Keep individual sections left-aligned within the wrapper */
+    align-items: flex-start;
     width: 100%;
-    gap: 1.5rem; /* Space between Visi and Misi sections */
+    gap: 1rem; /* Dikecilkan dari 1.5rem */
 }
 
 .help-content-wrapper h4 {
-    font-size: 1.6rem; /* Bigger subtitle for Visi/Misi */
-    margin-bottom: 0.8rem; /* More space below Visi/Misi titles */
-    color: var(--color-primary-purple); /* Highlight Visi/Misi titles with primary color */
+    font-size: 1.35rem; /* Dikecilkan dari 1.6rem */
+    margin-bottom: 0.4rem; /* Dikecilkan dari 0.8rem */
+    color: var(--color-primary-purple);
     font-weight: 700;
-    text-align: left; /* Ensure Visi/Misi titles are left-aligned */
+    text-align: left;
     width: 100%;
 }
 
 .help-content-wrapper p {
-    font-size: 1.1rem; /* Slightly larger text for readability */
-    line-height: 1.7; /* Increased line height for better flow */
-    margin-bottom: 0.5rem; /* Keep some space after the paragraph */
-    color: var(--color-medium-gray); /* Softer text color for body */
+    font-size: 1rem; /* Dikecilkan dari 1.1rem */
+    line-height: 1.6; /* Dikecilkan dari 1.7 */
+    margin-bottom: 0.3rem; /* Dikecilkan dari 0.5rem */
+    color: var(--color-medium-gray);
     text-align: left;
     width: 100%;
 }
 
 .help-section-list {
-    list-style: disc; /* Keep disc bullets */
-    padding-left: 1.8rem; /* More padding for list items */
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem; /* More space after the list */
+    list-style: disc;
+    padding-left: 1.5rem; /* Dikecilkan dari 1.8rem */
+    margin-top: 0.3rem; /* Dikecilkan dari 0.5rem */
+    margin-bottom: 1rem; /* Dikecilkan dari 1.5rem */
 }
 
 .help-section-list li {
-    margin-bottom: 0.7rem; /* More space between list items */
-    font-size: 1.05rem; /* Slightly larger font for list items */
+    margin-bottom: 0.4rem; /* Dikecilkan dari 0.7rem */
+    font-size: 0.95rem; /* Dikecilkan dari 1.05rem */
     color: var(--color-dark-gray);
-    line-height: 1.6;
+    line-height: 1.5; /* Dikecilkan dari 1.6 */
 }
 
 /* Principal Info Styling */
@@ -641,7 +643,7 @@ a {
         padding: 3.5rem 0 1.25rem 0;
         flex-direction: column;
         text-align: center;
-        align-items: flex-start;
+        align-items: center;
         min-height: 400px;
     }
 
@@ -662,7 +664,7 @@ a {
 
     .hero-description {
         font-size: 1rem;
-        line-height: 1.5; /* Adjusted for mobile readability */
+        line-height: 1.5;
         margin-bottom: 1.25rem;
     }
 
@@ -717,13 +719,17 @@ a {
         padding: 1.25rem;
         text-align: left;
         order: 1;
-        /* KUNCI: Membuat kartu menonjol ke atas */
-        margin-top: -3.5rem; /* Sesuaikan nilai ini sesuai keinginan untuk menonjol lebih/kurang */
-        position: relative; /* Pastikan ini ada agar z-index berfungsi */
-        z-index: 3; /* Pastikan di atas card sebelumnya */
-        box-shadow: var(--shadows-medium); /* Pertahankan bayangan agar terlihat 'terangkat' */
-        background-color: var(--color-white); /* Pertahankan warna latar belakang */
-        border-radius: var(--border-radius-lg); /* Pertahankan border-radius */
+        margin-top: -3.5rem;
+        position: relative;
+        z-index: 3;
+        box-shadow: var(--shadows-medium);
+        background-color: var(--color-white);
+        border-radius: var(--border-radius-lg);
+        width: calc(100% - (var(--layout-content-padding-x) * 2));
+        margin-left: auto;
+        margin-right: auto;
+        transform: translateY(0);
+        transition: transform 0.3s ease;
     }
 
     .update-section-h2 {
@@ -747,37 +753,37 @@ a {
 
     /* Visi dan Misi Section Mobile (Enhanced) */
     .help-section-h3 {
-        font-size: 1.8rem; /* Adjusted for mobile, still impactful */
-        margin-bottom: 1rem; /* More space for the title */
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
         font-weight: 800;
-        text-align: center; /* Keep centered for strong presence */
+        text-align: center;
     }
 
     .help-content-wrapper {
-        gap: 1rem; /* Reduced gap for mobile */
+        gap: 1rem;
     }
 
     .help-content-wrapper h4 {
-        font-size: 1.3rem; /* Adjusted for mobile */
+        font-size: 1.3rem;
         margin-bottom: 0.5rem;
         text-align: left;
     }
 
     .help-content-wrapper p {
-        font-size: 0.95rem; /* Adjusted for mobile readability */
+        font-size: 0.95rem;
         line-height: 1.6;
         margin-bottom: 0.4rem;
     }
 
     .help-section-list {
-        padding-left: 1.2rem; /* Adjusted padding */
+        padding-left: 1.2rem;
         margin-top: 0.3rem;
         margin-bottom: 1rem;
     }
 
     .help-section-list li {
         margin-bottom: 0.5rem;
-        font-size: 0.9rem; /* Adjusted for mobile */
+        font-size: 0.9rem;
     }
 
     /* Principal Info Mobile */
