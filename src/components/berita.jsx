@@ -5,7 +5,7 @@ function Berita() {
     const artikelData = [
         {
             id: 1,
-            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/14421122268998131160_0", // Gambar siswa olahraga sekolah
+            imgSrc: "https://via.placeholder.com/600x400/FFD700/FFFFFF?text=Pekan+Olahraga+Sekolah", // Placeholder for school sports event
             title: "Pekan Olahraga Sekolah Sukses Digelar",
             author: "Humas Sekolah",
             readTime: "4 min Read",
@@ -13,7 +13,7 @@ function Berita() {
         },
         {
             id: 2,
-            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/933682558675236177_0", // Gambar kunjungan edukasi siswa ke museum
+            imgSrc: "https://via.placeholder.com/600x400/ADD8E6/FFFFFF?text=Kunjungan+Edukasi", // Placeholder for educational visit
             title: "Kunjungan Edukasi ke Museum Sejarah",
             author: "Guru Sejarah",
             readTime: "6 min Read",
@@ -21,7 +21,7 @@ function Berita() {
         },
         {
             id: 3,
-            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/13671102348016111466_0", // Gambar siswa juara lomba sains
+            imgSrc: "https://via.placeholder.com/600x400/90EE90/FFFFFF?text=Lomba+Sains", // Placeholder for science competition
             title: "Siswa Berprestasi di Lomba Sains Nasional",
             author: "Tim IPA Sekolah",
             readTime: "3 min Read",
@@ -29,7 +29,7 @@ function Berita() {
         },
         {
             id: 4,
-            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/1244381648370638732_0", // Gambar kegiatan ekstrakurikuler SD
+            imgSrc: "https://via.placeholder.com/600x400/DDA0DD/FFFFFF?text=Kegiatan+Ekstrakurikuler", // Placeholder for extracurricular activities
             title: "Pengembangan Diri Melalui Ekstrakurikuler Baru",
             author: "Koordinator Ekskul",
             readTime: "5 min Read",
@@ -37,7 +37,7 @@ function Berita() {
         },
         {
             id: 5,
-            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/6128620639202060788_0", // Gambar perpisahan siswa SD
+            imgSrc: "https://via.placeholder.com/600x400/FFA07A/FFFFFF?text=Perpisahan+Kelas+6", // Placeholder for graduation/farewell
             title: "Momen Haru Perpisahan Kelas VI",
             author: "Panitia Acara",
             readTime: "5 min Read",
@@ -45,7 +45,7 @@ function Berita() {
         },
         {
             id: 6,
-            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/11490478203190259361_0", // Gambar perpustakaan sekolah modern
+            imgSrc: "https://via.placeholder.com/600x400/87CEEB/FFFFFF?text=Renovasi+Sekolah", // Placeholder for school renovation
             title: "Renovasi Perpustakaan Rampung",
             author: "Sarana Prasarana",
             readTime: "4 min Read",

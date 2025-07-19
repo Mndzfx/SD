@@ -9,7 +9,11 @@ function App() {
     // Ref untuk menunjuk ke elemen menu pop-up mobile
     const navRef = useRef(null);
     // Ref untuk menunjuk ke tombol hamburger
-    const hamburgerRef = useRef(null); // Tambahkan ref untuk hamburger
+    const hamburgerRef = useRef(null); 
+
+    // Refs untuk elemen card yang akan dianimasikan
+    const updateSectionRef = useRef(null);
+    const helpSectionRef = useRef(null);
 
     useEffect(() => {
         // Handler untuk mengubah state isMobile saat ukuran jendela berubah
@@ -36,10 +40,37 @@ function App() {
         window.addEventListener('resize', handleResize);
         document.addEventListener('mousedown', handleClickOutside);
 
-        // Bersihkan event listener saat komponen di-unmount
+        // Intersection Observer untuk animasi scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('hidden');
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target); // Berhenti mengamati setelah terlihat
+                }
+            });
+        }, {
+            threshold: 0.1 // Sedikit saja elemen terlihat sudah dianggap intersecting (10% dari elemen)
+        });
+
+        // Amati elemen card
+        if (updateSectionRef.current) {
+            observer.observe(updateSectionRef.current);
+        }
+        if (helpSectionRef.current) {
+            observer.observe(helpSectionRef.current);
+        }
+
+        // Bersihkan event listener dan observer saat komponen di-unmount
         return () => {
             window.removeEventListener('resize', handleResize);
             document.removeEventListener('mousedown', handleClickOutside);
+            if (updateSectionRef.current) {
+                observer.unobserve(updateSectionRef.current);
+            }
+            if (helpSectionRef.current) {
+                observer.unobserve(helpSectionRef.current);
+            }
         };
     }, [isNavOpen]); // Dependensi isNavOpen untuk memastikan logika terbaru
 
@@ -162,7 +193,7 @@ function App() {
             {/* Bagian Kolom Dua */}
             <div className="inner-container">
                 <div className="two-column-section-wrapper">
-                    <section className="section update-section-card update-section">
+                    <section ref={updateSectionRef} className="section update-section-card update-section hidden">
                         <h2 className="update-section-h2">Kenali Sekolah Kami Lebih Dekat</h2>
                         <p className="update-section-p">Temukan berbagai fasilitas, program, dan layanan yang kami sediakan demi mendukung pendidikan anak Anda.</p>
                         <div className="update-form">
@@ -172,7 +203,7 @@ function App() {
                     </section>
 
                     {/* Visi dan Misi Section */}
-                    <section className="section help-section-card help-section">
+                    <section ref={helpSectionRef} className="section help-section-card help-section hidden">
                         <h3 className="help-section-h3">Visi dan Misi SD Sejahtera Indonesia</h3>
                         <div className="help-content-wrapper">
                             <h4>Visi</h4>

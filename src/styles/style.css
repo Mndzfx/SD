@@ -119,6 +119,7 @@ a {
     background-color: var(--color-header-hero-bg);
     padding-bottom: 3.125rem;
     overflow: hidden;
+    min-height: 400px;
 }
 
 .inner-container {
@@ -207,7 +208,7 @@ a {
     font-weight: 600;
 }
 
-/* Hero Section (Tidak ada perubahan di sini) */
+/* Hero Section */
 .hero-section {
     display: flex;
     align-items: center;
@@ -223,6 +224,8 @@ a {
     padding-right: 1.875rem;
     z-index: 2;
     text-align: left;
+    /* Tambahkan margin-top negatif jika diperlukan untuk menyeimbangkan posisi teks */
+    /* margin-top: -15px; */ 
 }
 
 .hero-subtitle {
@@ -275,11 +278,18 @@ a {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    /* Ubah align-items untuk mendorong gambar ke bawah */
+    align-items: flex-end; /* Awalnya ini, mungkin perlu diubah ke center atau flex-start */
     position: relative;
     z-index: 1;
     margin-right: 0;
-    margin-bottom: -3.75rem;
+    /* Mungkin perlu menyesuaikan margin-bottom jika align-items diubah */
+    margin-bottom: -3.75rem; 
+    
+    /* Coba ubah align-items dan mainkan padding-top atau gap di sini */
+    /* Misalnya: */
+    /* align-items: center; /* Coba ini untuk melihat perubahan */
+    /* padding-top: 50px; /* Tambahkan padding di wrapper untuk menggeser isinya ke bawah */
 }
 
 .hero-image {
@@ -289,6 +299,8 @@ a {
     object-fit: contain;
     position: relative;
     z-index: 2;
+    /* Hapus 'top' atau 'margin-top' di sini, kita akan kontrol dari wrapper */
+    /* top: 15px; */ 
 }
 
 .hero-image-background {
@@ -318,7 +330,7 @@ a {
     flex-direction: row;
 }
 
-/* Card Styles (Tidak ada perubahan di sini) */
+/* Card Styles */
 .update-section-card,
 .help-section-card {
     padding: 1.5625rem 2.1875rem;
@@ -326,7 +338,22 @@ a {
     box-shadow: var(--shadows-medium);
     display: flex;
     flex-direction: column;
+    /* Tambahkan transisi untuk animasi muncul */
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out; /* Durasi dan easing bisa disesuaikan */
 }
+
+/* Initial state for hidden cards */
+.hidden {
+    opacity: 0;
+    transform: translateY(30px); /* Geser sedikit ke bawah dari posisi akhir */
+}
+
+/* Final state for shown cards */
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
 .update-section-card {
     flex: 1 1 40%;
@@ -631,7 +658,7 @@ a {
 
     .hero-subtitle {
         font-size: 0.8rem;
-        justify-content: center;
+        justify-content: flex-start; /* Ubah menjadi flex-start untuk rata kiri */
     }
 
     .hero-content-h1 {
