@@ -11,9 +11,9 @@ function App() {
     // Ref untuk menunjuk ke tombol hamburger
     const hamburgerRef = useRef(null); 
 
-    // Refs untuk elemen card yang akan dianimasikan
-    const updateSectionRef = useRef(null);
-    const helpSectionRef = useRef(null);
+    // Refs untuk elemen teks di dalam card yang akan dianimasikan
+    const updateTextRef = useRef(null);
+    const helpTextRef = useRef(null);
 
     useEffect(() => {
         // Handler untuk mengubah state isMobile saat ukuran jendela berubah
@@ -53,23 +53,23 @@ function App() {
             threshold: 0.1 // Sedikit saja elemen terlihat sudah dianggap intersecting (10% dari elemen)
         });
 
-        // Amati elemen card
-        if (updateSectionRef.current) {
-            observer.observe(updateSectionRef.current);
+        // Amati elemen teks di dalam card
+        if (updateTextRef.current) {
+            observer.observe(updateTextRef.current);
         }
-        if (helpSectionRef.current) {
-            observer.observe(helpSectionRef.current);
+        if (helpTextRef.current) {
+            observer.observe(helpTextRef.current);
         }
 
         // Bersihkan event listener dan observer saat komponen di-unmount
         return () => {
             window.removeEventListener('resize', handleResize);
             document.removeEventListener('mousedown', handleClickOutside);
-            if (updateSectionRef.current) {
-                observer.unobserve(updateSectionRef.current);
+            if (updateTextRef.current) {
+                observer.unobserve(updateTextRef.current);
             }
-            if (helpSectionRef.current) {
-                observer.unobserve(helpSectionRef.current);
+            if (helpTextRef.current) {
+                observer.unobserve(helpTextRef.current);
             }
         };
     }, [isNavOpen]); // Dependensi isNavOpen untuk memastikan logika terbaru
@@ -193,30 +193,34 @@ function App() {
             {/* Bagian Kolom Dua */}
             <div className="inner-container">
                 <div className="two-column-section-wrapper">
-                    <section ref={updateSectionRef} className="section update-section-card update-section hidden">
-                        <h2 className="update-section-h2">Kenali Sekolah Kami Lebih Dekat</h2>
-                        <p className="update-section-p">Temukan berbagai fasilitas, program, dan layanan yang kami sediakan demi mendukung pendidikan anak Anda.</p>
-                        <div className="update-form">
-                            <input type="email" placeholder="Cari informasi..." className="update-form-input" />
-                            <button type="submit" className="update-form-button">Cari</button>
+                    <section className="section update-section-card"> {/* Removed 'hidden' class from card */}
+                        <div ref={updateTextRef} className="update-section hidden"> {/* New div for animating text */}
+                            <h2 className="update-section-h2">Kenali Sekolah Kami Lebih Dekat</h2>
+                            <p className="update-section-p">Temukan berbagai fasilitas, program, dan layanan yang kami sediakan demi mendukung pendidikan anak Anda.</p>
+                            <div className="update-form">
+                                <input type="email" placeholder="Cari informasi..." className="update-form-input" />
+                                <button type="submit" className="update-form-button">Cari</button>
+                            </div>
                         </div>
                     </section>
 
                     {/* Visi dan Misi Section */}
-                    <section ref={helpSectionRef} className="section help-section-card help-section hidden">
-                        <h3 className="help-section-h3">Visi dan Misi SD Sejahtera Indonesia</h3>
-                        <div className="help-content-wrapper">
-                            <h4>Visi</h4>
-                            <p className="help-section-p">
-                                Menjadi sekolah dasar unggulan yang membentuk generasi berakhlak mulia, cerdas, kreatif, dan mandiri, siap menghadapi tantangan global.
-                            </p>
+                    <section className="section help-section-card"> {/* Removed 'hidden' class from card */}
+                        <div ref={helpTextRef} className="help-section hidden"> {/* New div for animating text */}
+                            <h3 className="help-section-h3">Visi dan Misi SD Sejahtera Indonesia</h3>
+                            <div className="help-content-wrapper">
+                                <h4>Visi</h4>
+                                <p className="help-section-p">
+                                    Menjadi sekolah dasar unggulan yang membentuk generasi berakhlak mulia, cerdas, kreatif, dan mandiri, siap menghadapi tantangan global.
+                                </p>
 
-                            <h4>Misi</h4>
-                            <ul className="help-section-list">
-                                <li>Mengembangkan potensi peserta didik secara holistik (akademik, non-akademik, spiritual, dan sosial).</li>
-                                <li>Menciptakan lingkungan belajar yang aman, nyaman, dan inspiratif.</li>
-                                <li>Membentuk karakter peserta didik yang Islami, nasionalis, dan berwawasan global.</li>
-                            </ul>
+                                <h4>Misi</h4>
+                                <ul className="help-section-list">
+                                    <li>Mengembangkan potensi peserta didik secara holistik (akademik, non-akademik, spiritual, dan sosial).</li>
+                                    <li>Menciptakan lingkungan belajar yang aman, nyaman, dan inspiratif.</li>
+                                    <li>Membentuk karakter peserta didik yang Islami, nasionalis, dan berwawasan global.</li>
+                                </ul>
+                            </div>
                         </div>
                     </section>
                 </div>
