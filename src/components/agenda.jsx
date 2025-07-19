@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useSpring, animated, config } from 'react-spring'; // Import useSpring, animated, and config
+import { useSpring, animated, config } from 'react-spring';
 
 function Agenda() {
-    // --- Common Styles (REVERTED TO ORIGINAL FOR HEADER ELEMENTS) ---
+    // --- Common Styles (DISINKRONKAN DENGAN DASHBOARD.JSX) ---
     const commonStyles = {
         container: {
             maxWidth: '1200px',
@@ -10,33 +10,35 @@ function Agenda() {
             padding: '0 20px',
             boxSizing: 'border-box',
         },
-        // --- sectionHeader untuk Desktop (default from original) ---
         sectionHeader: {
             display: 'flex',
-            justifyContent: 'space-between', // Default: sejajar kiri-kanan
+            justifyContent: 'space-between',
             alignItems: 'center',
-            paddingTop: '30px', // **Nilai disesuaikan dari 60px menjadi 30px**
+            paddingTop: '30px',
             marginBottom: '20px',
             flexWrap: 'wrap',
             gap: '15px',
         },
+        // --- SESUAI DENGAN DASHBOARD.JSX ---
         sectionTitle: {
             fontSize: '32px',
             fontWeight: 'bold',
-            color: 'white',
+            color: 'white', // Pastikan warna putih
             marginBottom: '5px',
             marginTop: 0,
         },
+        // --- SESUAI DENGAN DASHBOARD.JSX ---
         sectionSubtitle: {
             fontSize: '15px',
-            color: 'rgba(255, 255, 255, 0.9)',
+            color: 'rgba(255, 255, 255, 0.9)', // Pastikan warna putih semi-transparan
             marginTop: 0,
             maxWidth: '750px',
             lineHeight: '1.6',
         },
+        // --- SESUAI DENGAN DASHBOARD.JSX ---
         sectionButton: {
-            backgroundColor: '#e8f4fd',
-            color: '#3498db',
+            backgroundColor: '#e8f4fd', // Default background button
+            color: '#3498db',           // Default text color button
             border: '1px solid #3498db',
             padding: '10px 20px',
             borderRadius: '25px',
@@ -47,6 +49,7 @@ function Agenda() {
             display: 'inline-block',
             whiteSpace: 'nowrap',
         },
+        // --- SESUAI DENGAN DASHBOARD.JSX ---
         sectionButtonHover: {
             backgroundColor: '#3498db',
             color: 'white',
@@ -55,7 +58,7 @@ function Agenda() {
         },
     };
 
-    // --- Specific styles for the Agenda component and card internals (KEPT NEW DESIGN) ---
+    // --- Specific styles for the Agenda component and card internals ---
     const styles = {
         agendaSection: {
             // backgroundImage akan diatur secara dinamis oleh JavaScript
@@ -66,10 +69,9 @@ function Agenda() {
             marginTop: '50px',
             maxWidth: '100%',
             overflow: 'hidden',
-            color: 'white',
+            color: 'white', // Tetap white karena konten di atasnya putih
             boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
             padding: '0 0 30px 0',
-            // Transisi untuk efek fade-in gambar latar belakang
             transition: 'background-image 0.7s ease-in-out, background-color 0.7s ease-in-out',
         },
         agendaGridContainer: {
@@ -79,8 +81,6 @@ function Agenda() {
             paddingBottom: '15px',
             gap: '30px',
             padding: '0 20px',
-
-            // --- HIDE SCROLLBAR (Kept) ---
             MsOverflowStyle: 'none',
             scrollbarWidth: 'none',
             WebkitOverflowScrolling: 'touch',
@@ -111,7 +111,6 @@ function Agenda() {
                 boxShadow: '0 15px 35px rgba(0,0,0,0.15)',
             },
         },
-        // --- CARD INTERNAL STYLES (KEPT NEW DESIGN) ---
         cardHeader: {
             display: 'flex',
             justifyContent: 'space-between',
@@ -187,12 +186,12 @@ function Agenda() {
         };
         img.onerror = () => {
             console.error('Failed to load background image for Agenda: /img/background1.png');
-            setBackgroundLoaded(true); // Tetap set true agar tidak stuck
+            setBackgroundLoaded(true); // Fallback: tetap set true agar konten terlihat
         };
         img.src = '/img/background1.png';
     }, []);
 
-    const [hoveredJelajahiAgendaBtn, setHoveredJelajahiAgendaBtn] = useState(false);
+    const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false); // Ganti dari hoveredJelajahiAgendaBtn
     const [hoveredAgendaCard, setHoveredAgendaCard] = useState({});
 
     // --- State dan useEffect untuk Deteksi Ukuran Layar ---
@@ -247,64 +246,62 @@ function Agenda() {
     };
 
     return (
-        <div style={agendaSectionDynamicStyle}> {/* Gunakan style dinamis untuk agendaSection */}
-            {/* REMOVED the overlay div. The background image will now be fully visible. */}
-            {/* If you ever want an overlay again, you can re-add it here with a different color or opacity. */}
-
+        <div style={agendaSectionDynamicStyle}>
             <div style={{ ...getStyle('container'), position: 'relative', zIndex: 1 }}>
-                {/* Header bagian dengan animasi muncul dari atas */}
                 <animated.div
                     style={{
                         ...getStyle('sectionHeader'),
-                        ...sectionHeaderAnimation, // Aplikasi animasi header
-                        // --- Kondisi Gaya untuk Mobile View (Reverted to original) ---
+                        ...sectionHeaderAnimation,
                         ...(isMobileView ? {
-                            flexDirection: 'column', // Tumpuk vertikal
-                            alignItems: 'center',    // Pusatkan secara horizontal
-                            textAlign: 'center',     // Pusatkan teks di dalamnya
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            textAlign: 'center',
                         } : {}),
                     }}
                 >
-                    {/* Div yang membungkus Judul dan Subjudul */}
-                    <div
-                        style={{
-                            // Untuk subjudul, pastikan margin auto juga hanya aktif di mobile (Reverted to original)
-                            ...(isMobileView ? { margin: '0 auto' } : {}),
-                        }}
-                    >
-                        <h1 style={getStyle('sectionTitle')}>Agenda</h1>
-                        <p style={getStyle('sectionSubtitle')}>Menyajikan Publikasi Artikel Berita dan Informasi dari SD Muhammadiyah Plus Kota Probolinggo</p>
+                    <div>
+                        {/* Judul: Warna dan ukuran sama dengan Dashboard */}
+                        <h1 style={getStyle('sectionTitle')}>Agenda Sekolah</h1> {/* Ganti teks judul */}
+                        {/* Subjudul: Warna dan ukuran sama dengan Dashboard */}
+                        <p style={getStyle('sectionSubtitle')}>Lihat jadwal kegiatan penting dan acara terbaru di SD Muhammadiyah Plus Kota Probolinggo.</p> {/* Ganti teks deskripsi */}
                     </div>
-                    {/* Tombol dengan animasi muncul dari kanan */}
-                    <animated.button // Gunakan animated.button
+                    <animated.button
                         style={{
+                            // --- SESUAI DENGAN DASHBOARD.JSX UNTUK TOMBOL PUTIH DENGAN HOVER ---
                             ...getStyle('sectionButton'),
-                            ...sectionButtonAnimation, // Aplikasi animasi tombol
-                            ...(hoveredJelajahiAgendaBtn ? getStyle('sectionButton', true) : {}),
+                            ...sectionButtonAnimation,
+                            backgroundColor: 'white', // Latar belakang putih
+                            color: '#3498db',       // Warna teks biru
+                            border: '1px solid white', // Border putih
+                            ...(isSectionButtonHovered ? {
+                                backgroundColor: '#e8f4fd', // Background saat hover
+                                color: '#3498db',           // Text saat hover
+                                transform: 'translateY(-2px)',
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
+                            } : {})
                         }}
-                        onMouseEnter={() => setHoveredJelajahiAgendaBtn(true)}
-                        onMouseLeave={() => setHoveredJelajahiAgendaBtn(false)}
+                        onMouseEnter={() => setIsSectionButtonHovered(true)}
+                        onMouseLeave={() => setIsSectionButtonHovered(false)}
                     >
                         Jelajahi Agenda
                     </animated.button>
                 </animated.div>
 
-                {/* Agenda Cards Container (Horizontal Scroll with hidden scrollbar and new card design) */}
-                <animated.div style={{ ...getStyle('agendaGridContainer'), ...agendaGridContainerAnimation }}> {/* Aplikasi animasi ke container kartu */}
-                    {agendaData.map((agenda, index) => { // Tambahkan 'index' untuk stagger animation
+                <animated.div style={{ ...getStyle('agendaGridContainer'), ...agendaGridContainerAnimation }}>
+                    {agendaData.map((agenda, index) => {
                         const cardAnimation = useSpring({
-                            from: { opacity: 0, transform: 'translateY(50px)' }, // Muncul dari bawah
+                            from: { opacity: 0, transform: 'translateY(50px)' },
                             to: { opacity: 1, transform: 'translateY(0px)' },
-                            delay: 600 + index * 120, // Stagger delay for each card
-                            config: config.gentle, // Animasi lembut
+                            delay: 600 + index * 120,
+                            config: config.gentle,
                         });
 
                         return (
-                            <animated.div // Gunakan animated.div untuk kartu
+                            <animated.div
                                 key={agenda.id}
                                 style={{
                                     ...getStyle('agendaCard', hoveredAgendaCard[`${agenda.id}`]),
-                                    ...cardAnimation, // Aplikasi animasi muncul kartu
+                                    ...cardAnimation,
                                 }}
                                 onMouseEnter={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: true }))}
                                 onMouseLeave={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: false }))}

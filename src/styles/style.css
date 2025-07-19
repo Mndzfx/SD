@@ -555,7 +555,7 @@ a {
         visibility: visible;
         pointer-events: auto; /* Memungkinkan interaksi */
         transition: opacity var(--transition-speed-dropdown) ease-out,
-                    transform var(--transition-speed-dropdown) ease-out;
+                            transform var(--transition-speed-dropdown) ease-out;
     }
 
     /* Overlay tidak diperlukan untuk gaya dropdown ini jika Anda ingin hanya menu yang muncul */
@@ -616,9 +616,10 @@ a {
         text-align: center;
     }
 
-    /* Hero Section Mobile (Tidak ada perubahan di sini) */
+    /* --- Hero Section Mobile --- */
     .hero-section {
-        padding: 1.25rem 0;
+        /* Tambahkan padding-top di sini untuk memberi ruang di atas judul */
+        padding: 3.5rem 0 1.25rem 0; /* Ubah padding-top dari 1.25rem menjadi 3.5rem */
         flex-direction: column;
         text-align: center;
     }

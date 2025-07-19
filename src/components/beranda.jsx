@@ -135,6 +135,7 @@ function App() {
                 <div className="inner-container">
                     <section className="hero-section">
                         <div className="hero-content">
+                            <p className='hero-subtitle'>SDN SEJAHTERA</p>
                             <h1 className="hero-content-h1">Pendaftaran telah dibuka</h1>
                             <p className="hero-description">
                                 Sekolah yang mengedepankan prestasi dan akhlak mulia<br /><br />
@@ -144,7 +145,14 @@ function App() {
                             </div>
                         </div>
                         <div className="hero-image-wrapper">
-                            <img className="hero-image" src="/img/hero1.png" alt="Woman holding cards" />
+                            {/* GAMBAR HERO TANPA ANIMASI DAN DIPRIORITASKAN */}
+                            <img
+                                className="hero-image"
+                                src="/img/hero1.png"
+                                alt="Woman holding cards"
+                                loading="eager"       // Meminta browser untuk memuat gambar secepatnya
+                                fetchpriority="high"  // Memberi tahu browser ini adalah aset penting
+                            />
                             <div className="hero-image-background"></div>
                         </div>
                     </section>
@@ -174,11 +182,9 @@ function App() {
 
                             <h4>Misi</h4>
                             <ul className="help-section-list">
-                              
                                 <li>Mengembangkan potensi peserta didik secara holistik (akademik, non-akademik, spiritual, dan sosial).</li>
                                 <li>Menciptakan lingkungan belajar yang aman, nyaman, dan inspiratif.</li>
                                 <li>Membentuk karakter peserta didik yang Islami, nasionalis, dan berwawasan global.</li>
-                            
                             </ul>
                         </div>
                     </section>
