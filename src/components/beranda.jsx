@@ -3,15 +3,11 @@ import "../styles/style.css"; // Pastikan path ini benar
 
 function App() {
     // State untuk mendeteksi apakah di perangkat mobile atau tidak
-    // Set nilai awal ke false, lalu biarkan useEffect menyesuaikan setelah mount
-    const [isMobile, setIsMobile] = useState(false); 
-    
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     // State untuk mengontrol visibilitas navigasi mobile (pop-up)
     const [isNavOpen, setIsNavOpen] = useState(false);
-    
     // Ref untuk menunjuk ke elemen menu pop-up mobile
     const navRef = useRef(null);
-    
     // Ref untuk menunjuk ke tombol hamburger
     const hamburgerRef = useRef(null);
 
@@ -19,11 +15,7 @@ function App() {
     const updateTextRef = useRef(null);
     const helpTextRef = useRef(null);
 
-    // useEffect untuk mendeteksi ukuran layar dan Intersection Observer
     useEffect(() => {
-        // Inisialisasi isMobile setelah komponen di-mount
-        setIsMobile(window.innerWidth < 768);
-
         // Handler untuk mengubah state isMobile saat ukuran jendela berubah
         const handleResize = () => {
             const currentIsMobile = window.innerWidth < 768;
@@ -36,8 +28,9 @@ function App() {
 
         // Handler untuk menutup menu ketika klik di luar menu atau hamburger
         const handleClickOutside = (event) => {
-            if (isNavOpen && 
-                navRef.current && !navRef.current.contains(event.target) &&
+            // Jika menu terbuka DAN klik TIDAK di dalam navRef (menu)
+            // DAN klik TIDAK di dalam hamburgerRef (tombol hamburger)
+            if (isNavOpen && navRef.current && !navRef.current.contains(event.target) &&
                 hamburgerRef.current && !hamburgerRef.current.contains(event.target)) {
                 setIsNavOpen(false);
             }
@@ -51,8 +44,7 @@ function App() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    // Pastikan kelas 'hidden' dihapus sebelum menambahkan 'show'
-                    entry.target.classList.remove('hidden'); 
+                    entry.target.classList.remove('hidden');
                     entry.target.classList.add('show');
                     observer.unobserve(entry.target); // Berhenti mengamati setelah terlihat
                 }
@@ -73,23 +65,23 @@ function App() {
         return () => {
             window.removeEventListener('resize', handleResize);
             document.removeEventListener('mousedown', handleClickOutside);
-            // Penting: Hapus pengamatan hanya jika ref.current masih ada
             if (updateTextRef.current) {
                 observer.unobserve(updateTextRef.current);
             }
             if (helpTextRef.current) {
                 observer.unobserve(helpTextRef.current);
             }
-            observer.disconnect(); // Pastikan observer berhenti mengamati sepenuhnya
         };
     }, [isNavOpen]); // Dependensi isNavOpen untuk memastikan logika terbaru
 
     // Fungsi untuk mengubah state isNavOpen (toggle)
     const toggleNav = (event) => {
+        // Mencegah event klik menyebar ke document
+        // Ini penting agar klik pada hamburger tidak langsung memicu handleClickOutside
         if (event) {
-            event.stopPropagation(); 
+            event.stopPropagation();
         }
-        setIsNavOpen(prevIsNavOpen => !prevIsNavOpen); 
+        setIsNavOpen(prevIsNavOpen => !prevIsNavOpen); // Toggle nilai sebelumnya
     };
 
     return (
@@ -100,11 +92,7 @@ function App() {
                         <div className="navbar-wrapper">
                             {/* Logo */}
                             <div className="logo">
-                                {/* PERBAIKAN KRITIS: GANTI DENGAN GAMBAR LOKAL ANDA */}
-                                {/* Contoh: Jika logo Anda ada di folder public/img/logo.png */}
-                                <img src="/img/logo.png" alt="Payze Logo" className="logo-img" />
-                                {/* Atau jika tidak punya, gunakan gambar placeholder lokal/generik sementara */}
-                                {/* <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Crect width='120' height='40' fill='%238a2be2'/%3E%3Ctext x='60' y='25' font-family='Arial' font-size='14' fill='%23ffffff' text-anchor='middle'%3ELOGO HERE%3C/text%3E%3C/svg%3E" alt="Payze Logo" className="logo-img" /> */}
+                                <img src="https://via.placeholder.com/120x40/8a2be2/ffffff?text=PAYZE" alt="Payze Logo" className="logo-img" />
                             </div>
 
                             {/* Navigasi Desktop (Hanya ditampilkan di desktop) */}
@@ -166,6 +154,7 @@ function App() {
                                     </div>
 
                                     {/* Overlay (untuk menutup menu saat klik di luar) */}
+                                    {/* Class 'is-open' hanya ditambahkan jika isNavOpen true */}
                                     <div className={`mobile-overlay ${isNavOpen ? 'is-open' : ''}`} onClick={() => setIsNavOpen(false)}></div>
                                 </>
                             )}
@@ -177,7 +166,7 @@ function App() {
                 <div className="inner-container">
                     <section className="hero-section">
                         <div className="hero-content">
-                            <p className='hero-subtitle'>SDN SEJAHTER INDONESIA</p>
+                            <p className='hero-subtitle'>SDN SEJAHTERA</p>
                             <h1 className="hero-content-h1">Pendaftaran telah dibuka</h1>
                             <p className="hero-description">
                                 Sekolah yang mengedepankan prestasi dan akhlak mulia<br /><br />
@@ -187,12 +176,13 @@ function App() {
                             </div>
                         </div>
                         <div className="hero-image-wrapper">
+                            {/* GAMBAR HERO TANPA ANIMASI DAN DIPRIORITASKAN */}
                             <img
                                 className="hero-image"
-                                src="/img/hero1.png" // Pastikan path ini juga benar (relatif terhadap folder public)
+                                src="/img/hero1.png"
                                 alt="Woman holding cards"
-                                loading="eager"
-                                fetchpriority="high" // PERBAIKAN: Huruf kecil
+                                loading="eager"      // Meminta browser untuk memuat gambar secepatnya
+                                fetchPriority="high" // <<< FIX: Changed from fetchpriority="high"
                             />
                             <div className="hero-image-background"></div>
                         </div>
@@ -203,8 +193,8 @@ function App() {
             {/* Bagian Kolom Dua */}
             <div className="inner-container">
                 <div className="two-column-section-wrapper">
-                    <section className="section update-section-card">
-                        <div ref={updateTextRef} className="update-section hidden">
+                    <section className="section update-section-card"> {/* Removed 'hidden' class from card */}
+                        <div ref={updateTextRef} className="update-section hidden"> {/* New div for animating text */}
                             <h2 className="update-section-h2">Kenali Sekolah Kami Lebih Dekat</h2>
                             <p className="update-section-p">Temukan berbagai fasilitas, program, dan layanan yang kami sediakan demi mendukung pendidikan anak Anda.</p>
                             <div className="update-form">
@@ -215,8 +205,8 @@ function App() {
                     </section>
 
                     {/* Visi dan Misi Section */}
-                    <section className="section help-section-card">
-                        <div ref={helpTextRef} className="help-section hidden">
+                    <section className="section help-section-card"> {/* Removed 'hidden' class from card */}
+                        <div ref={helpTextRef} className="help-section hidden"> {/* New div for animating text */}
                             <h3 className="help-section-h3">Visi dan Misi SD Sejahtera Indonesia</h3>
                             <div className="help-content-wrapper">
                                 <h4>Visi</h4>
