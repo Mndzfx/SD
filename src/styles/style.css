@@ -1,12 +1,12 @@
-/* Variables (Pastikan variabel ini sudah ada dan benar) */
+/* Variables */
 :root {
     --color-white: #ffffff;
     --color-dark-gray: #333333;
     --color-button-color: #ffd700;
-    --color-primary-purple: #ffd700; /* Dikembalikan ke nilai asli Anda */
+    --color-primary-purple: #4a007f; /* Disesuaikan untuk kontras lebih baik dengan latar belakang baru */
     --color-light-purple: #e9d5ff;
     --color-medium-gray: #666666;
-    --color-header-hero-bg: #4a007f;
+    --color-header-hero-bg: #4a007f; /* Warna ini digunakan untuk latar belakang header/hero */
 
     --layout-content-max-width: 1200px;
     --layout-content-padding-x: 20px;
@@ -28,7 +28,6 @@
 }
 
 /* --- PERBAIKAN UTAMA UNTUK MENGHILANGKAN WARNING: Penulisan Scrollbar untuk Browser WebKit --- */
-/* Simbol '&' dihapus karena ini adalah file CSS biasa atau agar tidak memicu warning React */
 ::-webkit-scrollbar {
     width: 12px;
 }
@@ -58,7 +57,7 @@ body {
 .app-container {
     padding: 0 0 50px 0;
     overflow-x: hidden;
-    margin-top: -21px; /* Dikembalikan ke nilai asli Anda */
+    margin-top: -21px;
 }
 
 img {
@@ -126,7 +125,6 @@ a {
     background-repeat: no-repeat;
     background-position: right top;
     background-size: 100%;
-    /* REMOVED: background-color: var(--color-header-hero-bg); */
     padding-bottom: 3.125rem;
     overflow: hidden;
     min-height: 400px;
@@ -154,7 +152,7 @@ a {
     align-items: center;
     box-shadow: var(--shadows-light);
     width: 100%;
-    position: relative; /* Penting: agar pop-up di dalamnya bisa absolute */
+    position: relative;
     z-index: 100;
 }
 
@@ -165,13 +163,13 @@ a {
 
 /* Hamburger Icon (Mobile Only) */
 .hamburger {
-    display: none; /* Hidden by default for desktop */
+    display: none;
     cursor: pointer;
     font-size: 1.8rem;
     color: var(--color-dark-gray);
     padding: 0.3125rem;
     position: relative;
-    z-index: 101; /* Pastikan di atas menu */
+    z-index: 101;
 }
 
 /* Desktop Navigation and Button Group */
@@ -234,7 +232,6 @@ a {
     padding-right: 1.875rem;
     z-index: 2;
     text-align: left;
-    /* margin-top: -15px; */
 }
 
 .hero-subtitle {
@@ -261,7 +258,7 @@ a {
     color: var(--color-white);
     max-width: 46.875rem;
     margin: 0 auto 0.8125rem auto;
-    line-height: 0.8; /* Dikembalikan ke nilai asli Anda */
+    line-height: 1.5; /* Adjusted for better readability */
 }
 
 .hero-buttons {
@@ -291,7 +288,7 @@ a {
     position: relative;
     z-index: 1;
     margin-right: 0;
-    margin-bottom: -3.75rem; /* Dikembalikan ke nilai asli Anda */
+    margin-bottom: -3.75rem;
 }
 
 .hero-image {
@@ -340,7 +337,7 @@ a {
     flex-direction: column;
 }
 
-/* Inner text container styles - Removed animation properties */
+/* Inner text container styles */
 .update-section,
 .help-section {
     width: 100%;
@@ -370,7 +367,7 @@ a {
     align-items: flex-start;
     position: relative;
     z-index: 1;
-    margin-top: -5rem; /* Dikembalikan ke nilai asli Anda */
+    margin-top: -5rem; /* DIKEMBALIKAN KE NILAI ASLI ANDA UNTUK DESKTOP */
 }
 
 .update-section-h2 {
@@ -424,45 +421,53 @@ a {
     width: 100%;
 }
 
+/* --- Visi dan Misi Section Styles (Enhanced) --- */
 .help-section-h3 {
-    font-size: 1.8rem;
+    font-size: 2.2rem; /* Larger, more impactful title */
     color: var(--color-dark-gray);
-    margin-bottom: 0.9375rem;
-    font-weight: 600;
+    margin-bottom: 1.5rem; /* More space below the main title */
+    font-weight: 800; /* Extra bold for prominence */
+    line-height: 1.2;
+    text-align: center; /* Center align for strong presence */
     width: 100%;
-    text-align: left;
 }
 
 .help-content-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* Keep individual sections left-aligned within the wrapper */
     width: 100%;
+    gap: 1.5rem; /* Space between Visi and Misi sections */
 }
 
 .help-content-wrapper h4 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-dark-gray);
+    font-size: 1.6rem; /* Bigger subtitle for Visi/Misi */
+    margin-bottom: 0.8rem; /* More space below Visi/Misi titles */
+    color: var(--color-primary-purple); /* Highlight Visi/Misi titles with primary color */
+    font-weight: 700;
+    text-align: left; /* Ensure Visi/Misi titles are left-aligned */
+    width: 100%;
 }
 
 .help-content-wrapper p {
-    text-align: left !important;
+    font-size: 1.1rem; /* Slightly larger text for readability */
+    line-height: 1.7; /* Increased line height for better flow */
+    margin-bottom: 0.5rem; /* Keep some space after the paragraph */
+    color: var(--color-medium-gray); /* Softer text color for body */
+    text-align: left;
     width: 100%;
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
 }
 
 .help-section-list {
-    list-style: disc;
-    padding-left: 1.5rem;
+    list-style: disc; /* Keep disc bullets */
+    padding-left: 1.8rem; /* More padding for list items */
     margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem; /* More space after the list */
 }
 
 .help-section-list li {
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
+    margin-bottom: 0.7rem; /* More space between list items */
+    font-size: 1.05rem; /* Slightly larger font for list items */
     color: var(--color-dark-gray);
     line-height: 1.6;
 }
@@ -519,6 +524,7 @@ a {
     line-height: 1.2;
 }
 
+/* --- Media Queries for Mobile (max-width: 768px) --- */
 @media (max-width: 768px) {
     .header-hero-wrapper {
         background-position: center top;
@@ -539,11 +545,11 @@ a {
     }
 
     .hamburger {
-        display: block; /* Tampilkan hamburger di mobile */
+        display: block;
     }
 
     .nav-and-button-group {
-        display: none; /* Sembunyikan navigasi desktop di mobile */
+        display: none;
     }
 
     /* Mobile Pop-up Menu (Gaya Dropdown Browser) */
@@ -562,8 +568,8 @@ a {
         visibility: hidden;
         pointer-events: none;
         transition: opacity var(--transition-speed-dropdown) ease-out,
-                                transform var(--transition-speed-dropdown) ease-out,
-                                visibility 0s linear var(--transition-speed-dropdown);
+                    transform var(--transition-speed-dropdown) ease-out,
+                    visibility 0s linear var(--transition-speed-dropdown);
     }
 
     .mobile-popup-menu.is-open {
@@ -572,7 +578,7 @@ a {
         visibility: visible;
         pointer-events: auto;
         transition: opacity var(--transition-speed-dropdown) ease-out,
-                                transform var(--transition-speed-dropdown) ease-out;
+                    transform var(--transition-speed-dropdown) ease-out;
     }
 
     .mobile-overlay {
@@ -586,7 +592,7 @@ a {
         opacity: 0;
         visibility: hidden;
         transition: opacity var(--transition-speed-dropdown) ease-out,
-                                visibility 0s linear var(--transition-speed-dropdown);
+                    visibility 0s linear var(--transition-speed-dropdown);
     }
 
     .mobile-overlay.is-open {
@@ -630,19 +636,19 @@ a {
         text-align: center;
     }
 
-    /* --- Hero Section Mobile PERBAIKAN UTAMA --- */
+    /* Hero Section Mobile */
     .hero-section {
         padding: 3.5rem 0 1.25rem 0;
         flex-direction: column;
         text-align: center;
-        align-items: flex-start; /* Mengatur alignment item-item dalam kolom */
-        min-height: 400px; /* Dikembalikan ke nilai asli Anda */
+        align-items: flex-start;
+        min-height: 400px;
     }
 
     .hero-content {
         padding-right: 0;
         text-align: center;
-        width: 100%; /* Penting untuk mobile flex column */
+        width: 100%;
     }
 
     .hero-subtitle {
@@ -656,7 +662,7 @@ a {
 
     .hero-description {
         font-size: 1rem;
-        line-height: 0.8; /* Dikembalikan ke nilai asli Anda */
+        line-height: 1.5; /* Adjusted for mobile readability */
         margin-bottom: 1.25rem;
     }
 
@@ -672,9 +678,9 @@ a {
     }
 
     .hero-image-wrapper {
-        margin-bottom: -3.75rem; /* Dikembalikan ke nilai asli Anda */
+        margin-bottom: -3.75rem;
         width: 100%;
-        padding-top: 20px; /* Dikembalikan ke nilai asli Anda */
+        padding-top: 20px;
     }
 
     .hero-image {
@@ -705,12 +711,19 @@ a {
         order: 2;
     }
 
+    /* --- PERBAIKAN UTAMA UNTUK CARD VISI & MISI DI MOBILE --- */
     .help-section-card {
         flex: 1 1 100%;
         padding: 1.25rem;
         text-align: left;
         order: 1;
-        margin-top: -5rem; /* Dikembalikan ke nilai asli Anda */
+        /* KUNCI: Membuat kartu menonjol ke atas */
+        margin-top: -3.5rem; /* Sesuaikan nilai ini sesuai keinginan untuk menonjol lebih/kurang */
+        position: relative; /* Pastikan ini ada agar z-index berfungsi */
+        z-index: 3; /* Pastikan di atas card sebelumnya */
+        box-shadow: var(--shadows-medium); /* Pertahankan bayangan agar terlihat 'terangkat' */
+        background-color: var(--color-white); /* Pertahankan warna latar belakang */
+        border-radius: var(--border-radius-lg); /* Pertahankan border-radius */
     }
 
     .update-section-h2 {
@@ -732,29 +745,39 @@ a {
         width: auto;
     }
 
+    /* Visi dan Misi Section Mobile (Enhanced) */
     .help-section-h3 {
-        font-size: 1.5rem;
-        margin-bottom: 0.625rem;
-        text-align: left;
+        font-size: 1.8rem; /* Adjusted for mobile, still impactful */
+        margin-bottom: 1rem; /* More space for the title */
+        font-weight: 800;
+        text-align: center; /* Keep centered for strong presence */
     }
 
     .help-content-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
+        gap: 1rem; /* Reduced gap for mobile */
+    }
+
+    .help-content-wrapper h4 {
+        font-size: 1.3rem; /* Adjusted for mobile */
+        margin-bottom: 0.5rem;
+        text-align: left;
     }
 
     .help-content-wrapper p {
+        font-size: 0.95rem; /* Adjusted for mobile readability */
+        line-height: 1.6;
         margin-bottom: 0.4rem;
     }
 
     .help-section-list {
-        padding-left: 1rem;
+        padding-left: 1.2rem; /* Adjusted padding */
         margin-top: 0.3rem;
+        margin-bottom: 1rem;
     }
 
     .help-section-list li {
-        margin-bottom: 0.4rem;
-        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem; /* Adjusted for mobile */
     }
 
     /* Principal Info Mobile */
