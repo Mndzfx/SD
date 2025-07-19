@@ -1,5 +1,6 @@
 // src/components/Dashboard.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSpring, animated, config } from 'react-spring';
 
 function Dashboard() {
     // --- Styles untuk common elements ---
@@ -55,30 +56,21 @@ function Dashboard() {
     const prestasiStyles = {
         prestasiSection: {
             width: '100%',
-            backgroundImage: `url('/img/background1.png')`,
+            // backgroundImage akan diatur secara dinamis oleh JavaScript
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             position: 'relative',
             marginTop: '60px',
-            paddingTop: '20px', // Adjust padding for consistent spacing
-            paddingBottom: '20px', // Adjust padding for consistent spacing
+            paddingTop: '40px', // Increased padding for better initial view
+            paddingBottom: '40px',
             borderRadius: '0',
             color: 'white',
             boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
             boxSizing: 'border-box',
             overflow: 'hidden',
-        },
-        // Overlay handled by a separate div in JSX for inline styles
-        prestasiSectionOverlay: {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(33, 150, 243, 0.7)',
-            zIndex: 0,
+            // Transisi untuk efek fade-in gambar latar belakang
+            transition: 'background-image 0.7s ease-in-out, background-color 0.7s ease-in-out',
         },
         prestasiContentWrapper: { // New style for wrapping content within the section
             position: 'relative',
@@ -89,7 +81,7 @@ function Dashboard() {
             display: 'flex',
             overflowX: 'auto',
             gap: '25px',
-            marginTop: '20px',
+            marginTop: '30px', // Increased margin
             paddingBottom: '15px', // Add padding for scrollbar
             scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',
@@ -104,7 +96,7 @@ function Dashboard() {
             minWidth: '300px',
             background: 'white',
             borderRadius: '12px',
-            padding: '10px 20px',
+            padding: '20px', // Increased padding
             color: '#333',
             boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
             transition: 'transform 0.3s ease, box-shadow 0.3s ease',
@@ -122,55 +114,55 @@ function Dashboard() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
-            marginBottom: '5px',
+            marginBottom: '10px', // Increased margin
             gap: '10px',
         },
         prestasiBadge: {
             background: '#e8f4fd',
             color: '#3498db',
-            padding: '4px 10px',
+            padding: '6px 12px', // Increased padding
             borderRadius: '20px',
-            fontSize: '11px',
+            fontSize: '12px', // Slightly increased font size
             fontWeight: 'bold',
             whiteSpace: 'nowrap',
         },
         prestasiIcon: {
-            fontSize: '32px',
+            fontSize: '36px', // Increased icon size
             color: '#f39c12',
         },
         prestasiName: {
-            fontSize: '20px',
+            fontSize: '22px', // Increased font size
             fontWeight: 'bold',
-            marginBottom: '3px',
+            marginBottom: '5px',
             color: '#2c3e50',
-            lineHeight: '1.2',
+            lineHeight: '1.3',
         },
         prestasiDetails: {
-            fontSize: '14px',
+            fontSize: '15px',
             color: '#7f8c8d',
-            marginBottom: '5px',
+            marginBottom: '10px', // Increased margin
         },
         prestasiInfoGrid: {
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
-            gap: '8px',
-            marginTop: '5px',
-            paddingTop: '5px',
+            gap: '10px', // Increased gap
+            marginTop: '10px', // Increased margin
+            paddingTop: '10px', // Increased padding
             borderTop: '1px solid #f0f0f0',
         },
         prestasiInfoItem: {
             display: 'flex',
             flexDirection: 'column',
-            gap: '0px',
+            gap: '2px',
         },
         prestasiInfoLabel: {
-            fontSize: '11px',
+            fontSize: '12px',
             color: '#95a5a6',
             textTransform: 'uppercase',
             fontWeight: 'bold',
         },
         prestasiInfoValue: {
-            fontSize: '15px',
+            fontSize: '16px',
             fontWeight: 'bold',
             color: '#2c3e50',
         },
@@ -178,18 +170,25 @@ function Dashboard() {
 
     const getStyle = (elementName, isHovered = false) => {
         const allStyles = { ...commonStyles, ...prestasiStyles };
-        const baseStyle = allStyles[elementName] || {};
-        const hoverStyle = isHovered && allStyles[`${elementName}Hover`] ? allStyles[`${elementName}Hover`] : {};
+        const baseStyle = allStyles?.[elementName] || {};
+        const hoverStyle = isHovered && allStyles?.[`${elementName}Hover`] ? allStyles?.[`${elementName}Hover`] : {};
         return { ...baseStyle, ...hoverStyle };
     };
 
-    const PrestasiCard = ({ type, name, details, rank, field, year, icon }) => {
+    const PrestasiCard = ({ type, name, details, rank, field, year, icon, index }) => {
         const [isCardHovered, setIsCardHovered] = useState(false);
+        const animationProps = useSpring({
+            from: { opacity: 0, transform: 'translateY(20px)' },
+            to: { opacity: 1, transform: 'translateY(0px)' },
+            delay: 200 + index * 100, // Efek stagger: setiap kartu muncul dengan jeda
+            config: config.molasses, // Konfigurasi animasi yang halus
+        });
 
         return (
-            <div
+            <animated.div
                 style={{
                     ...getStyle('prestasiCard'),
+                    ...animationProps, // Aplikasi animasi muncul
                     ...(isCardHovered ? getStyle('prestasiCard', true) : {})
                 }}
                 onMouseEnter={() => setIsCardHovered(true)}
@@ -215,11 +214,50 @@ function Dashboard() {
                         <span style={getStyle('prestasiInfoValue')}>{year}</span>
                     </div>
                 </div>
-            </div>
+            </animated.div>
         );
     };
 
+    // State untuk melacak apakah gambar latar belakang sudah dimuat
+    const [backgroundLoaded, setBackgroundLoaded] = useState(false);
+
+    // Efek samping untuk memuat gambar latar belakang
+    useEffect(() => {
+        const img = new Image(); // Buat objek Image baru
+        img.onload = () => { // Ketika gambar selesai dimuat
+            setBackgroundLoaded(true); // Set state menjadi true
+        };
+        img.onerror = () => { // Tangani error jika gambar gagal dimuat
+            console.error('Failed to load background image: /img/background1.png');
+            setBackgroundLoaded(true); // Tetap set true agar tidak stuck, meskipun gambar tidak ada
+        };
+        img.src = '/img/background1.png'; // Mulai memuat gambar
+    }, []); // Array dependensi kosong, jalankan hanya sekali saat komponen mounted
+
     const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false);
+
+    // Animasi untuk judul bagian
+    const sectionHeaderAnimation = useSpring({
+        from: { opacity: 0, transform: 'translateY(-30px)' },
+        to: { opacity: 1, transform: 'translateY(0px)' },
+        config: config.wobbly, // Efek sedikit 'goyang' saat muncul
+    });
+
+    // Animasi untuk tombol
+    const sectionButtonAnimation = useSpring({
+        from: { opacity: 0, transform: 'translateX(30px)' },
+        to: { opacity: 1, transform: 'translateX(0px)' },
+        delay: 300, // Muncul setelah judul
+        config: config.stiff,
+    });
+
+    // Animasi untuk container scrollable kartu prestasi
+    const prestasiScrollContainerAnimation = useSpring({
+        from: { opacity: 0 },
+        to: { opacity: 1 },
+        delay: 500, // Muncul setelah tombol
+        config: config.slow,
+    });
 
     const prestasiData = [
         { id: 1, type: "Non Akademik", name: "Aulia Rahma Putri", details: "Juara 3 Tahfidz Qur'an Festival Anak Sholeh Muhammadiyah Kota Probolinggo.", rank: "Juara 3", field: "Tahfidz Qur'an", year: "2024", icon: "🥉" },
@@ -232,6 +270,14 @@ function Dashboard() {
         { id: 8, type: "Akademik", name: "Fitriani Indah", details: "Juara 3 Olimpiade IPS Tingkat Provinsi Jawa Timur.", rank: "Juara 3", field: "Ilmu Pengetahuan Sosial", year: "2023", icon: "🥉" },
     ];
 
+    // Style dinamis untuk bagian prestasi, termasuk lazy loading background
+    const prestasiSectionDynamicStyle = {
+        ...getStyle('prestasiSection'),
+        // Terapkan backgroundImage hanya jika sudah dimuat
+        backgroundImage: backgroundLoaded ? `url('/img/background1.png')` : 'none',
+        // Opsi: Tetapkan warna solid sebagai fallback sementara jika gambar belum dimuat
+        backgroundColor: backgroundLoaded ? 'transparent' : '#3498db', // Atau warna lain yang cocok
+    };
 
     return (
         <div style={{
@@ -258,23 +304,20 @@ function Dashboard() {
                 flexDirection: 'column',
             }}>
                 {/* Bagian Prestasi Siswa dengan background1.png */}
-                <div style={getStyle('prestasiSection')}>
-                    {/* The overlay div for background effect */}
-                    <div style={getStyle('prestasiSectionOverlay')}></div>
-
+                <div style={prestasiSectionDynamicStyle}> {/* Menggunakan style dinamis di sini */}
                     {/* Content wrapper to apply common container styles (max-width, margin, padding) */}
                     <div style={getStyle('prestasiContentWrapper')}>
-                        <div style={{
-                            ...getStyle('sectionHeader'),
-                            paddingTop: '0', // Keep this if you want no extra top padding inside sectionHeader
-                        }}>
+                        {/* Header bagian dengan animasi muncul dari atas */}
+                        <animated.div style={{ ...getStyle('sectionHeader'), ...sectionHeaderAnimation }}>
                             <div>
                                 <h1 style={getStyle('sectionTitle')}>Ragam Prestasi Siswa</h1>
                                 <p style={getStyle('sectionSubtitle')}>Merayakan keberhasilan siswa-siswi SD Muhammadiyah Plus Kota Probolinggo dalam berbagai bidang.</p>
                             </div>
-                            <button
+                            {/* Tombol dengan animasi muncul dari kanan */}
+                            <animated.button
                                 style={{
                                     ...getStyle('sectionButton'),
+                                    ...sectionButtonAnimation, // Aplikasi animasi tombol
                                     backgroundColor: 'white',
                                     color: '#3498db',
                                     border: '1px solid white',
@@ -284,12 +327,12 @@ function Dashboard() {
                                 onMouseLeave={() => setIsSectionButtonHovered(false)}
                             >
                                 Lihat Semua Prestasi
-                            </button>
-                        </div>
+                            </animated.button>
+                        </animated.div>
 
-                        {/* Scroll container for prestasi cards */}
-                        <div style={getStyle('prestasiScrollContainer')}>
-                            {prestasiData.map((prestasi) => (
+                        {/* Scroll container untuk kartu prestasi dengan animasi fade-in */}
+                        <animated.div style={{ ...getStyle('prestasiScrollContainer'), ...prestasiScrollContainerAnimation }}>
+                            {prestasiData.map((prestasi, index) => (
                                 <PrestasiCard
                                     key={prestasi.id}
                                     type={prestasi.type}
@@ -299,9 +342,10 @@ function Dashboard() {
                                     field={prestasi.field}
                                     year={prestasi.year}
                                     icon={prestasi.icon}
+                                    index={index} // Meneruskan index untuk efek stagger animasi kartu
                                 />
                             ))}
-                        </div>
+                        </animated.div>
                     </div>
                 </div>
                 {/* Anda bisa menambahkan bagian lain dari dashboard Anda di sini */}

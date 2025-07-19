@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSpring, animated, config } from 'react-spring'; // Import useSpring, animated, and config
 
 function Agenda() {
     // --- Common Styles (REVERTED TO ORIGINAL FOR HEADER ELEMENTS) ---
@@ -57,26 +58,27 @@ function Agenda() {
     // --- Specific styles for the Agenda component and card internals (KEPT NEW DESIGN) ---
     const styles = {
         agendaSection: {
-            // Reverted background to original image with overlay, but kept other properties
-            backgroundImage: `url('/img/background1.png')`, // Original image background
+            // backgroundImage akan diatur secara dinamis oleh JavaScript
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'right top',
             backgroundRepeat: 'no-repeat',
             position: 'relative',
-            marginTop: '50px', // Original margin
+            marginTop: '50px',
             maxWidth: '100%',
             overflow: 'hidden',
             color: 'white',
-            boxShadow: '0 6px 20px rgba(0,0,0,0.1)', // Original shadow
-            padding: '0 0 30px 0', // Original padding
+            boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
+            padding: '0 0 30px 0',
+            // Transisi untuk efek fade-in gambar latar belakang
+            transition: 'background-image 0.7s ease-in-out, background-color 0.7s ease-in-out',
         },
         agendaGridContainer: {
             display: 'flex',
-            overflowX: 'scroll', // Enable horizontal scrolling
+            overflowX: 'scroll',
             scrollSnapType: 'x mandatory',
             paddingBottom: '15px',
-            gap: '30px', // Gap between cards (kept new value)
-            padding: '0 20px', // Padding for the container itself (kept new value)
+            gap: '30px',
+            padding: '0 20px',
 
             // --- HIDE SCROLLBAR (Kept) ---
             MsOverflowStyle: 'none',
@@ -88,25 +90,25 @@ function Agenda() {
         },
         agendaCard: {
             flex: '0 0 auto',
-            width: '320px', // Fixed width for each card (kept new value)
-            background: '#ffffff', // Clean white background (kept new value)
-            borderRadius: '16px', // More rounded corners (kept new value)
-            padding: '25px', // Increased padding inside card (kept new value)
-            border: 'none', // No border (kept new value)
-            transition: 'all 0.4s ease', // Slower transition (kept new value)
+            width: '320px',
+            background: '#ffffff',
+            borderRadius: '16px',
+            padding: '25px',
+            border: 'none',
+            transition: 'all 0.4s ease',
             color: '#333',
             cursor: 'pointer',
-            boxShadow: '0 6px 20px rgba(0,0,0,0.08)', // Lighter, modern shadow (kept new value)
+            boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            minHeight: '220px', // Adjusted minimum height (kept new value)
+            minHeight: '220px',
             position: 'relative',
             overflow: 'hidden',
             scrollSnapAlign: 'start',
             '&:hover': {
-                transform: 'translateY(-10px) scale(1.03)', // More prominent lift and slight scale (kept new value)
-                boxShadow: '0 15px 35px rgba(0,0,0,0.15)', // Stronger hover shadow (kept new value)
+                transform: 'translateY(-10px) scale(1.03)',
+                boxShadow: '0 15px 35px rgba(0,0,0,0.15)',
             },
         },
         // --- CARD INTERNAL STYLES (KEPT NEW DESIGN) ---
@@ -127,14 +129,14 @@ function Agenda() {
         agendaTime: {
             fontSize: '20px',
             fontWeight: '700',
-            color: '#1E90FF', // Dodger Blue for time
+            color: '#1E90FF',
             flexShrink: 0,
             marginLeft: '15px',
         },
         agendaEventTitle: {
             fontSize: '22px',
             fontWeight: '800',
-            color: '#2c3e50', // Darker blue-grey for title
+            color: '#2c3e50',
             lineHeight: 1.3,
             marginBottom: '15px',
         },
@@ -144,7 +146,7 @@ function Agenda() {
             opacity: 0.8,
             marginTop: 'auto',
             paddingTop: '15px',
-            borderTop: '1px dashed #eee', // Dashed line for a softer separator
+            borderTop: '1px dashed #eee',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
@@ -159,7 +161,7 @@ function Agenda() {
             right: 0,
             width: '40px',
             height: '40px',
-            backgroundColor: '#FFD700', // Gold accent
+            backgroundColor: '#FFD700',
             borderBottomLeftRadius: '16px',
         }
     };
@@ -174,6 +176,22 @@ function Agenda() {
         return { ...baseStyle, ...hoverStyle };
     };
 
+    // State untuk lazy loading gambar latar belakang
+    const [backgroundLoaded, setBackgroundLoaded] = useState(false);
+
+    // Efek untuk memuat gambar latar belakang
+    useEffect(() => {
+        const img = new Image();
+        img.onload = () => {
+            setBackgroundLoaded(true);
+        };
+        img.onerror = () => {
+            console.error('Failed to load background image for Agenda: /img/background1.png');
+            setBackgroundLoaded(true); // Tetap set true agar tidak stuck
+        };
+        img.src = '/img/background1.png';
+    }, []);
+
     const [hoveredJelajahiAgendaBtn, setHoveredJelajahiAgendaBtn] = useState(false);
     const [hoveredAgendaCard, setHoveredAgendaCard] = useState({});
 
@@ -187,7 +205,28 @@ function Agenda() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const isMobileView = windowWidth < MOBILE_BREAKPOINT; // Kept for sectionHeader responsiveness
+    const isMobileView = windowWidth < MOBILE_BREAKPOINT;
+
+    // --- Animasi dengan react-spring ---
+    const sectionHeaderAnimation = useSpring({
+        from: { opacity: 0, transform: 'translateY(-30px)' },
+        to: { opacity: 1, transform: 'translateY(0px)' },
+        config: config.wobbly,
+    });
+
+    const sectionButtonAnimation = useSpring({
+        from: { opacity: 0, transform: 'translateX(30px)' },
+        to: { opacity: 1, transform: 'translateX(0px)' },
+        delay: 300,
+        config: config.stiff,
+    });
+
+    const agendaGridContainerAnimation = useSpring({
+        from: { opacity: 0 },
+        to: { opacity: 1 },
+        delay: 500,
+        config: config.slow,
+    });
 
     const agendaData = [
         { id: 1, date: "18 November 2024", time: "Start 07:00 WIB", title: "Upacara Milad Muhammadiyah", location: "Lapangan SD Muhammadiyah Plus" },
@@ -198,30 +237,31 @@ function Agenda() {
         { id: 6, date: "15 Februari 2025", time: "09:00 WIB - Selesai", title: "Lomba Cerdas Cermat", location: "Perpustakaan Sekolah" },
     ];
 
+    // Style dinamis untuk bagian agenda, termasuk lazy loading background
+    const agendaSectionDynamicStyle = {
+        ...getStyle('agendaSection'),
+        // Terapkan backgroundImage hanya jika sudah dimuat
+        backgroundImage: backgroundLoaded ? `url('/img/background1.png')` : 'none',
+        // Opsi: Tetapkan warna solid sebagai fallback sementara jika gambar belum dimuat
+        backgroundColor: backgroundLoaded ? 'transparent' : '#3498db', // Warna placeholder sebelum gambar dimuat
+    };
+
     return (
-        <div
-            style={getStyle('agendaSection')}
-        >
-            {/* The overlay div for background effect (needed for inline styles with background image) */}
-            <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'rgba(33, 150, 243, 0.7)',
-                zIndex: 0,
-            }}></div>
+        <div style={agendaSectionDynamicStyle}> {/* Gunakan style dinamis untuk agendaSection */}
+            {/* REMOVED the overlay div. The background image will now be fully visible. */}
+            {/* If you ever want an overlay again, you can re-add it here with a different color or opacity. */}
 
             <div style={{ ...getStyle('container'), position: 'relative', zIndex: 1 }}>
-                <div
+                {/* Header bagian dengan animasi muncul dari atas */}
+                <animated.div
                     style={{
                         ...getStyle('sectionHeader'),
+                        ...sectionHeaderAnimation, // Aplikasi animasi header
                         // --- Kondisi Gaya untuk Mobile View (Reverted to original) ---
                         ...(isMobileView ? {
                             flexDirection: 'column', // Tumpuk vertikal
-                            alignItems: 'center',    // Pusatkan secara horizontal
-                            textAlign: 'center',     // Pusatkan teks di dalamnya
+                            alignItems: 'center',    // Pusatkan secara horizontal
+                            textAlign: 'center',     // Pusatkan teks di dalamnya
                         } : {}),
                     }}
                 >
@@ -232,45 +272,56 @@ function Agenda() {
                             ...(isMobileView ? { margin: '0 auto' } : {}),
                         }}
                     >
-                        {/* REVERTED: Original Title */}
                         <h1 style={getStyle('sectionTitle')}>Agenda</h1>
-                        {/* REVERTED: Original Subtitle */}
                         <p style={getStyle('sectionSubtitle')}>Menyajikan Publikasi Artikel Berita dan Informasi dari SD Muhammadiyah Plus Kota Probolinggo</p>
                     </div>
-                    {/* REVERTED: Original Button */}
-                    <button
+                    {/* Tombol dengan animasi muncul dari kanan */}
+                    <animated.button // Gunakan animated.button
                         style={{
                             ...getStyle('sectionButton'),
+                            ...sectionButtonAnimation, // Aplikasi animasi tombol
                             ...(hoveredJelajahiAgendaBtn ? getStyle('sectionButton', true) : {}),
                         }}
                         onMouseEnter={() => setHoveredJelajahiAgendaBtn(true)}
                         onMouseLeave={() => setHoveredJelajahiAgendaBtn(false)}
                     >
                         Jelajahi Agenda
-                    </button>
-                </div>
+                    </animated.button>
+                </animated.div>
 
                 {/* Agenda Cards Container (Horizontal Scroll with hidden scrollbar and new card design) */}
-                <div style={getStyle('agendaGridContainer')}>
-                    {agendaData.map((agenda) => (
-                        <div
-                            key={agenda.id}
-                            style={getStyle('agendaCard', hoveredAgendaCard[`${agenda.id}`])}
-                            onMouseEnter={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: true }))}
-                            onMouseLeave={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: false }))}
-                        >
-                            <div style={getStyle('cardCornerAccent')}></div> {/* New accent element */}
-                            <div style={getStyle('cardHeader')}>
-                                <div style={getStyle('agendaDateSmall')}>{agenda.date}</div>
-                                <div style={getStyle('agendaTime')}>{agenda.time}</div>
-                            </div>
-                            <h3 style={getStyle('agendaEventTitle')}>{agenda.title}</h3>
-                            <div style={getStyle('agendaLocation')}>
-                                <span style={getStyle('locationIcon')}>📍</span> {agenda.location}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <animated.div style={{ ...getStyle('agendaGridContainer'), ...agendaGridContainerAnimation }}> {/* Aplikasi animasi ke container kartu */}
+                    {agendaData.map((agenda, index) => { // Tambahkan 'index' untuk stagger animation
+                        const cardAnimation = useSpring({
+                            from: { opacity: 0, transform: 'translateY(50px)' }, // Muncul dari bawah
+                            to: { opacity: 1, transform: 'translateY(0px)' },
+                            delay: 600 + index * 120, // Stagger delay for each card
+                            config: config.gentle, // Animasi lembut
+                        });
+
+                        return (
+                            <animated.div // Gunakan animated.div untuk kartu
+                                key={agenda.id}
+                                style={{
+                                    ...getStyle('agendaCard', hoveredAgendaCard[`${agenda.id}`]),
+                                    ...cardAnimation, // Aplikasi animasi muncul kartu
+                                }}
+                                onMouseEnter={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: true }))}
+                                onMouseLeave={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: false }))}
+                            >
+                                <div style={getStyle('cardCornerAccent')}></div>
+                                <div style={getStyle('cardHeader')}>
+                                    <div style={getStyle('agendaDateSmall')}>{agenda.date}</div>
+                                    <div style={getStyle('agendaTime')}>{agenda.time}</div>
+                                </div>
+                                <h3 style={getStyle('agendaEventTitle')}>{agenda.title}</h3>
+                                <div style={getStyle('agendaLocation')}>
+                                    <span style={getStyle('locationIcon')}>📍</span> {agenda.location}
+                                </div>
+                            </animated.div>
+                        );
+                    })}
+                </animated.div>
             </div>
         </div>
     );

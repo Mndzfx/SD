@@ -5,51 +5,51 @@ function Berita() {
     const artikelData = [
         {
             id: 1,
-            imgSrc: "https://images.unsplash.com/photo-1510797176523-2895964d3996?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Example for "Floating Lines"
-            title: "Floating Lines",
-            author: "Steve Duda",
-            readTime: "6 min Read",
-            description: "A journey through the untouched wilderness, following winding rivers and vast landscapes, capturing the essence of nature's raw beauty and the thrill of discovery.",
+            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/14421122268998131160_0", // Gambar siswa olahraga sekolah
+            title: "Pekan Olahraga Sekolah Sukses Digelar",
+            author: "Humas Sekolah",
+            readTime: "4 min Read",
+            description: "Semangat sportifitas membara! Pekan Olahraga Sekolah (POS) tahun ini berhasil dilaksanakan dengan meriah, melibatkan seluruh siswa dalam berbagai cabang olahraga.",
         },
         {
             id: 2,
-            imgSrc: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            title: "Cochamó Por Siempre",
-            author: "Daniel Seeliger & Rodrigo Condeza",
-            readTime: "10 min Read",
-            description: "An ode to the majestic granite walls of Cochamó, exploring the challenges and rewards of climbing in this Chilean paradise, and the deep connection formed with its landscapes.",
+            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/933682558675236177_0", // Gambar kunjungan edukasi siswa ke museum
+            title: "Kunjungan Edukasi ke Museum Sejarah",
+            author: "Guru Sejarah",
+            readTime: "6 min Read",
+            description: "Siswa kelas 5 dan 6 melakukan kunjungan edukasi ke Museum Sejarah Nasional, memperkaya pengetahuan mereka tentang warisan budaya bangsa.",
         },
         {
             id: 3,
-            imgSrc: "https://images.unsplash.com/photo-1621373507116-20092ac9b06f?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            title: "Chess Not Checkers",
-            author: "Moona Whyte",
+            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/13671102348016111466_0", // Gambar siswa juara lomba sains
+            title: "Siswa Berprestasi di Lomba Sains Nasional",
+            author: "Tim IPA Sekolah",
             readTime: "3 min Read",
-            description: "A strategic approach to life and sports, drawing parallels between the calculated moves of chess and the dynamic flow of kitesurfing, emphasizing foresight and adaptability.",
+            description: "Dua siswa perwakilan sekolah berhasil meraih juara dalam ajang Lomba Sains Nasional, mengharumkan nama sekolah dengan inovasi mereka.",
         },
         {
             id: 4,
-            imgSrc: "https://images.unsplash.com/photo-1549419163-547e17094d48?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            title: "Protecting the Right to Protest",
-            author: "Annie Leonard",
+            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/1244381648370638732_0", // Gambar kegiatan ekstrakurikuler SD
+            title: "Pengembangan Diri Melalui Ekstrakurikuler Baru",
+            author: "Koordinator Ekskul",
             readTime: "5 min Read",
-            description: "An examination of the fundamental right to peaceful assembly and protest, highlighting its importance in democratic societies and the ongoing challenges to its preservation.",
+            description: "Tahun ajaran baru membawa semangat baru dengan peluncuran beberapa kegiatan ekstrakurikuler menarik untuk mendukung pengembangan minat dan bakat siswa.",
         },
         {
             id: 5,
-            imgSrc: "https://images.unsplash.com/photo-1533284074218-c70503f56860?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // This one is meant to be the "A Seventh Chance" example from your second image
-            title: "A Seventh Chance",
-            author: "Pete Whittaker",
+            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/6128620639202060788_0", // Gambar perpisahan siswa SD
+            title: "Momen Haru Perpisahan Kelas VI",
+            author: "Panitia Acara",
             readTime: "5 min Read",
-            description: "For routes like Crown Royale, a lot of what goes into putting them up is falling down. This piece delves into the perseverance required for high-stakes climbing.",
+            description: "Acara pelepasan siswa-siswi kelas VI berlangsung penuh kehangatan dan haru, menandai akhir perjalanan mereka di jenjang SD dan siap melangkah ke jenjang selanjutnya.",
         },
         {
             id: 6,
-            imgSrc: "https://images.unsplash.com/photo-1517457371079-c09a80579e0a?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            title: "Exploring Ancient Ruins",
-            author: "Dr. Evelyn Reed",
-            readTime: "8 min Read",
-            description: "A fascinating look into archaeological discoveries and the secrets they reveal about ancient civilizations, bringing history to life through compelling narratives.",
+            imgSrc: "http://googleusercontent.com/image_collection/image_retrieval/11490478203190259361_0", // Gambar perpustakaan sekolah modern
+            title: "Renovasi Perpustakaan Rampung",
+            author: "Sarana Prasarana",
+            readTime: "4 min Read",
+            description: "Perpustakaan sekolah kini tampil dengan wajah baru setelah proses renovasi, siap memberikan kenyamanan lebih bagi siswa dalam membaca dan belajar.",
         },
     ];
 
@@ -60,23 +60,21 @@ function Berita() {
         boxSizing: 'border-box',
     };
 
-    const containerStyle = {
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '30px 20px 50px 20px',
-        backgroundColor: '#f7f9fc',
-        ...commonStyles,
-    };
-
     const headerStyle = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: '20px',
-        marginBottom: '40px',
+        paddingTop: '30px',
+        paddingBottom: '40px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        maxWidth: '1200px',
+        margin: '0 auto',
         textAlign: 'center',
         gap: '10px',
+        backgroundColor: '#FFFFFF', // Changed to white
+        ...commonStyles,
     };
 
     const titleStyle = {
@@ -117,23 +115,29 @@ function Berita() {
         display: 'flex',
         gap: '30px',
         overflowX: 'scroll',
-        paddingBottom: '20px',
+        paddingBottom: '50px',
         paddingTop: '10px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        maxWidth: '1200px',
+        margin: '0 auto',
         WebkitOverflowScrolling: 'touch',
         alignItems: 'stretch',
+        backgroundColor: '#FFFFFF', // Changed to white
+        ...commonStyles,
     };
 
     const artikelCardBaseStyle = {
         background: '#ffffff',
         borderRadius: '16px',
-        overflow: 'hidden', // Crucial for overlay animation
+        overflow: 'hidden',
         boxShadow: '0 8px 25px rgba(0,0,0,0.1)',
-        transition: 'box-shadow 0.3s ease', // Only shadow transition here
+        transition: 'box-shadow 0.3s ease',
         display: 'flex',
         flexDirection: 'column',
         width: '320px',
         flexShrink: 0,
-        position: 'relative', // Crucial for absolute positioning of overlay
+        position: 'relative',
         cursor: 'pointer',
     };
 
@@ -171,9 +175,9 @@ function Berita() {
     const artikelReadTimeTextStyle = {
         fontSize: '13px',
         color: '#7f8c8d',
-        marginTop: 'auto', // Pushes it to the bottom
-        alignSelf: 'flex-start', // Aligns to left
-        padding: '5px 0', // Small padding to match image
+        marginTop: 'auto',
+        alignSelf: 'flex-start',
+        padding: '5px 0',
     };
 
     // --- CSS String for styles not supported by inline styles (including the new hover effect) ---
@@ -183,7 +187,7 @@ function Berita() {
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f7f9fc; /* Match section background */
+            background-color: #f7f9fc; /* Maintain a light grey background for the overall page */
         }
 
         /* Berita Button Hover */
@@ -196,16 +200,16 @@ function Berita() {
 
         /* Artikel Grid Scrollbar Hiding */
         .artikel-grid::-webkit-scrollbar {
-            display: none; /* Hide scrollbar for Webkit browsers */
+            display: none;
         }
         .artikel-grid {
-            scrollbar-width: none; /* Hide scrollbar for Firefox */
-            -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         /* Artikel Card Hover Effects (for the card itself, not the overlay) */
         .artikel-card:hover {
-            box-shadow: 0 18px 45px rgba(0,0,0,0.25); /* Stronger shadow on hover */
+            box-shadow: 0 18px 45px rgba(0,0,0,0.25);
         }
 
         /* Artikel Overlay */
@@ -215,61 +219,61 @@ function Berita() {
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #ffffff; /* Fully opaque white */
-            border-radius: 16px; /* Match card border-radius */
+            background-color: #ffffff;
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align content to top of overlay */
+            justify-content: flex-start;
             padding: 25px;
             box-sizing: border-box;
-            transform: translateY(100%); /* Start completely below the card */
-            transition: transform 0.4s ease-out, opacity 0.4s ease-out; /* Smooth slide-up transition */
-            z-index: 2; /* Ensure it's above default content */
-            opacity: 0; /* Start invisible */
-            pointer-events: none; /* Allow clicks to pass through when hidden */
+            transform: translateY(100%);
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+            z-index: 2;
+            opacity: 0;
+            pointer-events: none;
         }
 
         .artikel-card:hover .artikel-overlay {
-            transform: translateY(0); /* Slide up to cover the card */
-            opacity: 1; /* Fade in */
-            pointer-events: all; /* Enable clicks when visible */
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
         }
 
         /* Content inside Overlay */
         .artikel-overlay-content {
             display: flex;
             flex-direction: column;
-            flex-grow: 1; /* Allows content to take up space */
+            flex-grow: 1;
             text-align: left;
-            padding-top: 15px; /* Space between top edge and content */
+            padding-top: 15px;
         }
 
         .artikel-overlay-title {
             font-size: 20px;
-            font-weight: 700;
-            color: #34495e;
+            fontWeight: 700;
+            color: '#34495e';
             margin-bottom: 10px;
             line-height: 1.4;
         }
 
         .artikel-overlay-author {
             font-size: 15px;
-            color: #7f8c8d;
+            color: '#7f8c8d';
             margin-bottom: 15px;
             font-weight: 500;
         }
 
         .artikel-overlay-description {
             font-size: 14px;
-            color: #555;
+            color: '#555';
             line-height: 1.6;
-            margin-bottom: 25px; /* Space before button */
-            flex-grow: 1; /* Allows description to push button down */
+            margin-bottom: 25px;
+            flex-grow: 1;
         }
 
         .artikel-overlay .read-time-btn-black {
-            background: #FED219; /* Updated to new color */
-            color: #333; /* Text color for the yellow button */
+            background: #FED219;
+            color: #333;
             padding: 8px 18px;
             border: none;
             border-radius: 20px;
@@ -277,19 +281,23 @@ function Berita() {
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s ease;
-            align-self: flex-start; /* Aligns to left within overlay */
-            text-decoration: none; /* Ensure no underline */
-            display: inline-block; /* For padding */
+            align-self: flex-start;
+            text-decoration: none;
+            display: inline-block;
             white-space: nowrap;
         }
 
         .artikel-overlay .read-time-btn-black:hover {
-            background: #FFD700; /* Slightly darker yellow on hover */
+            background: #FFD700;
         }
 
 
         /* Media Queries (Responsive Adjustments) - Applied to classes */
         @media (max-width: 1024px) {
+            .berita-header, .artikel-grid {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
             .berita-title { font-size: 34px; }
             .artikel-card { width: 280px; }
             .artikel-image { height: 180px; }
@@ -313,7 +321,6 @@ function Berita() {
         }
 
         @media (max-width: 480px) {
-            .berita-container { padding: 20px 15px 40px 15px; }
             .berita-title { font-size: 26px; margin-bottom: 5px; }
             .berita-subtitle { font-size: 14px; margin-bottom: 10px; max-width: 90%; }
             .berita-button { padding: 8px 18px; font-size: 13px; }
@@ -330,18 +337,17 @@ function Berita() {
     `;
 
     return (
-        <section style={containerStyle}>
-            {/* Inject global styles using a style tag */}
+        <>
             <style>{globalCss}</style>
 
-            <div style={headerStyle}>
-                <h2 style={titleStyle}>Artikel & Berita</h2>
-                <p style={subtitleStyle}>Menyajikan Publikasi Artikel Berita dan Informasi dari SD Muhammadiyah Plus Kota Probolinggo</p>
+            <div className="berita-header" style={headerStyle}>
+                <h2 style={titleStyle}>Artikel & Berita Sekolah</h2>
+                <p style={subtitleStyle}>Kumpulan berita dan informasi terbaru seputar kegiatan sekolah, prestasi siswa, dan pengumuman penting dari SD Muhammadiyah Plus Kota Probolinggo.</p>
                 <button
-                    className="berita-button" // Uses className for hover effect (handled by injected CSS)
-                    style={buttonBaseStyle} // Applies base inline styles
+                    className="berita-button"
+                    style={buttonBaseStyle}
                 >
-                    Jelajahi Artikel
+                    Jelajahi Semua Artikel
                 </button>
             </div>
 
@@ -349,30 +355,24 @@ function Berita() {
                 {artikelData.map((artikel) => (
                     <div
                         key={artikel.id}
-                        className="artikel-card" // Uses className for hover effect (handled by injected CSS)
-                        style={artikelCardBaseStyle} // Applies base inline styles
+                        className="artikel-card"
+                        style={artikelCardBaseStyle}
                     >
-                        {/* Always visible image */}
                         <img src={artikel.imgSrc} alt={artikel.title} style={artikelImageStyle} />
 
-                        {/* Default Content (visible when NOT hovered) */}
                         <div className="artikel-default-content" style={artikelDefaultContentStyle}>
                             <h3 className="artikel-title-default" style={artikelTitleDefaultStyle}>{artikel.title}</h3>
                             <p className="artikel-author-default" style={artikelAuthorDefaultStyle}>{artikel.author}</p>
-                            {/* Read time as simple text in default state */}
                             <span className="artikel-read-time-text" style={artikelReadTimeTextStyle}>
                                 {artikel.readTime}
                             </span>
                         </div>
 
-                        {/* Overlay Content (slides up on hover) */}
                         <div className="artikel-overlay">
                             <div className="artikel-overlay-content">
                                 <h3 className="artikel-overlay-title">{artikel.title}</h3>
                                 <p className="artikel-overlay-author">{artikel.author}</p>
-                                {/* Description is now part of the overlay content */}
                                 {artikel.description && <p className="artikel-overlay-description">{artikel.description}</p>}
-                                {/* Black button appears as part of the overlay content */}
                                 <button className="read-time-btn-black">
                                     {artikel.readTime}
                                 </button>
@@ -381,7 +381,7 @@ function Berita() {
                     </div>
                 ))}
             </div>
-        </section>
+        </>
     );
 }
 

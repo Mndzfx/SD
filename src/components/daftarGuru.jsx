@@ -116,49 +116,43 @@ function DaftarGuru() {
         },
         teacherList: {
             display: 'grid', // Menggunakan grid untuk tata letak kolom
-            // 2 kolom untuk mobile, 3 kolom untuk desktop
             gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(auto-fit, minmax(300px, 1fr))',
-            // Penjelasan:
-            // - isMobile ? 'repeat(2, minmax(0, 1fr))' : Akan membuat 2 kolom yang sama lebar dan fleksibel di mobile.
-            // - 'repeat(auto-fit, minmax(300px, 1fr))' : Akan membuat kolom sebanyak mungkin di desktop,
-            //   setiap kolom minimal 300px. Ini akan menghasilkan 3 kolom di layar lebar 1200px (1200/3=400px per kolom),
-            //   dan akan menyesuaikan menjadi 2 kolom jika lebar kontainer terlalu kecil untuk 3x300px.
             gap: isMobile ? '10px' : '20px', // Jarak antar kartu lebih rapat di mobile
             marginTop: '15px',
             listStyle: 'none',
-            padding: '0', // Padding sudah diatur di container
+            padding: '0',
         },
         teacherListItem: {
             display: 'flex',
             alignItems: 'center',
             backgroundColor: '#ffffff',
-            borderRadius: '12px',
-            padding: isMobile ? '12px 18px' : '15px 25px', // Padding card disesuaikan
-            boxShadow: '0 6px 20px rgba(0,0,0,0.07)',
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            borderRadius: '8px', // Changed to 8px to match Fasilitas card border-radius
+            padding: isMobile ? '12px 18px' : '15px 25px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)', // Changed to match Fasilitas card box-shadow
+            transition: 'transform 0.2s ease, box-shadow 0.2s ease', // Adjusted transition duration
             cursor: 'pointer',
-            border: '1px solid #f5f5f5',
+            border: 'none', // Removed border to match Fasilitas card
             textAlign: 'left',
-            minHeight: isMobile ? '90px' : '100px', // Atur minHeight untuk konsistensi tinggi kartu
+            minHeight: isMobile ? '90px' : '100px',
             boxSizing: 'border-box',
         },
         teacherListItemHover: {
-            transform: 'translateY(-5px)',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.12)',
+            transform: 'translateY(-2px)', // Adjusted to match Fasilitas card hover transform
+            boxShadow: '0 4px 10px rgba(0,0,0,0.1)', // Adjusted to match Fasilitas card hover box-shadow
         },
         teacherImageContainer: {
-            width: isMobile ? '50px' : '60px', // Ukuran gambar disesuaikan
-            height: isMobile ? '50px' : '60px', // Ukuran gambar disesuaikan
+            width: isMobile ? '50px' : '60px',
+            height: isMobile ? '50px' : '60px',
             borderRadius: '50%',
             overflow: 'hidden',
-            marginRight: isMobile ? '15px' : '20px', // Margin kanan disesuaikan
+            marginRight: isMobile ? '15px' : '20px',
             flexShrink: 0,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            border: '2px solid #4a90e2',
+            boxShadow: 'none', // Removed shadow from image container to match Fasilitas (which has no inner shadow for image)
+            border: 'none', // Removed border from image container to match Fasilitas
             transition: 'transform 0.3s ease',
         },
         teacherImageContainerHover: {
-            transform: 'scale(1.05)',
+            transform: 'scale(1.05)', // Kept original image hover for visual interest
         },
         teacherImage: {
             width: '100%',
@@ -169,13 +163,13 @@ function DaftarGuru() {
             flexGrow: 1,
         },
         teacherName: {
-            fontSize: isMobile ? '16px' : '20px', // Ukuran font nama disesuaikan (sedikit lebih kecil di mobile)
+            fontSize: isMobile ? '16px' : '20px',
             fontWeight: '700',
             color: '#34495e',
             margin: '0 0 5px 0',
         },
         teacherSubject: {
-            fontSize: isMobile ? '13px' : '15px', // Ukuran font subjek disesuaikan (lebih kecil di mobile)
+            fontSize: isMobile ? '13px' : '15px',
             fontWeight: '500',
             color: '#2980b9',
             margin: 0,
@@ -192,7 +186,7 @@ function DaftarGuru() {
 
     // State untuk efek hover
     const [hoveredListItem, setHoveredListItem] = useState({});
-    const [hoveredImage, setHoveredImage] = useState({});
+    const [hoveredImage, setHoveredImage] = useState({}); // Kept this for independent image hover
     const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false);
 
     return (
@@ -221,18 +215,19 @@ function DaftarGuru() {
                             key={teacher.id}
                             style={{
                                 ...getStyle('teacherListItem'),
-                                ...(hoveredListItem[`${teacher.id}`] ? getStyle('teacherListItem', true) : {}),
+                                ...(hoveredListItem[teacher.id] ? getStyle('teacherListItem', true) : {}),
                             }}
-                            onMouseEnter={() => setHoveredListItem(prev => ({ ...prev, [`${teacher.id}`]: true }))}
-                            onMouseLeave={() => setHoveredListItem(prev => ({ ...prev, [`${teacher.id}`]: false }))}
+                            onMouseEnter={() => setHoveredListItem(prev => ({ ...prev, [teacher.id]: true }))}
+                            onMouseLeave={() => setHoveredListItem(prev => ({ ...prev, [teacher.id]: false }))}
                         >
                             <div
                                 style={{
                                     ...getStyle('teacherImageContainer'),
-                                    ...(hoveredImage[`${teacher.id}`] ? getStyle('teacherImageContainer', true) : {}),
+                                    // Apply image hover only when image container is hovered, not necessarily the whole list item
+                                    ...(hoveredImage[teacher.id] ? getStyle('teacherImageContainer', true) : {}),
                                 }}
-                                onMouseEnter={() => setHoveredImage(prev => ({ ...prev, [`${teacher.id}`]: true }))}
-                                onMouseLeave={() => setHoveredImage(prev => ({ ...prev, [`${teacher.id}`]: false }))}
+                                onMouseEnter={() => setHoveredImage(prev => ({ ...prev, [teacher.id]: true }))}
+                                onMouseLeave={() => setHoveredImage(prev => ({ ...prev, [teacher.id]: false }))}
                             >
                                 <img
                                     src={teacher.image}

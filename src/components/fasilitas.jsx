@@ -17,14 +17,14 @@ function Fasilitas() {
 
     // Data fasilitas/kategori dengan gambar placeholder
     const fasilitasData = [
-        { id: 1, imgSrc: "https://picsum.photos/id/1015/280/280", name: "Men's" },
-        { id: 2, imgSrc: "https://picsum.photos/id/1025/280/280", name: "Women's" },
-        { id: 3, imgSrc: "https://picsum.photos/id/1062/280/280", name: "Kids' & Baby" },
-        { id: 4, imgSrc: "https://picsum.photos/id/1070/280/280", name: "Packs & Gear" },
-        { id: 5, imgSrc: "https://picsum.photos/id/1080/280/280", name: "Equipment" },
-        { id: 6, imgSrc: "https://picsum.photos/id/1084/280/280", name: "Accessories" },
-        { id: 7, imgSrc: "https://picsum.photos/id/1057/280/280", name: "Camping Gear" },
-        { id: 8, imgSrc: "https://picsum.photos/id/1043/280/280", name: "Water Sports" },
+        { id: 1, imgSrc: "https://picsum.photos/id/1015/280/280", name: "Masjid" },
+        { id: 2, imgSrc: "https://picsum.photos/id/1025/280/280", name: "Lapangan" },
+        { id: 3, imgSrc: "https://picsum.photos/id/1062/280/280", name: "Laboratorium" },
+        { id: 4, imgSrc: "https://picsum.photos/id/1070/280/280", name: "Lab Komputer" },
+        { id: 5, imgSrc: "https://picsum.photos/id/1080/280/280", name: "Ruang Guru" },
+        { id: 6, imgSrc: "https://picsum.photos/id/1084/280/280", name: "Ruang Kelas" },
+        { id: 7, imgSrc: "https://picsum.photos/id/1057/280/280", name: "Ruang Seni" },
+        { id: 8, imgSrc: "https://picsum.photos/id/1043/280/280", name: "Toilet" },
     ];
 
     // --- Common Styles (Disalin dari komponen lain untuk konsistensi) ---
