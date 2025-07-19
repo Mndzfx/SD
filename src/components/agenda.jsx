@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSpring, animated, config } from 'react-spring';
+// Remove useSpring and animated import as they are no longer used for entrance animations
+// import { useSpring, animated, config } from 'react-spring'; // This line is commented out
 
 function Agenda() {
     // --- Common Styles (DISINKRONKAN DENGAN DASHBOARD.JSX) ---
@@ -81,12 +82,13 @@ function Agenda() {
             paddingBottom: '15px',
             gap: '30px',
             padding: '0 20px',
-            MsOverflowStyle: 'none',
-            scrollbarWidth: 'none',
+            MsOverflowStyle: 'none', // For IE/Edge, still works inline for hiding default scrollbar
+            scrollbarWidth: 'none', // For Firefox, still works inline for hiding default scrollbar
             WebkitOverflowScrolling: 'touch',
-            '&::-webkit-scrollbar': {
-                display: 'none',
-            },
+            // --- REMOVED THE CAUSING ERROR STYLES BELOW ---
+            // '&::-webkit-scrollbar': {
+            //     display: 'none',
+            // },
         },
         agendaCard: {
             flex: '0 0 auto',
@@ -172,6 +174,11 @@ function Agenda() {
             isHovered && baseStyle['&:hover'] ? baseStyle['&:hover'] : {}
         );
 
+        // --- REMOVED THE CAUSING ERROR CHECK ---
+        // if (elementName === 'agendaGridContainer' && baseStyle['&::-webkit-scrollbar']) {
+        //     return { ...baseStyle, ...hoverStyle };
+        // }
+
         return { ...baseStyle, ...hoverStyle };
     };
 
@@ -191,7 +198,7 @@ function Agenda() {
         img.src = '/img/background1.png';
     }, []);
 
-    const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false); // Ganti dari hoveredJelajahiAgendaBtn
+    const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false);
     const [hoveredAgendaCard, setHoveredAgendaCard] = useState({});
 
     // --- State dan useEffect untuk Deteksi Ukuran Layar ---
@@ -206,26 +213,10 @@ function Agenda() {
 
     const isMobileView = windowWidth < MOBILE_BREAKPOINT;
 
-    // --- Animasi dengan react-spring ---
-    const sectionHeaderAnimation = useSpring({
-        from: { opacity: 0, transform: 'translateY(-30px)' },
-        to: { opacity: 1, transform: 'translateY(0px)' },
-        config: config.wobbly,
-    });
-
-    const sectionButtonAnimation = useSpring({
-        from: { opacity: 0, transform: 'translateX(30px)' },
-        to: { opacity: 1, transform: 'translateX(0px)' },
-        delay: 300,
-        config: config.stiff,
-    });
-
-    const agendaGridContainerAnimation = useSpring({
-        from: { opacity: 0 },
-        to: { opacity: 1 },
-        delay: 500,
-        config: config.slow,
-    });
+    // --- Removed react-spring animations ---
+    // const sectionHeaderAnimation = useSpring({...});
+    // const sectionButtonAnimation = useSpring({...});
+    // const agendaGridContainerAnimation = useSpring({...});
 
     const agendaData = [
         { id: 1, date: "18 November 2024", time: "Start 07:00 WIB", title: "Upacara Milad Muhammadiyah", location: "Lapangan SD Muhammadiyah Plus" },
@@ -248,10 +239,10 @@ function Agenda() {
     return (
         <div style={agendaSectionDynamicStyle}>
             <div style={{ ...getStyle('container'), position: 'relative', zIndex: 1 }}>
-                <animated.div
+                {/* Removed animated.div for sectionHeader */}
+                <div
                     style={{
                         ...getStyle('sectionHeader'),
-                        ...sectionHeaderAnimation,
                         ...(isMobileView ? {
                             flexDirection: 'column',
                             alignItems: 'center',
@@ -265,13 +256,13 @@ function Agenda() {
                         {/* Subjudul: Warna dan ukuran sama dengan Dashboard */}
                         <p style={getStyle('sectionSubtitle')}>Lihat jadwal kegiatan penting dan acara terbaru di SD Muhammadiyah Plus Kota Probolinggo.</p> {/* Ganti teks deskripsi */}
                     </div>
-                    <animated.button
+                    {/* Removed animated.button */}
+                    <button
                         style={{
                             // --- SESUAI DENGAN DASHBOARD.JSX UNTUK TOMBOL PUTIH DENGAN HOVER ---
                             ...getStyle('sectionButton'),
-                            ...sectionButtonAnimation,
                             backgroundColor: 'white', // Latar belakang putih
-                            color: '#3498db',       // Warna teks biru
+                            color: '#3498db',           // Warna teks biru
                             border: '1px solid white', // Border putih
                             ...(isSectionButtonHovered ? {
                                 backgroundColor: '#e8f4fd', // Background saat hover
@@ -284,24 +275,22 @@ function Agenda() {
                         onMouseLeave={() => setIsSectionButtonHovered(false)}
                     >
                         Jelajahi Agenda
-                    </animated.button>
-                </animated.div>
+                    </button>
+                </div>
 
-                <animated.div style={{ ...getStyle('agendaGridContainer'), ...agendaGridContainerAnimation }}>
-                    {agendaData.map((agenda, index) => {
-                        const cardAnimation = useSpring({
-                            from: { opacity: 0, transform: 'translateY(50px)' },
-                            to: { opacity: 1, transform: 'translateY(0px)' },
-                            delay: 600 + index * 120,
-                            config: config.gentle,
-                        });
+                {/* Removed animated.div for agendaGridContainer */}
+                <div style={getStyle('agendaGridContainer')}>
+                    {agendaData.map((agenda) => { // Removed index as it's not used for entrance animation
+                        // Removed cardAnimation useSpring hook
+                        // const cardAnimation = useSpring({...});
 
                         return (
-                            <animated.div
+                            // Changed animated.div back to a regular div
+                            <div
                                 key={agenda.id}
                                 style={{
                                     ...getStyle('agendaCard', hoveredAgendaCard[`${agenda.id}`]),
-                                    ...cardAnimation,
+                                    // Removed ...cardAnimation,
                                 }}
                                 onMouseEnter={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: true }))}
                                 onMouseLeave={() => setHoveredAgendaCard(prev => ({ ...prev, [`${agenda.id}`]: false }))}
@@ -315,10 +304,10 @@ function Agenda() {
                                 <div style={getStyle('agendaLocation')}>
                                     <span style={getStyle('locationIcon')}>📍</span> {agenda.location}
                                 </div>
-                            </animated.div>
+                            </div>
                         );
                     })}
-                </animated.div>
+                </div>
             </div>
         </div>
     );

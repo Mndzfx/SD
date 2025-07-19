@@ -3,7 +3,7 @@
     --color-white: #ffffff;
     --color-dark-gray: #333333;
     --color-button-color: #ffd700;
-    --color-primary-purple: #ffd700;
+    --color-primary-purple: #ffd700; /* Dikembalikan ke nilai asli Anda */
     --color-light-purple: #e9d5ff;
     --color-medium-gray: #666666;
     --color-header-hero-bg: #4a007f;
@@ -14,7 +14,7 @@
     --shadows-light: 0 2px 5px rgba(0, 0, 0, 0.1);
     --shadows-medium: 0 5px 15px rgba(0, 0, 0, 0.15);
     /* Gunakan shadow yang sedikit lebih ringan untuk dropdown */
-    --shadows-dropdown: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    --shadows-dropdown: 0 4px 12px rgba(0, 0, 0, 0.1);
 
     --border-radius-sm: 4px;
     --border-radius-md: 10px;
@@ -27,7 +27,22 @@
     --transition-speed-dropdown: 0.25s;
 }
 
-/* Base Styles (Tidak ada perubahan di sini) */
+/* --- PERBAIKAN UTAMA UNTUK MENGHILANGKAN WARNING: Penulisan Scrollbar untuk Browser WebKit --- */
+/* Simbol '&' dihapus karena ini adalah file CSS biasa atau agar tidak memicu warning React */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+/* Base Styles */
 body {
     margin: 0;
     padding: 0;
@@ -40,15 +55,10 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Ini tidak diperlukan lagi jika menu tidak menutupi layar penuh */
-/* body.no-scroll {
-    overflow: hidden;
-} */
-
 .app-container {
     padding: 0 0 50px 0;
     overflow-x: hidden;
-    margin-top: -21px;
+    margin-top: -21px; /* Dikembalikan ke nilai asli Anda */
 }
 
 img {
@@ -72,7 +82,7 @@ a {
     color: inherit;
 }
 
-/* Reusable Button Styles (Tidak ada perubahan di sini) */
+/* Reusable Button Styles */
 .btn {
     padding: 0.625rem 1.5rem;
     border: none;
@@ -110,7 +120,7 @@ a {
     color: var(--color-dark-gray);
 }
 
-/* Header and Hero Wrapper (Tidak ada perubahan di sini) */
+/* Header and Hero Wrapper */
 .header-hero-wrapper {
     background-image: url('/img/background1.png');
     background-repeat: no-repeat;
@@ -128,14 +138,13 @@ a {
     padding: 0 var(--layout-content-padding-x);
 }
 
-/* Header (Tidak ada perubahan di sini) */
+/* Header */
 .header {
     display: flex;
     align-items: center;
     padding: 1.25rem 0;
 }
 
-/* Perubahan pada navbar-wrapper agar pop-up bisa relatif terhadapnya */
 .navbar-wrapper {
     background-color: var(--color-white);
     border-radius: var(--border-radius-pill);
@@ -165,7 +174,7 @@ a {
     z-index: 101; /* Pastikan di atas menu */
 }
 
-/* Desktop Navigation and Button Group (Tidak ada perubahan di sini) */
+/* Desktop Navigation and Button Group */
 .nav-and-button-group {
     display: flex;
     align-items: center;
@@ -217,6 +226,7 @@ a {
     z-index: 1;
     flex-direction: row;
     text-align: left;
+    min-height: 400px;
 }
 
 .hero-content {
@@ -224,8 +234,7 @@ a {
     padding-right: 1.875rem;
     z-index: 2;
     text-align: left;
-    /* Tambahkan margin-top negatif jika diperlukan untuk menyeimbangkan posisi teks */
-    /* margin-top: -15px; */ 
+    /* margin-top: -15px; */
 }
 
 .hero-subtitle {
@@ -252,7 +261,7 @@ a {
     color: var(--color-white);
     max-width: 46.875rem;
     margin: 0 auto 0.8125rem auto;
-    line-height: 0.8;
+    line-height: 0.8; /* Dikembalikan ke nilai asli Anda */
 }
 
 .hero-buttons {
@@ -278,18 +287,11 @@ a {
     flex: 1;
     display: flex;
     justify-content: center;
-    /* Ubah align-items untuk mendorong gambar ke bawah */
-    align-items: flex-end; /* Awalnya ini, mungkin perlu diubah ke center atau flex-start */
+    align-items: flex-end;
     position: relative;
     z-index: 1;
     margin-right: 0;
-    /* Mungkin perlu menyesuaikan margin-bottom jika align-items diubah */
-    margin-bottom: -3.75rem; 
-    
-    /* Coba ubah align-items dan mainkan padding-top atau gap di sini */
-    /* Misalnya: */
-    /* align-items: center; /* Coba ini untuk melihat perubahan */
-    /* padding-top: 50px; /* Tambahkan padding di wrapper untuk menggeser isinya ke bawah */
+    margin-bottom: -3.75rem; /* Dikembalikan ke nilai asli Anda */
 }
 
 .hero-image {
@@ -299,15 +301,13 @@ a {
     object-fit: contain;
     position: relative;
     z-index: 2;
-    /* Hapus 'top' atau 'margin-top' di sini, kita akan kontrol dari wrapper */
-    /* top: 15px; */ 
 }
 
 .hero-image-background {
     display: none;
 }
 
-/* General Section Styles (Tidak ada perubahan di sini) */
+/* General Section Styles */
 .section {
     padding: 3.125rem 0;
 }
@@ -338,20 +338,17 @@ a {
     box-shadow: var(--shadows-medium);
     display: flex;
     flex-direction: column;
-    /* Remove animation properties from here */
 }
 
 /* Inner text container styles - These are the elements that will animate */
 .update-section,
 .help-section {
-    /* Initial state for hidden elements */
     opacity: 0;
-    transform: translateY(30px); /* Move slightly down from final position */
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out; /* Animation duration and easing */
-    /* Ensure content takes full available space within the card */
+    transform: translateY(30px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
     width: 100%;
     height: 100%;
-    display: flex; /* Inherit display from card for internal layout */
+    display: flex;
     flex-direction: column;
 }
 
@@ -360,7 +357,6 @@ a {
     opacity: 1;
     transform: translateY(0);
 }
-
 
 .update-section-card {
     flex: 1 1 40%;
@@ -383,7 +379,7 @@ a {
     align-items: flex-start;
     position: relative;
     z-index: 1;
-    margin-top: -5rem;
+    margin-top: -5rem; /* Dikembalikan ke nilai asli Anda */
 }
 
 .update-section-h2 {
@@ -453,12 +449,11 @@ a {
     width: 100%;
 }
 
-.help-content-wrapper h4 { /* Added style for h4 inside help-content-wrapper */
-    font-size: 1.2rem; /* Adjust as needed */
+.help-content-wrapper h4 {
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: var(--color-dark-gray);
 }
-
 
 .help-content-wrapper p {
     text-align: left !important;
@@ -481,7 +476,7 @@ a {
     line-height: 1.6;
 }
 
-/* Principal Info Styling (Tidak ada perubahan di sini) */
+/* Principal Info Styling */
 .principal-info {
     margin-top: 0.625rem;
     margin-bottom: 0;
@@ -533,7 +528,6 @@ a {
     line-height: 1.2;
 }
 
-
 @media (max-width: 768px) {
     .header-hero-wrapper {
         background-position: center top;
@@ -563,67 +557,56 @@ a {
 
     /* Mobile Pop-up Menu (Gaya Dropdown Browser) */
     .mobile-popup-menu {
-        position: absolute; /* Penting: absolute terhadap .navbar-wrapper */
-        top: 100%; /* Muncul tepat di bawah .navbar-wrapper */
-        right: 0; /* Sesuaikan posisi ke kanan */
-        /* Anda bisa juga menggunakan left: 0; atau atur lebar */
-        width: 15rem; /* Lebar menu, sesuaikan sesuai kebutuhan */
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 15rem;
         background-color: var(--color-white);
-        border-radius: var(--border-radius-md); /* Sudut sedikit membulat */
-        box-shadow: var(--shadows-dropdown); /* Shadow untuk efek 'mengambang' */
-        z-index: 1000; /* Pastikan di atas konten lain */
-        overflow: hidden; /* Pastikan konten di dalamnya tidak keluar */
-        
-        /* Kondisi awal: Tersembunyi */
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadows-dropdown);
+        z-index: 1000;
+        overflow: hidden;
         opacity: 0;
-        transform: translateY(-0.5rem) scale(0.95); /* Sedikit naik dan mengecil */
+        transform: translateY(-0.5rem) scale(0.95);
         visibility: hidden;
-        pointer-events: none; /* Mencegah interaksi saat tersembunyi */
-        
-        /* Transisi untuk muncul/hilang yang mulus */
+        pointer-events: none;
         transition: opacity var(--transition-speed-dropdown) ease-out,
-                    transform var(--transition-speed-dropdown) ease-out,
-                    visibility 0s linear var(--transition-speed-dropdown);
-        
-        /* Opsional: Untuk menyesuaikan posisi agar tidak terlalu mepet ke kanan */
-        /* right: var(--layout-content-padding-x); */
+                                transform var(--transition-speed-dropdown) ease-out,
+                                visibility 0s linear var(--transition-speed-dropdown);
     }
 
-    /* Kondisi Aktif: Terlihat */
     .mobile-popup-menu.is-open {
         opacity: 1;
-        transform: translateY(0) scale(1); /* Kembali ke posisi dan ukuran normal */
+        transform: translateY(0) scale(1);
         visibility: visible;
-        pointer-events: auto; /* Memungkinkan interaksi */
+        pointer-events: auto;
         transition: opacity var(--transition-speed-dropdown) ease-out,
                                 transform var(--transition-speed-dropdown) ease-out;
     }
 
-    /* Overlay tidak diperlukan untuk gaya dropdown ini jika Anda ingin hanya menu yang muncul */
-    /* Jika tetap ingin overlay untuk menutup menu saat klik di luar, biarkan overlay tetap 'fixed' */
     .mobile-overlay {
-        position: fixed; /* Tetap fixed */
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: transparent; /* Transparan atau sangat tipis */
-        z-index: 999; /* Di bawah menu, di atas konten lain */
+        background-color: transparent;
+        z-index: 999;
         opacity: 0;
         visibility: hidden;
         transition: opacity var(--transition-speed-dropdown) ease-out,
-                            visibility 0s linear var(--transition-speed-dropdown);
+                                visibility 0s linear var(--transition-speed-dropdown);
     }
 
     .mobile-overlay.is-open {
-        opacity: 1; /* Mungkin 0 jika Anda tidak ingin efek buram */
+        opacity: 1;
         visibility: visible;
         transition: opacity var(--transition-speed-dropdown) ease-out;
     }
 
     .navbar-ul-mobile {
         list-style: none;
-        padding: 0.5rem 0; /* Padding vertikal di dalam menu */
+        padding: 0.5rem 0;
         margin: 0;
         display: flex;
         flex-direction: column;
@@ -638,8 +621,8 @@ a {
     .navbar-link-mobile {
         color: var(--color-dark-gray);
         font-weight: 500;
-        font-size: 0.95rem; /* Ukuran font standar untuk dropdown */
-        padding: 0.7rem 1.2rem; /* Padding yang pas untuk item menu */
+        font-size: 0.95rem;
+        padding: 0.7rem 1.2rem;
         display: block;
         transition: background-color var(--transition-speed-fast) ease;
         white-space: nowrap;
@@ -651,28 +634,29 @@ a {
     }
 
     .header-btn-mobile {
-        /* Untuk tombol di dalam dropdown, Anda bisa menempatkannya di bawah daftar link */
-        width: calc(100% - 2.4rem); /* Sesuaikan padding */
-        margin: 0.5rem 1.2rem 1.2rem 1.2rem; /* Margin di dalam dropdown */
+        width: calc(100% - 2.4rem);
+        margin: 0.5rem 1.2rem 1.2rem 1.2rem;
         text-align: center;
     }
 
-    /* --- Hero Section Mobile --- */
+    /* --- Hero Section Mobile PERBAIKAN UTAMA --- */
     .hero-section {
-        /* Tambahkan padding-top di sini untuk memberi ruang di atas judul */
-        padding: 3.5rem 0 1.25rem 0; /* Ubah padding-top dari 1.25rem menjadi 3.5rem */
+        padding: 3.5rem 0 1.25rem 0;
         flex-direction: column;
         text-align: center;
+        align-items: flex-start; /* Mengatur alignment item-item dalam kolom */
+        min-height: 400px; /* Dikembalikan ke nilai asli Anda */
     }
 
     .hero-content {
         padding-right: 0;
         text-align: center;
+        width: 100%; /* Penting untuk mobile flex column */
     }
 
     .hero-subtitle {
         font-size: 0.8rem;
-        justify-content: center; /* Ubah menjadi center untuk rata tengah */
+        justify-content: center;
     }
 
     .hero-content-h1 {
@@ -681,7 +665,7 @@ a {
 
     .hero-description {
         font-size: 1rem;
-        line-height: 1.5;
+        line-height: 0.8; /* Dikembalikan ke nilai asli Anda */
         margin-bottom: 1.25rem;
     }
 
@@ -697,7 +681,9 @@ a {
     }
 
     .hero-image-wrapper {
-        margin-bottom: 0;
+        margin-bottom: -3.75rem; /* Dikembalikan ke nilai asli Anda */
+        width: 100%;
+        padding-top: 20px; /* Dikembalikan ke nilai asli Anda */
     }
 
     .hero-image {
@@ -705,7 +691,7 @@ a {
         max-height: 21.875rem;
     }
 
-    /* Section Mobile (Tidak ada perubahan di sini) */
+    /* Section Mobile */
     .section {
         padding: 1.875rem 0;
     }
@@ -721,7 +707,7 @@ a {
         flex-direction: column;
     }
 
-    /* Card Order Modification for Mobile (Tidak ada perubahan di sini) */
+    /* Card Order Modification for Mobile */
     .update-section-card {
         flex: 1 1 100%;
         padding: 1.25rem;
@@ -733,7 +719,7 @@ a {
         padding: 1.25rem;
         text-align: left;
         order: 1;
-        margin-top: -5rem;
+        margin-top: -5rem; /* Dikembalikan ke nilai asli Anda */
     }
 
     .update-section-h2 {
@@ -780,7 +766,7 @@ a {
         font-size: 0.95rem;
     }
 
-    /* Principal Info Mobile (Tidak ada perubahan di sini) */
+    /* Principal Info Mobile */
     .principal-info {
         margin-top: 0.5rem;
         margin-bottom: 0.3125rem;

@@ -1,0 +1,12 @@
+/* src/styles/DashboardScrollbar.css */
+
+/* Sembunyikan scrollbar untuk elemen dengan class prestasi-scroll-container */
+.prestasi-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Untuk Firefox */
+.prestasi-scroll-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}

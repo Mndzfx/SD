@@ -9,7 +9,7 @@ function App() {
     // Ref untuk menunjuk ke elemen menu pop-up mobile
     const navRef = useRef(null);
     // Ref untuk menunjuk ke tombol hamburger
-    const hamburgerRef = useRef(null); 
+    const hamburgerRef = useRef(null);
 
     // Refs untuk elemen teks di dalam card yang akan dianimasikan
     const updateTextRef = useRef(null);
@@ -127,7 +127,7 @@ function App() {
                                     <div className="hamburger" onClick={toggleNav} ref={hamburgerRef}>
                                         &#9776; {/* Icon Hamburger */}
                                     </div>
-                                    
+
                                     {/* Mobile Pop-up Menu */}
                                     <div className={`mobile-popup-menu ${isNavOpen ? 'is-open' : ''}`} ref={navRef}>
                                         <nav className="mobile-navbar">
@@ -181,8 +181,8 @@ function App() {
                                 className="hero-image"
                                 src="/img/hero1.png"
                                 alt="Woman holding cards"
-                                loading="eager"       // Meminta browser untuk memuat gambar secepatnya
-                                fetchpriority="high"  // Memberi tahu browser ini adalah aset penting
+                                loading="eager"      // Meminta browser untuk memuat gambar secepatnya
+                                fetchPriority="high" // <<< FIX: Changed from fetchpriority="high"
                             />
                             <div className="hero-image-background"></div>
                         </div>

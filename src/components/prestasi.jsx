@@ -1,6 +1,6 @@
-// src/components/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
-import { useSpring, animated, config } from 'react-spring';
+// Removed useSpring and animated import as they are no longer used for entrance animations
+// import { useSpring, animated, config } from 'react-spring'; 
 
 function Dashboard() {
     // --- Styles untuk common elements ---
@@ -175,20 +175,16 @@ function Dashboard() {
         return { ...baseStyle, ...hoverStyle };
     };
 
-    const PrestasiCard = ({ type, name, details, rank, field, year, icon, index }) => {
+    const PrestasiCard = ({ type, name, details, rank, field, year, icon }) => { // Removed index as it's not used for animation
         const [isCardHovered, setIsCardHovered] = useState(false);
-        const animationProps = useSpring({
-            from: { opacity: 0, transform: 'translateY(20px)' },
-            to: { opacity: 1, transform: 'translateY(0px)' },
-            delay: 200 + index * 100, // Efek stagger: setiap kartu muncul dengan jeda
-            config: config.molasses, // Konfigurasi animasi yang halus
-        });
+        // Removed animationProps as useSpring is no longer imported/used for card entrance animation
 
         return (
-            <animated.div
+            // Changed animated.div back to a regular div
+            <div
                 style={{
                     ...getStyle('prestasiCard'),
-                    ...animationProps, // Aplikasi animasi muncul
+                    // Removed animationProps
                     ...(isCardHovered ? getStyle('prestasiCard', true) : {})
                 }}
                 onMouseEnter={() => setIsCardHovered(true)}
@@ -214,7 +210,7 @@ function Dashboard() {
                         <span style={getStyle('prestasiInfoValue')}>{year}</span>
                     </div>
                 </div>
-            </animated.div>
+            </div>
         );
     };
 
@@ -236,28 +232,8 @@ function Dashboard() {
 
     const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false);
 
-    // Animasi untuk judul bagian
-    const sectionHeaderAnimation = useSpring({
-        from: { opacity: 0, transform: 'translateY(-30px)' },
-        to: { opacity: 1, transform: 'translateY(0px)' },
-        config: config.wobbly, // Efek sedikit 'goyang' saat muncul
-    });
-
-    // Animasi untuk tombol
-    const sectionButtonAnimation = useSpring({
-        from: { opacity: 0, transform: 'translateX(30px)' },
-        to: { opacity: 1, transform: 'translateX(0px)' },
-        delay: 300, // Muncul setelah judul
-        config: config.stiff,
-    });
-
-    // Animasi untuk container scrollable kartu prestasi
-    const prestasiScrollContainerAnimation = useSpring({
-        from: { opacity: 0 },
-        to: { opacity: 1 },
-        delay: 500, // Muncul setelah tombol
-        config: config.slow,
-    });
+    // Removed sectionHeaderAnimation, sectionButtonAnimation, and prestasiScrollContainerAnimation
+    // as useSpring hooks are removed.
 
     const prestasiData = [
         { id: 1, type: "Non Akademik", name: "Aulia Rahma Putri", details: "Juara 3 Tahfidz Qur'an Festival Anak Sholeh Muhammadiyah Kota Probolinggo.", rank: "Juara 3", field: "Tahfidz Qur'an", year: "2024", icon: "🥉" },
@@ -307,17 +283,16 @@ function Dashboard() {
                 <div style={prestasiSectionDynamicStyle}> {/* Menggunakan style dinamis di sini */}
                     {/* Content wrapper to apply common container styles (max-width, margin, padding) */}
                     <div style={getStyle('prestasiContentWrapper')}>
-                        {/* Header bagian dengan animasi muncul dari atas */}
-                        <animated.div style={{ ...getStyle('sectionHeader'), ...sectionHeaderAnimation }}>
+                        {/* Header bagian - Removed animated.div */}
+                        <div style={getStyle('sectionHeader')}>
                             <div>
                                 <h1 style={getStyle('sectionTitle')}>Ragam Prestasi Siswa</h1>
                                 <p style={getStyle('sectionSubtitle')}>Merayakan keberhasilan siswa-siswi SD Muhammadiyah Plus Kota Probolinggo dalam berbagai bidang.</p>
                             </div>
-                            {/* Tombol dengan animasi muncul dari kanan */}
-                            <animated.button
+                            {/* Tombol - Removed animated.button */}
+                            <button
                                 style={{
                                     ...getStyle('sectionButton'),
-                                    ...sectionButtonAnimation, // Aplikasi animasi tombol
                                     backgroundColor: 'white',
                                     color: '#3498db',
                                     border: '1px solid white',
@@ -327,12 +302,12 @@ function Dashboard() {
                                 onMouseLeave={() => setIsSectionButtonHovered(false)}
                             >
                                 Lihat Semua Prestasi
-                            </animated.button>
-                        </animated.div>
+                            </button>
+                        </div>
 
-                        {/* Scroll container untuk kartu prestasi dengan animasi fade-in */}
-                        <animated.div style={{ ...getStyle('prestasiScrollContainer'), ...prestasiScrollContainerAnimation }}>
-                            {prestasiData.map((prestasi, index) => (
+                        {/* Scroll container untuk kartu prestasi - Removed animated.div */}
+                        <div style={getStyle('prestasiScrollContainer')}>
+                            {prestasiData.map((prestasi) => ( // Removed index from map as it's not needed for stagger
                                 <PrestasiCard
                                     key={prestasi.id}
                                     type={prestasi.type}
@@ -342,10 +317,9 @@ function Dashboard() {
                                     field={prestasi.field}
                                     year={prestasi.year}
                                     icon={prestasi.icon}
-                                    index={index} // Meneruskan index untuk efek stagger animasi kartu
                                 />
                             ))}
-                        </animated.div>
+                        </div>
                     </div>
                 </div>
                 {/* Anda bisa menambahkan bagian lain dari dashboard Anda di sini */}

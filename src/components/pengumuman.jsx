@@ -1,5 +1,7 @@
 // src/components/Pengumuman.jsx
 import React, { useState } from 'react';
+import { useSpring, animated, config } from 'react-spring';
+
 // Import icons if you decide to use them later:
 // import { FaCalendarAlt, FaFileDownload, FaExternalLinkAlt } from 'react-icons/fa';
 
@@ -70,10 +72,6 @@ const Pengumuman = () => {
             boxShadow: 'none',
             fontFamily: '"Poppins", sans-serif', // Keep Poppins for this section
         },
-        // Re-aligning sectionHeader to match the common style that has it as 'flex'
-        // and its children (title, subtitle, button) are centered due to `width: '100%', textAlign: 'center'`
-        // If you want them stacked and centered *within* the header, keep flexDirection: 'column'
-        // For consistency with TestimonialSection, I'll align it similarly.
         sectionHeader: {
             display: 'flex',
             flexDirection: 'column', // Force column layout for title, subtitle, button
@@ -85,7 +83,6 @@ const Pengumuman = () => {
             boxShadow: 'none',
             paddingTop: '40px', // Apply padding top as per common
         },
-        // The individual card styles
         pengumumanScrollContainer: {
             display: 'flex',
             overflowX: 'auto',
@@ -93,19 +90,20 @@ const Pengumuman = () => {
             paddingBottom: '20px',
             scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',
-            '&::-webkit-scrollbar': {
-                height: '8px',
-                backgroundColor: '#f1f1f1',
-            },
-            '&::-webkit-scrollbar-thumb': {
-                backgroundColor: '#ccc',
-                borderRadius: '10px',
-            },
-            '&::-webkit-scrollbar-thumb:hover': {
-                backgroundColor: '#a0a0a0',
-            },
-            msOverflowStyle: 'none',
-            scrollbarWidth: 'none',
+            // --- REMOVED THE CAUSING ERROR STYLES BELOW ---
+            // '&::-webkit-scrollbar': {
+            //     height: '8px',
+            //     backgroundColor: '#f1f1f1',
+            // },
+            // '&::-webkit-scrollbar-thumb': {
+            //     backgroundColor: '#ccc',
+            //     borderRadius: '10px',
+            // },
+            // '&::-webkit-scrollbar-thumb:hover': {
+            //     backgroundColor: '#a0a0a0',
+            // },
+            msOverflowStyle: 'none', // For IE/Edge, still works inline for hiding default scrollbar
+            scrollbarWidth: 'none', // For Firefox, still works inline for hiding default scrollbar
             border: 'none',
             outline: 'none',
             boxShadow: 'none',
@@ -231,10 +229,10 @@ const Pengumuman = () => {
         const baseStyle = allStyles[elementName] || {};
         const hoverStyle = isHovered && allStyles[`${elementName}Hover`] ? allStyles[`${elementName}Hover`] : {};
 
-        // Special handling for Webkit scrollbar pseudo-element styles as they can't be directly merged
-        if (elementName === 'pengumumanScrollContainer' && (baseStyle['&::-webkit-scrollbar'] || baseStyle['&::-webkit-scrollbar-thumb'])) {
-            return { ...baseStyle, ...hoverStyle };
-        }
+        // REMOVED: Special handling for Webkit scrollbar pseudo-element styles as they were causing the error.
+        // if (elementName === 'pengumumanScrollContainer' && (baseStyle['&::-webkit-scrollbar'] || baseStyle['&::-webkit-scrollbar-thumb'])) {
+        //     return { ...baseStyle, ...hoverStyle };
+        // }
 
         return { ...baseStyle, ...hoverStyle };
     };
@@ -292,6 +290,19 @@ const Pengumuman = () => {
     // --- Main Component ---
     const [isSectionButtonHovered, setIsSectionButtonHovered] = useState(false);
 
+    // Floating animation for the "Lihat Semua Pengumuman" button
+    const floatAnimation = useSpring({
+        from: { transform: 'translateY(0px)' },
+        to: async (next) => {
+            while (1) {
+                await next({ transform: 'translateY(-5px)', config: config.gentle });
+                await next({ transform: 'translateY(0px)', config: config.gentle });
+            }
+        },
+        loop: true, // This property handles the infinite loop when 'to' is an async function
+    });
+
+
     return (
         <section style={getStyle('sectionWrapper')}>
             <div style={getStyle('container')}>
@@ -304,16 +315,18 @@ const Pengumuman = () => {
                     <p style={getStyle('sectionSubtitle')}>
                         Temukan informasi terbaru, pengumuman penting, dan kegiatan sekolah kami di sini.
                     </p>
-                    <button
+                    {/* Apply the floating animation to the button */}
+                    <animated.button
                         style={{
                             ...getStyle('sectionButton'),
-                            ...(isSectionButtonHovered ? getStyle('sectionButtonHover') : {})
+                            ...(isSectionButtonHovered ? getStyle('sectionButtonHover') : {}),
+                            ...floatAnimation, // Apply the float animation here
                         }}
                         onMouseEnter={() => setIsSectionButtonHovered(true)}
                         onMouseLeave={() => setIsSectionButtonHovered(false)}
                     >
                         Lihat Semua Pengumuman
-                    </button>
+                    </animated.button>
                 </div>
 
                 <div style={getStyle('pengumumanScrollContainer')}>
