@@ -11,9 +11,9 @@ function App() {
     // Ref untuk menunjuk ke tombol hamburger
     const hamburgerRef = useRef(null);
 
-    // Refs untuk elemen teks di dalam card yang akan dianimasikan
-    const updateTextRef = useRef(null);
-    const helpTextRef = useRef(null);
+    // Refs for text elements inside the card (animation refs removed as per request)
+    // const updateTextRef = useRef(null);
+    // const helpTextRef = useRef(null);
 
     useEffect(() => {
         // Handler untuk mengubah state isMobile saat ukuran jendela berubah
@@ -40,37 +40,37 @@ function App() {
         window.addEventListener('resize', handleResize);
         document.addEventListener('mousedown', handleClickOutside);
 
-        // Intersection Observer untuk animasi scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.remove('hidden');
-                    entry.target.classList.add('show');
-                    observer.unobserve(entry.target); // Berhenti mengamati setelah terlihat
-                }
-            });
-        }, {
-            threshold: 0.1 // Sedikit saja elemen terlihat sudah dianggap intersecting (10% dari elemen)
-        });
+        // Intersection Observer for scroll animations removed as per request
+        // const observer = new IntersectionObserver((entries) => {
+        //     entries.forEach((entry) => {
+        //         if (entry.isIntersecting) {
+        //             entry.target.classList.remove('hidden');
+        //             entry.target.classList.add('show');
+        //             observer.unobserve(entry.target); // Berhenti mengamati setelah terlihat
+        //         }
+        //     });
+        // }, {
+        //     threshold: 0.1 // Sedikit saja elemen terlihat sudah dianggap intersecting (10% dari elemen)
+        // });
 
-        // Amati elemen teks di dalam card
-        if (updateTextRef.current) {
-            observer.observe(updateTextRef.current);
-        }
-        if (helpTextRef.current) {
-            observer.observe(helpTextRef.current);
-        }
+        // Observe text elements inside the card (removed as per request)
+        // if (updateTextRef.current) {
+        //     observer.observe(updateTextRef.current);
+        // }
+        // if (helpTextRef.current) {
+        //     observer.observe(helpTextRef.current);
+        // }
 
         // Bersihkan event listener dan observer saat komponen di-unmount
         return () => {
             window.removeEventListener('resize', handleResize);
             document.removeEventListener('mousedown', handleClickOutside);
-            if (updateTextRef.current) {
-                observer.unobserve(updateTextRef.current);
-            }
-            if (helpTextRef.current) {
-                observer.unobserve(helpTextRef.current);
-            }
+            // if (updateTextRef.current) {
+            //     observer.unobserve(updateTextRef.current);
+            // }
+            // if (helpTextRef.current) {
+            //     observer.unobserve(helpTextRef.current);
+            // }
         };
     }, [isNavOpen]); // Dependensi isNavOpen untuk memastikan logika terbaru
 
@@ -194,7 +194,7 @@ function App() {
             <div className="inner-container">
                 <div className="two-column-section-wrapper">
                     <section className="section update-section-card"> {/* Removed 'hidden' class from card */}
-                        <div ref={updateTextRef} className="update-section hidden"> {/* New div for animating text */}
+                        <div className="update-section"> {/* Removed animation ref and 'hidden' class */}
                             <h2 className="update-section-h2">Kenali Sekolah Kami Lebih Dekat</h2>
                             <p className="update-section-p">Temukan berbagai fasilitas, program, dan layanan yang kami sediakan demi mendukung pendidikan anak Anda.</p>
                             <div className="update-form">
@@ -206,7 +206,7 @@ function App() {
 
                     {/* Visi dan Misi Section */}
                     <section className="section help-section-card"> {/* Removed 'hidden' class from card */}
-                        <div ref={helpTextRef} className="help-section hidden"> {/* New div for animating text */}
+                        <div className="help-section"> {/* Removed animation ref and 'hidden' class */}
                             <h3 className="help-section-h3">Visi dan Misi SD Sejahtera Indonesia</h3>
                             <div className="help-content-wrapper">
                                 <h4>Visi</h4>

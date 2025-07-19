@@ -6,7 +6,7 @@
     --color-primary-purple: #ffd700; /* Dikembalikan ke nilai asli Anda */
     --color-light-purple: #e9d5ff;
     --color-medium-gray: #666666;
-    --color-header-hero-bg: #4a007f;
+    --color-header-hero-bg: #51ff00;
 
     --layout-content-max-width: 1200px;
     --layout-content-padding-x: 20px;
@@ -340,23 +340,23 @@ a {
     flex-direction: column;
 }
 
-/* Inner text container styles - These are the elements that will animate */
+/* Inner text container styles - Removed animation properties */
 .update-section,
 .help-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    /* opacity: 0; Removed animation property */
+    /* transform: translateY(30px); Removed animation property */
+    /* transition: opacity 0.7s ease-out, transform 0.7s ease-out; Removed animation property */
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-/* Final state for shown elements */
-.show {
+/* Removed the 'show' class as it's no longer needed for animation */
+/* .show {
     opacity: 1;
     transform: translateY(0);
-}
+} */
 
 .update-section-card {
     flex: 1 1 40%;
@@ -528,16 +528,17 @@ a {
     line-height: 1.2;
 }
 
-.hidden {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-out;
+/* Removed animation-related classes */
+/* .hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
 }
 
 .show {
-  opacity: 1;
-  transform: translateY(0);
-}
+    opacity: 1;
+    transform: translateY(0);
+} */
 
 @media (max-width: 768px) {
     .header-hero-wrapper {
@@ -558,16 +559,17 @@ a {
         height: 1.875rem;
     }
 
-    .hidden {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-out;
-}
+    /* Removed animation-related classes within media query too */
+    /* .hidden {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease-out;
+    }
 
-.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+    .show {
+        opacity: 1;
+        transform: translateY(0);
+    } */
 
     .hamburger {
         display: block; /* Tampilkan hamburger di mobile */
