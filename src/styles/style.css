@@ -27,7 +27,7 @@
     --transition-speed-dropdown: 0.25s;
 }
 
-/* --- PERBAIKAN UTAMA UNTUK MENGHILANGKAN WARNING: Penulisan Scrollbar untuk Browser WebKit --- */
+/* --- PERBAIKAN UTAMA UNTUL MENGHILANGKAN WARNING: Penulisan Scrollbar untuk Browser WebKit --- */
 ::-webkit-scrollbar {
     width: 12px;
 }
@@ -330,8 +330,7 @@ a {
 /* Card Styles - These remain visible and provide the background/structure */
 .update-section-card,
 .help-section-card {
-    /* Padding asli untuk kedua card di desktop */
-    padding: 1.5625rem 2.1875rem; 
+    padding: 1.5625rem 2.1875rem;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadows-medium);
     display: flex;
@@ -368,9 +367,9 @@ a {
     align-items: flex-start;
     position: relative;
     z-index: 1;
-    margin-top: -5rem; /* DIKEMBALIKAN KE NILAI ASLI ANDA UNTUK DESKTOP */
-    /* Pastikan tidak ada properti width yang mengecilkan kartu di desktop */
-    /* Padding sudah diatur di .update-section-card, .help-section-card */
+    margin-top: -5rem;
+    /* Menyesuaikan padding untuk mengurangi tinggi card secara keseluruhan */
+    padding: 1.5rem 2rem; /* Sedikit mengurangi padding atas/bawah dan samping */
 }
 
 .update-section-h2 {
@@ -424,7 +423,7 @@ a {
     width: 100%;
 }
 
-/* --- Visi dan Misi Section Styles (Enhanced FOR DESKTOP - Ukuran & Jarak Disesuaikan) --- */
+/* --- Visi dan Misi Section Styles (Enhanced FOR DESKTOP) --- */
 .help-section-h3 {
     font-size: 1.8rem; /* Dikecilkan dari 2.2rem */
     color: var(--color-dark-gray);
@@ -528,7 +527,6 @@ a {
 }
 
 /* --- Media Queries for Mobile (max-width: 768px) --- */
-/* SELURUH BAGIAN INI TIDAK BERUBAH DARI PERBAIKAN SEBELUMNYA */
 @media (max-width: 768px) {
     .header-hero-wrapper {
         background-position: center top;
@@ -713,12 +711,16 @@ a {
         flex: 1 1 100%;
         padding: 1.25rem;
         order: 2;
+        /* Hapus lebar eksplisit dan margin auto jika ada */
+        width: auto; /* Pastikan tidak ada override width */
+        margin-left: 0;
+        margin-right: 0;
     }
 
     /* --- PERBAIKAN UTAMA UNTUK CARD VISI & MISI DI MOBILE --- */
     .help-section-card {
         flex: 1 1 100%;
-        padding: 1.25rem;
+        padding: 1.25rem; /* Pastikan padding sama dengan update-section-card */
         text-align: left;
         order: 1;
         margin-top: -3.5rem;
@@ -727,12 +729,21 @@ a {
         box-shadow: var(--shadows-medium);
         background-color: var(--color-white);
         border-radius: var(--border-radius-lg);
-        width: calc(100% - (var(--layout-content-padding-x) * 2));
-        margin-left: auto;
-        margin-right: auto;
+        /* Hapus atau sesuaikan properti yang membatasi lebar */
+        width: auto; /* Ini akan membuat lebarnya mengikuti parent, yaitu inner-container */
+        margin-left: auto; /* Tetap pertahankan untuk sentering jika flex-grow tidak bekerja optimal */
+        margin-right: auto; /* Tetap pertahankan untuk sentering */
         transform: translateY(0);
         transition: transform 0.3s ease;
     }
+    
+    /* Tambahkan pengaturan lebar penuh untuk update-section-card agar konsisten */
+    .update-section-card {
+        width: auto; /* Pastikan tidak ada override width */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
 
     .update-section-h2 {
         font-size: 1.8rem;
